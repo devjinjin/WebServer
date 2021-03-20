@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebServer.Client\WebServer.Client.csproj" />
+    <ProjectReference Include="..\WebServer.Models\WebServer.Models.csproj" />
   </ItemGroup>
 
 

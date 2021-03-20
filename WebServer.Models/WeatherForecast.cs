@@ -1,6 +1,8 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace WebServer
+namespace WebServer.Models
 {
     public class WeatherForecast
     {
