@@ -1,10 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Text;
 using WebServer.Data;
+using WebServer.Data.Users;
 
 namespace WebServer
 {
@@ -26,6 +31,8 @@ namespace WebServer
                   options.UseSqlServer(
                       Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
 
+            JWTAuthentication(services); //jWT 인증 등록 함수
+
 
             //swagger 등록 
             services.AddSwaggerGen();//Swagger 추가
@@ -39,6 +46,32 @@ namespace WebServer
             services.AddControllers();
         }
 
+        //jWT 인증 등록 함수
+        private void JWTAuthentication(IServiceCollection services)
+        {
+            //JWT 인증 사용
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = true;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("placeholder-key-that-is-long-enough-for-sha256")),
+                    ValidateAudience = false, //토큰 유효성 검사 중에 대상의 유효성을 검사할지 여부
+                    ValidateIssuer = false, //토큰 유효성 검사 중에 발급자가 유효성을 검사할지 여부
+                    ValidateLifetime = false, //토큰 유효성 검사 중에 수명의 유효성을 검사할지 여부
+                    RequireExpirationTime = false, //토큰에 만료시간 속성이 필요한지 적용
+                    ClockSkew = TimeSpan.Zero, //시간의 유효성을 검사 할 때 적용 
+                    ValidateIssuerSigningKey = true //securityToken 에 서명 한 SecurityKey의 유효성 검사 가 호출 되는지 여부
+                };
+            });
+            services.AddScoped<ITokenBuilder, TokenBuilder>(); // 토큰 생성
+            //JWT 인증 사용
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
