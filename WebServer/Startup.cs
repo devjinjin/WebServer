@@ -25,6 +25,11 @@ namespace WebServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //블레이저 클라이언트를 위한 내용 추가
+            services.AddServerSideBlazor();
+            services.AddRazorPages();
+            //블레이저 클라이언트를 위한 내용 추가
+
             services.AddControllers();
         }
 
@@ -35,6 +40,10 @@ namespace WebServer
             {
                 app.UseDeveloperExceptionPage();
             }
+            //블레이저 클라이언트를 위한 내용 추가
+            app.UseBlazorFrameworkFiles(); 
+            app.UseStaticFiles();
+            //블레이저 클라이언트를 위한 내용 추가
 
             app.UseHttpsRedirection();
 
@@ -44,7 +53,9 @@ namespace WebServer
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapRazorPages(); // 블레이저 클라이언트를 위한 내용 추가
+                endpoints.MapControllers(); // 기존 Api 설정사항
+                endpoints.MapFallbackToFile("index.html"); // 블레이저 클라이언트를 위한 내용 추가
             });
         }
     }
