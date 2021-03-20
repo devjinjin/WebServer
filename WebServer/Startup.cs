@@ -1,15 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using WebServer.Data;
 
 namespace WebServer
 {
@@ -25,6 +20,16 @@ namespace WebServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //DbContext 종속성 주입
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+                  options.UseSqlServer(
+                      Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+
+            //swagger 등록 
+            services.AddSwaggerGen();//Swagger 추가
+            //swagger 등록
+
             //블레이저 클라이언트를 위한 내용 추가
             services.AddServerSideBlazor();
             services.AddRazorPages();
@@ -40,6 +45,15 @@ namespace WebServer
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //swagger 등록 
+            app.UseSwagger(); //swagger 등록                            
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+            //swagger 등록
+
             //블레이저 클라이언트를 위한 내용 추가
             app.UseBlazorFrameworkFiles(); 
             app.UseStaticFiles();
