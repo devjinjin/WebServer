@@ -26,6 +26,7 @@ namespace WebServer
                   options.UseSqlServer(
                       Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
 
+
             //swagger 등록 
             services.AddSwaggerGen();//Swagger 추가
             //swagger 등록
@@ -37,6 +38,7 @@ namespace WebServer
 
             services.AddControllers();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -65,6 +67,7 @@ namespace WebServer
 
             app.UseAuthorization();
 
+        
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages(); // 블레이저 클라이언트를 위한 내용 추가
