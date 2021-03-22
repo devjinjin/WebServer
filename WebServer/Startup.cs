@@ -1,14 +1,18 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.IO;
 using System.Text;
 using WebServer.Data;
+using WebServer.Data.Notes;
 using WebServer.Data.Users;
 
 namespace WebServer
@@ -71,6 +75,8 @@ namespace WebServer
             });
             services.AddScoped<ITokenBuilder, TokenBuilder>(); // 토큰 생성
             //JWT 인증 사용
+
+            services.AddTransient<INoteRepository, NoteRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -93,6 +99,15 @@ namespace WebServer
             app.UseBlazorFrameworkFiles(); 
             app.UseStaticFiles();
             //블레이저 클라이언트를 위한 내용 추가
+
+            //File 폴더를 위한 경로 설정
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                            Path.Combine(Directory.GetCurrentDirectory(), @"Files")),
+                RequestPath = new PathString("/Files")
+            });
+            //File 폴더를 위한 경로 설정
 
             app.UseHttpsRedirection();
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebServer.Models;
+using WebServer.Models.Notes;
 using WebServer.Models.Users;
 
 namespace WebServer.Data
@@ -19,14 +20,14 @@ namespace WebServer.Data
             builder
                 .Entity<User>()
                 .HasData(
-                new User { Id = 1, Username = "User1", Password = "Password1" },
-                new User { Id = 2, Username = "User2", Password = "Password2" }
+                new User { Id = 1, Email = "User1", Password = "Password1", FirstName="lee", LastName="jin" },
+                new User { Id = 2, Email = "User2", Password = "Password2", FirstName = "lee", LastName = "young" }
                 );
         }
         public DbSet<User> Users { get; set; }
 
         public DbSet<Notice> Notice { get; set; }
 
-   
+        public DbSet<Note> Notes { get; set; }
     }
 }

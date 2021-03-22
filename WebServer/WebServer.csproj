@@ -25,5 +25,9 @@
     <ProjectReference Include="..\WebServer.Models\WebServer.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
+
 
 </Project>

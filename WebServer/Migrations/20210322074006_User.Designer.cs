@@ -9,7 +9,7 @@ using WebServer.Data;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210320090909_User")]
+    [Migration("20210322074006_User")]
     partial class User
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,10 +45,16 @@ namespace WebServer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Password")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -59,14 +65,18 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 1,
-                            Password = "Password1",
-                            Username = "User1"
+                            Email = "User1",
+                            FirstName = "lee",
+                            LastName = "jin",
+                            Password = "Password1"
                         },
                         new
                         {
                             Id = 2,
-                            Password = "Password2",
-                            Username = "User2"
+                            Email = "User2",
+                            FirstName = "lee",
+                            LastName = "young",
+                            Password = "Password2"
                         });
                 });
 #pragma warning restore 612, 618

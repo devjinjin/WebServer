@@ -7,6 +7,6 @@ namespace WebServer.Data.Users
 {
     public interface ITokenBuilder
     {
-        string BuildToken(string username);
+        string BuildToken(string email);
     }
 }

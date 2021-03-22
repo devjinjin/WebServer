@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Data;
 using WebServer.Data.Users;
+using WebServer.Models.Users;
 
 namespace WebServer.Controllers
 {
@@ -25,11 +26,11 @@ namespace WebServer.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] WebServer.Models.Users.User user)
+        public async Task<IActionResult> Login([FromBody] User user)
         {
             var dbUser = await _context
                 .Users
-                .SingleOrDefaultAsync(u => u.Username == user.Username);
+                .SingleOrDefaultAsync(u => u.Email == user.Email);
 
             if (dbUser == null)
             {
@@ -45,7 +46,7 @@ namespace WebServer.Controllers
                 return BadRequest("Could not authenticate user.");
             }
 
-            var token = _tokenBuilder.BuildToken(user.Username);
+            var token = _tokenBuilder.BuildToken(user.Email);
 
             return Ok(token);
         }
@@ -54,18 +55,18 @@ namespace WebServer.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> VerifyToken()
         {
-            var username = User
+            var email = User
                 .Claims
                 .SingleOrDefault();
 
-            if (username == null)
+            if (email == null)
             {
                 return Unauthorized();
             }
 
             var userExists = await _context
                 .Users
-                .AnyAsync(u => u.Username == username.Value);
+                .AnyAsync(u => u.Email == email.Value);
 
             if (!userExists)
             {
@@ -74,5 +75,6 @@ namespace WebServer.Controllers
 
             return Ok();
         }
+
     }
 }
