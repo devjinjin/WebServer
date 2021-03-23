@@ -1,6 +1,6 @@
 ﻿@page "/note"
 @inject HttpClient Http
-
+@inject NavigationManager NavigationManger
 <h1>note list</h1>
 
 
@@ -10,15 +10,19 @@
 }
 else
 {
+<div>
+    <a href="#" class="btn btn-primary" @onclick="@MoveCreate" @onclick:preventDefault>입력</a>
+</div>
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
                 <th>Title</th>
+                <th>Image</th>
                 <th>Content</th>
-                <th>FilePath</th>
                 <th>Create</th>
                 <th>Modify</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -26,16 +30,25 @@ else
             {
                 <tr>
                     <td>@note.Id</td>
-                    <td>@note.Title</td>
-                    <td>@note.Content</td>
-                    <td> <img src="@note.FilePath" asp-append-version="true" /></td>
+                    <td>
+                        @note.Title
+                    </td>
+                    <td>
+                            <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px;" src="@note.FilePath" asp-append-version="true" />
+                    </td>
+                    <td>
+                        @note.Content
+                    </td>
                     <td>@note.Create</td>
                     <td>@note.Modify</td>
+                    <td>
 
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+
 }
 
 @code {
