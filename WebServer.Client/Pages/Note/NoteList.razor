@@ -1,0 +1,50 @@
+﻿@page "/note"
+@inject HttpClient Http
+
+<h1>note list</h1>
+
+
+@if (notes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Content</th>
+                <th>FilePath</th>
+                <th>Create</th>
+                <th>Modify</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var note in notes)
+            {
+                <tr>
+                    <td>@note.Id</td>
+                    <td>@note.Title</td>
+                    <td>@note.Content</td>
+                    <td> <img src="@note.FilePath" asp-append-version="true" /></td>
+                    <td>@note.Create</td>
+                    <td>@note.Modify</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private NoteResponse[] notes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        notes = await Http.GetFromJsonAsync<NoteResponse[]>("api/Notes");
+    }
+
+
+}

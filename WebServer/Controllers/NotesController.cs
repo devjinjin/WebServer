@@ -25,8 +25,10 @@ namespace WebServer.Controllers
             _noteRepository = noteRepository;
         }
 
-        public INoteRepository NoteRepository { get; }
-
+        /// <summary>
+        /// 전체 리스트 가져오기
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<NoteResponse>>> GetNoteAsync()
         {
@@ -40,13 +42,21 @@ namespace WebServer.Controllers
                 {
                     Id = note.Id.ToString(),
                     FilePath = note.FilePath,
-                    IsSuccess = true
+                    Content = note.Content,
+                    Title = note.Title,
+                    Create = note.Create,
+                    Modify = note.Modify
                 });
             }
 
             return noteResponses;
         }
 
+        /// <summary>
+        /// 등록하기
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<ActionResult<NoteResponse>> PostNote([FromForm]NoteRequest model)
@@ -118,9 +128,12 @@ namespace WebServer.Controllers
 
                 // Set the Success flag and generated details
                 // to show in the View 
-                res.IsSuccess = true;
                 res.Id = created.Id.ToString();
                 res.FilePath = created.FilePath;
+                res.Content = created.Content;
+                res.Title = created.Title;
+                res.Modify = created.Modify;
+                res.Create = created.Create;
             }
 
             // return the model back to view
