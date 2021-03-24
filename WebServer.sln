@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer.Models", "WebServ
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebServer.Database", "WebServer.Database\WebServer.Database.sqlproj", "{EB64A938-71C2-4808-B24B-9D2BDE9B2ECD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer.Service", "WebServer.Service\WebServer.Service.csproj", "{9B306D63-9005-4C35-BE53-E3AACE5EA860}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{EB64A938-71C2-4808-B24B-9D2BDE9B2ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB64A938-71C2-4808-B24B-9D2BDE9B2ECD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB64A938-71C2-4808-B24B-9D2BDE9B2ECD}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9B306D63-9005-4C35-BE53-E3AACE5EA860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B306D63-9005-4C35-BE53-E3AACE5EA860}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B306D63-9005-4C35-BE53-E3AACE5EA860}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B306D63-9005-4C35-BE53-E3AACE5EA860}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

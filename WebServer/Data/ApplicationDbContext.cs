@@ -1,4 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using WebServer.Models;
 using WebServer.Models.Notes;
 using WebServer.Models.Users;
@@ -20,7 +24,7 @@ namespace WebServer.Data
             builder
                 .Entity<User>()
                 .HasData(
-                new User { Id = 1, Email = "User1", Password = "Password1", FirstName="lee", LastName="jin" },
+                new User { Id = 1, Email = "User1", Password = "Password1", FirstName = "lee", LastName = "jin" },
                 new User { Id = 2, Email = "User2", Password = "Password2", FirstName = "lee", LastName = "young" }
                 );
         }

@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using WebServer.Data;
 using WebServer.Data.Notes;
 using WebServer.Models.Notes;
 
@@ -17,12 +14,14 @@ namespace WebServer.Controllers
     public class NotesController : ControllerBase
     {
  
-        private readonly IWebHostEnvironment _environment;
+    
         private readonly INoteRepository _noteRepository;
-        public NotesController(IWebHostEnvironment environment, INoteRepository noteRepository)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public NotesController(INoteRepository noteRepository, IWebHostEnvironment webHostEnvironment)
         {
-            _environment = environment;
             _noteRepository = noteRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace WebServer.Controllers
         public async Task<ActionResult<IEnumerable<NoteResponse>>> GetNoteAsync()
         {
             List<NoteResponse> noteResponses = new List<NoteResponse>();
-            var list = await _noteRepository.GetNoteList();
+            var list = await _noteRepository.GetAllAsync();
 
             foreach (var note in list)
             {
@@ -44,8 +43,8 @@ namespace WebServer.Controllers
                     FilePath = note.FilePath,
                     Content = note.Content,
                     Title = note.Title,
-                    Create = note.Create,
-                    Modify = note.Modify
+                    Create = note.Created,
+                    Modify = note.Modified
                 });
             }
 
@@ -53,7 +52,7 @@ namespace WebServer.Controllers
         }
 
         /// <summary>
-        /// 등록하기
+        /// 입력
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -66,16 +65,27 @@ namespace WebServer.Controllers
                 return BadRequest();
             }
 
-            var res = await AddReader(model);
+            var res = await AddNote(model);
 
-            // On successful submission
-            // redirect to the Master Page
-            return res;
+            //// On successful submission
+            //// redirect to the Master Page
+            //return res;
+            var uri = Url.Link("GetNoteById", new { id = res.Id });
+            return Created(uri, res); // 201 Created
         }
 
 
+        // 상세
+        // GET api/Notices/1
+        [HttpGet("{id}", Name = "GetNoteById")]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+                var model = await _noteRepository.GetByIdAsync(id);
+                return Ok(model);
+        }
 
-        private async Task<NoteResponse> AddReader(NoteRequest model)
+
+        private async Task<NoteResponse> AddNote(NoteRequest model)
         {
             var res = new NoteResponse();
 
@@ -89,7 +99,7 @@ namespace WebServer.Controllers
                 // add non-file attributes
                 note.Title = model.Title;
                 note.Content = model.Content;
-                note.Create = DateTime.Now;
+                note.Created = DateTime.Now;
                 // check if any file is uploaded
                 var work = model.File;
 
@@ -105,7 +115,7 @@ namespace WebServer.Controllers
                     // and append a sub directory workFiles 
                     // [Should be present before hand!!!]
                     // and lastly append the file name
-                    var filePath = Path.Combine(_environment.ContentRootPath, "Files", fileName);
+                    var filePath = Path.Combine(_webHostEnvironment.ContentRootPath, "Files", fileName);
 
                     // open-create the file in a stream and
                     // copy the uploaded file content into
@@ -124,16 +134,16 @@ namespace WebServer.Controllers
                 // using a Repository class IReadersRepository
                 // which is registered as a Scoped Service
                 // in Startup.cs
-                var created = _noteRepository.AddNote(note);
+                var created = _noteRepository.AddAsync(note);
 
                 // Set the Success flag and generated details
                 // to show in the View 
                 res.Id = created.Id.ToString();
-                res.FilePath = created.FilePath;
-                res.Content = created.Content;
-                res.Title = created.Title;
-                res.Modify = created.Modify;
-                res.Create = created.Create;
+                res.FilePath = note.FilePath;
+                res.Content = note.Content;
+                res.Title = note.Title;
+                res.Modify = note.Modified;
+                res.Create = note.Created;
             }
 
             // return the model back to view

@@ -12,9 +12,9 @@ namespace WebServer.Models.Notes
 
         public string Content { get; set; }
 
-        public DateTime Create { get; set; }
+        public DateTime? Create { get; set; }
 
-        public DateTime Modify { get; set; }
+        public DateTime? Modify { get; set; }
 
         public string FilePath { get; set; }
 

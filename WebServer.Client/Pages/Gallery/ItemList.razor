@@ -1,0 +1,76 @@
+﻿@page "/gallery"
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+
+@if (notes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <button >등록하기</button>
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">Features Items</h2>
+                    <div class="row">
+                        @if (notes.Length == 0)
+                        {
+                            <p>데이터가 없습니다.</p>
+                        }
+                        else
+                        {
+                            @foreach (var note in notes)
+                            {
+
+                                <div class="col-sm-3">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img src="@note.FilePath" alt="" />
+                                                <h2>@note.Title</h2>
+                                                <p>@note.Content</p>
+                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            </div>
+                                            <div class="product-overlay">
+                                                <div class="overlay-content">
+                                                    <h2>@note.Title</h2>
+                                                    <p>@note.Content</p>
+                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="choose">
+                                            <ul class="nav nav-pills nav-justified">
+                                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+                </div><!--features_items-->
+            </div>
+        </div>
+        <WebServer.Client.Pages.Component.Pagination></WebServer.Client.Pages.Component.Pagination>
+    </div>
+</section>
+
+    
+
+    }
+
+    @code {
+private NoteResponse[] notes;
+
+    protected override async Task OnInitializedAsync()
+    {
+        notes = await Http.GetFromJsonAsync<NoteResponse[]>("api/Notes");
+    }
+    }

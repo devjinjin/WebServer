@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Data;
 using WebServer.Data.Users;
+using WebServer.Models;
 using WebServer.Models.Users;
 
 namespace WebServer.Controllers

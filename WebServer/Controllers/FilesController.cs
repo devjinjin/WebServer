@@ -20,35 +20,68 @@ namespace WebServer.Controllers
         {
             _environment = environment;
         }
+        //[HttpPost]
+        //[Consumes("application/json", "multipart/form-data")]
+        //public async Task<IActionResult> Post(List<IFormFile> files)
+        //{
+        //    // 파일을 업로드할 폴더: 서버루트\\files
+
+
+        //    if (string.IsNullOrWhiteSpace(_environment.WebRootPath))
+        //    {
+        //        _environment.WebRootPath = Directory.GetCurrentDirectory();
+        //    }
+
+        //    var uploadFolder = Path.Combine(_environment.WebRootPath, "Files");
+
+        //    foreach (var file in files)
+        //    {
+        //        if (file.Length > 0)
+        //        {
+        //            // 파일명 
+        //            var fileName = Path.GetFileName(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+
+        //            using (var fileStream = new FileStream(Path.Combine(uploadFolder, fileName), FileMode.Create))
+        //            {
+        //                await file.CopyToAsync(fileStream);
+        //            }
+        //        }
+        //    }
+
+        //    return Ok(new { message = "OK" });
+        //}
+
         [HttpPost]
-        [Consumes("application/json", "multipart/form-data")]
-        public async Task<IActionResult> Post(List<IFormFile> files)
+        public IActionResult Upload()
         {
-            // 파일을 업로드할 폴더: 서버루트\\files
-        
-
-            if (string.IsNullOrWhiteSpace(_environment.WebRootPath))
+            try
             {
-                _environment.WebRootPath = Directory.GetCurrentDirectory();
-            }
+                var file = Request.Form.Files[0];
+                var folderName = Path.Combine(_environment.WebRootPath, "Files");
+                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
 
-            var uploadFolder = Path.Combine(_environment.WebRootPath, "Files");
-
-            foreach (var file in files)
-            {
                 if (file.Length > 0)
                 {
-                    // 파일명 
-                    var fileName = Path.GetFileName(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    var fullPath = Path.Combine(pathToSave, fileName);
+                    var dbPath = Path.Combine(folderName, fileName);
 
-                    using (var fileStream = new FileStream(Path.Combine(uploadFolder, fileName), FileMode.Create))
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
                     {
-                        await file.CopyToAsync(fileStream);
+                        file.CopyTo(stream);
                     }
+
+                    return Ok(dbPath);
+                }
+                else
+                {
+                    return BadRequest();
                 }
             }
-
-            return Ok(new { message = "OK" });
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex}");
+            }
         }
     }
 }

@@ -38,6 +38,8 @@ namespace WebServer
             JWTAuthentication(services); //jWT 인증 등록 함수
 
             services.AddTransient<INoteRepository, NoteRepository>();
+
+
             //swagger 등록 
             services.AddSwaggerGen();//Swagger 추가
             //swagger 등록
