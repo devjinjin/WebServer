@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer.Models", "WebServ
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "WebServer.Database", "WebServer.Database\WebServer.Database.sqlproj", "{EB64A938-71C2-4808-B24B-9D2BDE9B2ECD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer.Service", "WebServer.Service\WebServer.Service.csproj", "{9B306D63-9005-4C35-BE53-E3AACE5EA860}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer.Service", "WebServer.Service\WebServer.Service.csproj", "{9B306D63-9005-4C35-BE53-E3AACE5EA860}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

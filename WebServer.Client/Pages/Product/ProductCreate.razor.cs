@@ -4,10 +4,10 @@ using WebServer.Client.Shared;
 using WebServer.Models.Product;
 using WebServer.Service.Notes;
 
-namespace WebServer.Client.Pages.Note
+namespace WebServer.Client.Pages.Product
 {
 
-    public partial class NoteCreate
+    public partial class ProductCreate
     {
 
         private ProductModel _product = new ProductModel();

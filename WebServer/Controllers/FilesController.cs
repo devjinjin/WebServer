@@ -56,22 +56,47 @@ namespace WebServer.Controllers
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(_environment.WebRootPath))
+                {
+                    _environment.WebRootPath = Directory.GetCurrentDirectory();
+                }
+
+
                 var file = Request.Form.Files[0];
-                var folderName = Path.Combine(_environment.WebRootPath, "Files");
-                var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                //var folderName = Path.Combine(_environment.WebRootPath, "Files");
+                //var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+
+
+                var uploadFolder = Path.Combine(_environment.WebRootPath, "Files");
 
                 if (file.Length > 0)
                 {
-                    var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    var fullPath = Path.Combine(pathToSave, fileName);
-                    var dbPath = Path.Combine(folderName, fileName);
+                    //var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    //var fullPath = Path.Combine(pathToSave, fileName);
+                    //var dbPath = Path.Combine(folderName, fileName);
 
-                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    //using (var stream = new FileStream(fullPath, FileMode.Create))
+                    //{
+                    //    file.CopyTo(stream);
+                    //}
+                    if (file.Length > 0)
                     {
-                        file.CopyTo(stream);
-                    }
+                        var fileName = Path.GetFileName(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
+                        var dbPath = $"{Request.Scheme}://{Request.Host}/Files/{fileName}";
 
-                    return Ok(dbPath);
+
+                        using (var fileStream = new FileStream(Path.Combine(uploadFolder, fileName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }                      
+                   
+
+                        return Ok(dbPath);
+                    }
+                    else
+                    {
+                        return BadRequest();
+                    }
                 }
                 else
                 {

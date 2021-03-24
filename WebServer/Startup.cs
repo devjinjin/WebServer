@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 using WebServer.Data;
 using WebServer.Data.Notes;
+using WebServer.Data.Products;
 using WebServer.Data.Users;
 
 namespace WebServer
@@ -38,7 +39,7 @@ namespace WebServer
             JWTAuthentication(services); //jWT 인증 등록 함수
 
             services.AddTransient<INoteRepository, NoteRepository>();
-
+              services.AddScoped<IProductRepository, ProductRepository>();
 
             //swagger 등록 
             services.AddSwaggerGen();//Swagger 추가

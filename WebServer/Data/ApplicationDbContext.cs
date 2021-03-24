@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Models;
 using WebServer.Models.Notes;
+using WebServer.Models.Product;
 using WebServer.Models.Users;
 
 namespace WebServer.Data
@@ -33,5 +34,7 @@ namespace WebServer.Data
         public DbSet<Notice> Notice { get; set; }
 
         public DbSet<Note> Notes { get; set; }
+
+        public DbSet<ProductModel> Products { get; set; }
     }
 }
