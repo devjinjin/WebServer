@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using WebServer.Models.Features;
 using WebServer.Models.Product;
 
-namespace WebServer.Service.Notes
+namespace WebServer.Service.Products
 {
     public interface IProductHttpRepository
     {

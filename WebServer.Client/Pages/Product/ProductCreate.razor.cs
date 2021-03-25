@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using WebServer.Client.Shared;
 using WebServer.Models.Product;
-using WebServer.Service.Notes;
+using WebServer.Service.Products;
 
 namespace WebServer.Client.Pages.Product
 {
@@ -11,7 +11,7 @@ namespace WebServer.Client.Pages.Product
     {
 
         private ProductModel _product = new ProductModel();
-        private SuccessNotification _notification;
+        private ProductSuccessNotification _notification;
 
         [Inject]
         public IProductHttpRepository ProductRepo { get; set; }

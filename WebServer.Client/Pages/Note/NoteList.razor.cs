@@ -3,54 +3,56 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebServer.Models.Features;
+using WebServer.Models.Notes;
 using WebServer.Service.Notes;
+using WebServer.Service.Products;
 
 namespace WebServer.Client.Pages.Note
 {
     public partial class NoteList
     {
 
-        public List<WebServer.Models.Product.ProductModel> productList { get; set; } = new List<WebServer.Models.Product.ProductModel>();
+        public List<NoteModel> Notes { get; set; } = new List<NoteModel>();
         public MetaData MetaData { get; set; } = new MetaData();
 
-        private ProductParameters _productParameters = new ProductParameters();
+        private NoteParameters _NoteParameters = new NoteParameters();
 
         [Inject]
-        public IProductHttpRepository ProductRepo { get; set; }
+        public INoteHttpRepository Repository { get; set; }
 
 
 
         protected override async Task OnInitializedAsync()
         {
-            await GetProducts();
+            await GetNotes();
         }
         private async Task SelectedPage(int page)
         {
-            _productParameters.PageNumber = page;
-            await GetProducts();
+            _NoteParameters.PageNumber = page;
+            await GetNotes();
         }
 
-        private async Task GetProducts()
+        private async Task GetNotes()
         {
 
-            var pagingResponse = await ProductRepo.GetProducts(_productParameters);
-            productList = pagingResponse.Items;
+            var pagingResponse = await Repository.GetNotes(_NoteParameters);
+            Notes = pagingResponse.Items;
             MetaData = pagingResponse.MetaData;
         }
 
         private async Task SearchChanged(string searchTerm)
         {
             Console.WriteLine(searchTerm);
-            _productParameters.PageNumber = 1;
-            _productParameters.SearchTerm = searchTerm;
-            await GetProducts();
+            _NoteParameters.PageNumber = 1;
+            _NoteParameters.SearchTerm = searchTerm;
+            await GetNotes();
         }
 
         private async Task SortChanged(string orderBy)
         {
             Console.WriteLine(orderBy);
-            _productParameters.OrderBy = orderBy;
-            await GetProducts();
+            _NoteParameters.OrderBy = orderBy;
+            await GetNotes();
         }
 
         public void MoveCreate()
@@ -63,8 +65,6 @@ namespace WebServer.Client.Pages.Note
         public void MoveUpdate(Guid id)
         {
             this.NavigationManager.NavigateTo("/note/update" + id);
-
-      
 
         }
 

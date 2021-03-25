@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using WebServer.Models.Notes;
 using WebServer.Models.Product;
 
-namespace WebServer.Client.Pages.Note
+namespace WebServer.Client.Pages.Product
 {
-    public partial class NoteDetail
+
+    public partial class ProductDetail
     {
         [Parameter]
         public string id { get; set; }
 
-        private NoteModel note;
+        private ProductModel product;
 
         protected override async Task OnInitializedAsync()
         {
-            note = await Http.GetFromJsonAsync<NoteModel>($"api/notes/{id}");
+            product = await Http.GetFromJsonAsync<ProductModel>($"api/products/{id}");
         }
 
 

@@ -2,8 +2,10 @@
 using System.Threading.Tasks;
 using WebServer.Client.Shared;
 using WebServer.Models.Product;
-using WebServer.Service.Notes;
+using WebServer.Service.Products;
 using WebServer.Client.Pages.Component;
+using WebServer.Service.Notes;
+using WebServer.Models.Notes;
 
 namespace WebServer.Client.Pages.Note
 {
@@ -11,18 +13,20 @@ namespace WebServer.Client.Pages.Note
     public partial class NoteCreate
     {
 
-        private ProductModel _product = new ProductModel();
-        private SuccessNotification _notification;
+        private NoteRequest _note = new NoteRequest();
+        private NoteSuccessNotification _notification;
 
         [Inject]
-        public IProductHttpRepository ProductRepo { get; set; }
+        public INoteHttpRepository Repository { get; set; }
 
         private async Task Create()
         {
-            await ProductRepo.CreateProduct(_product);
+            await Repository.CreateNote(_note);
             _notification.Show();
         }
 
-        private void AssignImageUrl(string imgUrl) => _product.ImageUrl = imgUrl;
+        private void AssignImageUrl(string imgUrl) {
+            _note.FilePath = imgUrl;
+        }
     }
 }

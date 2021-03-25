@@ -4,16 +4,16 @@
 <h1>note list</h1>
 
 
-@if (productList == null)
+@if (Notes == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <div class="col-md-2">
-        <a href="/note/create">Create Product</a>
+    <div class="col-sm-12">
+        <a class="btn btn-primary" href="/note/create">Create</a>
     </div>
-    @if (productList.Count > 0)
+    @if (Notes.Count > 0)
     {
         <table class="table">
             <thead>
@@ -27,39 +27,39 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var product in productList)
+                @foreach (var note in Notes)
                 {
                     <tr>
                         <td>
-                            <img src="@product.ImageUrl" alt="product image" style="width:100px;" />
+                            <img src="@note.FilePath" alt="product image" style="width:100px;" />
                         </td>
                         <td class="align-middle">
-                            @product.Name
+                            @note.Title
                         </td>
                         <td class="align-middle">
-                            @product.Supplier
+                            @note.Content
                         </td>
                         <td class="align-middle">
-                            $@product.Price
+                            @note.CreatedBy
                         </td>
                         <td class="align-middle">
-                            <a class="btn btn-primary" href="note/detail/@(product.Id.ToString())">Detail</a>
+                            <a class="btn btn-primary" href="note/detail/@(note.Id.ToString())">Detail</a>
                         </td>
                         <td class="align-middle">
-                            <a class="btn btn-danger" href="note/delete/@(product.Id.ToString())">Delete</a>
-                            <a class="btn btn-warning" href="note/update/@(product.Id.ToString())">update</a>
+                            <a class="btn btn-danger" href="note/delete/@(note.Id.ToString())">Delete</a>
+                            <a class="btn btn-warning" href="note/update/@(note.Id.ToString())">update</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
 
-       <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+        <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
     }
     else
     {
         <span>
-            Loading products...
+            Loading Notes...
         </span>
     }
 }

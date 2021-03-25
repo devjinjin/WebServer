@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
 using WebServer.Service.Notes;
+using WebServer.Service.Products;
 
 namespace WebServer.Client.Shared
 {

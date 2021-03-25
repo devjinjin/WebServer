@@ -1,31 +1,38 @@
 ﻿@page "/note/create"
 @inject HttpClient Http
 
-<h2>Create Product Form</h2>
+<h2>Create Note Form</h2>
 
-<EditForm Model="_product" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+<EditForm Model="_note" OnValidSubmit="Create" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
     <div class="form-group row">
-        <label for="name" class="col-md-2 col-form-label">Name:</label>
+        <label for="name" class="col-md-2 col-form-label">Title:</label>
         <div class="col-md-10">
-            <InputText id="name" class="form-control" @bind-Value="_product.Name" />
-            <ValidationMessage For="@(() => _product.Name)" />
+            <InputText id="title" class="form-control" @bind-Value="_note.Title" />
+            <ValidationMessage For="@(() => _note.Title)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="supplier" class="col-md-2 col-form-label">Supplier:</label>
+        <label for="supplier" class="col-md-2 col-form-label">Content:</label>
         <div class="col-md-10">
-            <InputText id="supplier" class="form-control" @bind-Value="_product.Supplier" />
-            <ValidationMessage For="@(() => _product.Supplier)" />
+            <InputText id="content" class="form-control" @bind-Value="_note.Content" />
+            <ValidationMessage For="@(() => _note.Content)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="price" class="col-md-2 col-form-label">Price:</label>
+        <label for="price" class="col-md-2 col-form-label">CreatedBy:</label>
         <div class="col-md-10">
-            <InputNumber id="price" class="form-control" @bind-Value="_product.Price" />
-            <ValidationMessage For="@(() => _product.Price)" />
+            <InputText id="createdBy" class="form-control" @bind-Value="_note.CreatedBy" />
+            <ValidationMessage For="@(() => _note.CreatedBy)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="price" class="col-md-2 col-form-label">Name:</label>
+        <div class="col-md-10">
+            <InputText id="name" class="form-control" @bind-Value="_note.Name" />
+            <ValidationMessage For="@(() => _note.Name)" />
         </div>
     </div>
 
@@ -42,6 +49,6 @@
         </div>
     </div>
 </EditForm>
-<SuccessNotification @ref="_notification" />
+<NoteSuccessNotification @ref="_notification" />
 
 

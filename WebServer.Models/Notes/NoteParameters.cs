@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebServer.Models.Features
+namespace WebServer.Models.Notes
 {
-    public class ProductParameters
+    public class NoteParameters
     {
         const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;

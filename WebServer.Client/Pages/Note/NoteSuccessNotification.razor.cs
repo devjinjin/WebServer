@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebServer.Client.Shared
+namespace WebServer.Client.Pages.Note
 {
-    public partial class SuccessNotification
+
+    public partial class NoteSuccessNotification
     {
         private string _modalDisplay;
         private string _modalClass;
@@ -28,7 +29,7 @@ namespace WebServer.Client.Shared
             _modalClass = "";
             _showBackdrop = false;
             StateHasChanged();
-            Navigation.NavigateTo("/product");
+            Navigation.NavigateTo("/note");
         }
     }
 }

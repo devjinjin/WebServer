@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Files\" />
+    <Folder Include="Files\Product\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

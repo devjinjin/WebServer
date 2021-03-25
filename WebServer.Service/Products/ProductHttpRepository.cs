@@ -1,8 +1,6 @@
-﻿using BlazorInputFile;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.WebUtilities;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -11,10 +9,9 @@ using System.Threading.Tasks;
 using WebServer.Models.Features;
 using WebServer.Models.Product;
 
-
-namespace WebServer.Service.Notes
+namespace WebServer.Service.Products
 {
-    public class ProductHttpRepository: IProductHttpRepository
+    public class ProductHttpRepository : IProductHttpRepository
     {
         private readonly HttpClient _client;
 
@@ -55,7 +52,7 @@ namespace WebServer.Service.Notes
 
             var postResult = await _client.PostAsync("/api/products", bodyContent);
 
-    
+
             var postContent = await postResult.Content.ReadAsStringAsync();
 
             if (!postResult.IsSuccessStatusCode)

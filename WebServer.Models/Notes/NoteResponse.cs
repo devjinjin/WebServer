@@ -8,13 +8,20 @@ namespace WebServer.Models.Notes
     {
         public string Id { get; set; }
 
+        public string Name { get; set; }
+
+
         public string Title { get; set; }
 
         public string Content { get; set; }
 
-        public DateTime? Create { get; set; }
+        public string CreatedBy { get; set; }
 
-        public DateTime? Modify { get; set; }
+        public string ModifiedBy { get; set; }
+
+        public DateTime? Created { get; set; }
+
+        public DateTime? Modified { get; set; }
 
         public string FilePath { get; set; }
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WebServer.Models.Notes
 {
-    public class Note
+    public class NoteModel
     {
         public int Id { get; set; }
 

@@ -49,7 +49,7 @@ namespace WebServer.Controllers
 
         //    return Ok(new { message = "OK" });
         //}
-
+  
 
         [HttpPost]
         public IActionResult Upload()
@@ -86,7 +86,7 @@ namespace WebServer.Controllers
                         var fileName = "UserId-" + strTimeStamp + extension;
 
                         var dbPath = $"{Request.Scheme}://{Request.Host}/Temp/Product/{fileName}"; //호출하는 폴더 
-
+           
                         using (var fileStream = new FileStream(Path.Combine(uploadFolderProduct, fileName), FileMode.Create))
                         {
                             file.CopyTo(fileStream);

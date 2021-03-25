@@ -1,7 +1,7 @@
-﻿@page "/note/detail/{id}"
+﻿@page "/product/detail/{id}"
 @inject HttpClient Http
 
-@if (note == null)
+@if (product == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -11,7 +11,7 @@ else
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-6 offset-lg-3">
+                <div class="col-12">
 
                     <div class="cardbox shadow-lg bg-white">
 
@@ -32,16 +32,16 @@ else
                                     <a href=""><img class="img-fluid rounded-circle" src="http://www.themashabrand.com/templates/bootsnipp/post/assets/img/users/4.jpg" alt="User"></a>
                                 </div>
                                 <div class="media-body">
-                                    <p class="m-0">@note.Title</p>
-                                    <small><span><i class="icon ion-md-pin"></i> @note.CreatedBy</span></small>
-                                    <small><span><i class="icon ion-md-time"></i>@note.Created</span></small>
+                                    <p class="m-0">@product.Name</p>
+                                    <small><span><i class="icon ion-md-pin"></i> @product.Price</span></small>
+                                    <small><span><i class="icon ion-md-time"></i>@product.Created</span></small>
                                     <small><span><i class="icon ion-md-time"></i> 10 hours ago</span></small>
                                 </div>
                             </div><!--/ media -->
                         </div><!--/ cardbox-heading -->
 
                         <div class="cardbox-item">
-                            <img class="img-fluid" src="@note.FilePath" alt="Image">
+                            <img class="img-fluid" src="@product.ImageUrl" alt="Image">
                         </div><!--/ cardbox-item -->
                         <div class="cardbox-base">
                             <ul class="float-right">
@@ -72,7 +72,7 @@ else
                     </div><!--/ cardbox -->
 
                 </div><!--/ col-lg-6 -->
-               
+
 
             </div><!--/ row -->
         </div><!--/ container -->

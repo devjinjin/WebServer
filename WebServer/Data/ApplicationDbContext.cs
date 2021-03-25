@@ -33,7 +33,7 @@ namespace WebServer.Data
 
         public DbSet<Notice> Notice { get; set; }
 
-        public DbSet<Note> Notes { get; set; }
+        public DbSet<NoteModel> Notes { get; set; }
 
         public DbSet<ProductModel> Products { get; set; }
     }

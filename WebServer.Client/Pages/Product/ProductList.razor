@@ -9,16 +9,18 @@
 }
 else
 {
-    <div class="col-md-2">
-        <a href="/note/create">Create Product</a>
-    </div>
+
     @if (productList.Count > 0)
     {
 <section>
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
-                <button>등록하기</button>
+                <a class="btn btn-primary" href="/product/create">Create</a>
+            </div>
+
+            <div class="col-sm-12">
+
                 <div class="features_items">
                     <!--features_items-->
                     <h2 class="title text-center">Features Items</h2>
@@ -30,25 +32,33 @@ else
                             <div class="col-sm-3">
                                 <div class="product-image-wrapper">
                                     <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="@note.ImageUrl" alt="" />
-                                            <h2>@note.Name</h2>
-                                            <p>@note.Supplier</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                        </div>
-                                        <div class="product-overlay">
-                                            <div class="overlay-content">
+                                        <a href="product/detail/@(note.Id.ToString())">
+                                            <div class="productinfo text-center">
+
+                                                <img src="@note.ImageUrl" alt="" style=" height: 200px; width: 100%; object-fit:cover" />
+
+
                                                 <h2>@note.Name</h2>
                                                 <p>@note.Supplier</p>
                                                 <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                             </div>
-                                        </div>
+                                            <div class="product-overlay">
+
+                                                content
+                                                <div class="overlay-content">
+                                                    <h2>@note.Name</h2>
+                                                    <p>@note.Supplier</p>
+                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                </div>
+
+                                            </div>
+                                        </a>
                                     </div>
                                     <div class="choose">
                                         <ul class="nav nav-pills nav-justified">
-                                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                                        </ul>
+                                            <li><a href="/product/delete/@note.Id"><i class="fa fa-plus-square"></i>Delete</a></li>
+                                            <li><a href="/product/update/@note.Id"><i class="fa fa-plus-square"></i>Modify</a></li>
+                                        </ul> 
                                     </div>
                                 </div>
                             </div>

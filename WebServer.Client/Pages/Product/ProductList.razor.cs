@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebServer.Models.Features;
-using WebServer.Service.Notes;
+using WebServer.Service.Products;
 using WebServer.Models.Product;
 
 namespace WebServer.Client.Pages.Product
