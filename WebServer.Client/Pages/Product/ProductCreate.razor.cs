@@ -18,10 +18,15 @@ namespace WebServer.Client.Pages.Product
 
         private async Task Create()
         {
-            await ProductRepo.CreateProduct(_product);
-            _notification.Show();
+            if (_product.ImageUrl != null) {
+             
+                await ProductRepo.CreateProduct(_product);
+                _notification.Show();
+            }
         }
 
-        private void AssignImageUrl(string imgUrl) => _product.ImageUrl = imgUrl;
+        private void AssignImageUrl(string imgUrl) {
+            _product.ImageUrl = imgUrl;
+        }
     }
 }

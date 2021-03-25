@@ -8,5 +8,7 @@ namespace WebServer.Data.Products
     {
         Task<PagedList<ProductModel>> GetProducts(ProductParameters productParameters);
         Task CreateProduct(ProductModel product);
+
+        Task<ProductModel> GetProduct(string id);
     }
 }

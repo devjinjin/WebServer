@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using WebServer.Data;
 using WebServer.Models;
 
@@ -19,10 +20,12 @@ namespace WebServer.Controllers
     public class NoticesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<NoticesController> logger;
 
-        public NoticesController(ApplicationDbContext context)
+        public NoticesController(ApplicationDbContext context, ILogger<NoticesController> logger)
         {
             _context = context;
+            this.logger = logger;
         }
 
         // GET: api/Notices

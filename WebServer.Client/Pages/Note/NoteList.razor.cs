@@ -60,17 +60,18 @@ namespace WebServer.Client.Pages.Note
 
         }
 
-        public void MoveUpdate()
+        public void MoveUpdate(Guid id)
         {
-            //this.NavigationManager.NavigateTo("/note/create", forceLoad: true);
-            this.NavigationManager.NavigateTo("/note/update/"+1);
+            this.NavigationManager.NavigateTo("/note/update" + id);
+
+      
 
         }
 
-        public void MoveDelete()
+        public void MoveDelete(Guid id)
         {
             //this.NavigationManager.NavigateTo("/note/create", forceLoad: true);
-            this.NavigationManager.NavigateTo("/note/delete/" + 1);
+            this.NavigationManager.NavigateTo("/note/delete/" + id);
 
         }
 

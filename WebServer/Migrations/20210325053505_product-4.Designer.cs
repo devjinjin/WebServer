@@ -10,8 +10,8 @@ using WebServer.Data;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210324133010_upload-product")]
-    partial class uploadproduct
+    [Migration("20210325053505_product-4")]
+    partial class product4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,14 +81,20 @@ namespace WebServer.Migrations
                     b.ToTable("Notice");
                 });
 
-            modelBuilder.Entity("WebServer.Models.Product.Product", b =>
+            modelBuilder.Entity("WebServer.Models.Product.ProductModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()

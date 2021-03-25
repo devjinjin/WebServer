@@ -1,4 +1,4 @@
-﻿@page "/note/delete/{id:int}"
+﻿@page "/note/delete/{id}"
 @inject HttpClient Http
 
 <h1>note delete</h1>
@@ -40,6 +40,9 @@ else
 }
 
 @code {
+    [Parameter]
+    public string id { get; set; }
+
     private NoteResponse[] forecasts;
 
     protected override async Task OnInitializedAsync()

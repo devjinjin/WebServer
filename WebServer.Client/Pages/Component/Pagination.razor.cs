@@ -26,18 +26,20 @@ namespace WebServer.Client.Pages.Component
         private void CreatePaginationLinks()
         {
             _links = new List<PagingLink>();
+            if (MetaData != null) {
+                _links.Add(new PagingLink(MetaData.CurrentPage - 1, MetaData.HasPrevious, "Previous"));
 
-            _links.Add(new PagingLink(MetaData.CurrentPage - 1, MetaData.HasPrevious, "Previous"));
-
-            for (int i = 1; i <= MetaData.TotalPages; i++)
-            {
-                if (i >= MetaData.CurrentPage - Spread && i <= MetaData.CurrentPage + Spread)
+                for (int i = 1; i <= MetaData.TotalPages; i++)
                 {
-                    _links.Add(new PagingLink(i, true, i.ToString()) { Active = MetaData.CurrentPage == i });
+                    if (i >= MetaData.CurrentPage - Spread && i <= MetaData.CurrentPage + Spread)
+                    {
+                        _links.Add(new PagingLink(i, true, i.ToString()) { Active = MetaData.CurrentPage == i });
+                    }
                 }
-            }
 
-            _links.Add(new PagingLink(MetaData.CurrentPage + 1, MetaData.HasNext, "Next"));
+                _links.Add(new PagingLink(MetaData.CurrentPage + 1, MetaData.HasNext, "Next"));
+            }
+            
         }
 
         private async Task OnSelectedPage(PagingLink link)

@@ -1,4 +1,4 @@
-﻿@page "/note/update/{id:int}"
+﻿@page "/note/update/{id}"
 @inject HttpClient Http
 
 <h1>note update</h1>
@@ -39,6 +39,10 @@ else
     </table>
 }
 @code {
+
+    [Parameter]
+    public string id { get; set; }
+
     private NoteResponse[] forecasts;
 
     protected override async Task OnInitializedAsync()

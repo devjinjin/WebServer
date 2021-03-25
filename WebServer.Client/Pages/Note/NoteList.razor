@@ -43,10 +43,11 @@ else
                             $@product.Price
                         </td>
                         <td class="align-middle">
-                            <button type="button" class="btn btn-info">Update</button>
+                            <a class="btn btn-primary" href="note/detail/@(product.Id.ToString())">Detail</a>
                         </td>
                         <td class="align-middle">
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <a class="btn btn-danger" href="note/delete/@(product.Id.ToString())">Delete</a>
+                            <a class="btn btn-warning" href="note/update/@(product.Id.ToString())">update</a>
                         </td>
                     </tr>
                 }

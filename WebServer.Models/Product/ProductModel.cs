@@ -15,5 +15,9 @@ namespace WebServer.Models.Product
         [Range(1, double.MaxValue, ErrorMessage = "Value for the Price can't be lower than 1")]
         public double Price { get; set; }
         public string ImageUrl { get; set; }
+
+        public DateTime Created { get; set; }
+
+        public DateTime Modified { get; set; }
     }
 }

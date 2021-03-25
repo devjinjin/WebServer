@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
 using WebServer.Service.Notes;
 
-namespace WebServer.Client.Pages.Component
+namespace WebServer.Client.Shared
 {
     public partial class ImageUpload
     {

@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System;
+using System.IO;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebServer.Data.Products;
 using WebServer.Models.Features;
@@ -11,11 +16,15 @@ namespace WebServer.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly IWebHostEnvironment _environment;
         private readonly IProductRepository _repository;
+        private readonly ILogger<ProductsController> logger;
 
-        public ProductsController(IProductRepository repository)
+        public ProductsController(IWebHostEnvironment environment,  IProductRepository repository, ILogger<ProductsController> logger)
         {
+            _environment = environment;
             _repository = repository;
+            this.logger = logger;
         }
 
         [HttpGet]
@@ -28,6 +37,16 @@ namespace WebServer.Controllers
             return Ok(products);
         }
 
+        // 상세
+        // GET api/Notices/1
+        [HttpGet("{id}", Name = "GetProductById")]
+        public async Task<IActionResult> GetById([FromRoute] string id)
+        {
+            var model = await _repository.GetProduct(id);
+            return Ok(model);
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] ProductModel product)
         {
@@ -39,5 +58,6 @@ namespace WebServer.Controllers
 
             return Created("", product);
         }
+      
     }
 }

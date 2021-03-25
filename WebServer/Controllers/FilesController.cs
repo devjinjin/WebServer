@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace WebServer.Controllers
 {
@@ -15,10 +12,12 @@ namespace WebServer.Controllers
     public class FilesController : ControllerBase
     {
         private readonly IWebHostEnvironment _environment;
+        private readonly ILogger<FilesController> logger;
 
-        public FilesController(IWebHostEnvironment environment)
+        public FilesController(IWebHostEnvironment environment, ILogger<FilesController> logger)
         {
             _environment = environment;
+            this.logger = logger;
         }
         //[HttpPost]
         //[Consumes("application/json", "multipart/form-data")]
@@ -51,45 +50,47 @@ namespace WebServer.Controllers
         //    return Ok(new { message = "OK" });
         //}
 
+
         [HttpPost]
         public IActionResult Upload()
         {
             try
             {
+              
                 if (string.IsNullOrWhiteSpace(_environment.WebRootPath))
                 {
                     _environment.WebRootPath = Directory.GetCurrentDirectory();
                 }
 
+                if (Request.Form.Files.Count > 0) {
+                    var file = Request.Form.Files[0];
 
-                var file = Request.Form.Files[0];
-                //var folderName = Path.Combine(_environment.WebRootPath, "Files");
-                //var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), folderName);
+                    var uploadFolder = Path.Combine(_environment.WebRootPath, "Files"); //실제 사용 폴더
+                    var uploadFolderProduct = Path.Combine(uploadFolder, "Product");
+                    if (!System.IO.Directory.Exists(uploadFolderProduct))
+                    {
+                        System.IO.Directory.CreateDirectory(uploadFolderProduct);
+                    }
 
-
-                var uploadFolder = Path.Combine(_environment.WebRootPath, "Files");
-
-                if (file.Length > 0)
-                {
-                    //var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                    //var fullPath = Path.Combine(pathToSave, fileName);
-                    //var dbPath = Path.Combine(folderName, fileName);
-
-                    //using (var stream = new FileStream(fullPath, FileMode.Create))
-                    //{
-                    //    file.CopyTo(stream);
-                    //}
                     if (file.Length > 0)
                     {
-                        var fileName = Path.GetFileName(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"'));
-                        var dbPath = $"{Request.Scheme}://{Request.Host}/Files/{fileName}";
 
+                        //파일 이름 만들기 UserId + DateTime + extension
+                        string extension = System.IO.Path.GetExtension(Path.GetFileName(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"')));
+                        string strTimeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        strTimeStamp = strTimeStamp.Replace(":", "");
+                        strTimeStamp = strTimeStamp.Replace("-", "");
+                        strTimeStamp = strTimeStamp.Replace(" ", "");
+                        strTimeStamp = strTimeStamp.Insert(8, "-");
+                        strTimeStamp = strTimeStamp.Insert(13, "-");
+                        var fileName = "UserId-" + strTimeStamp + extension;
 
-                        using (var fileStream = new FileStream(Path.Combine(uploadFolder, fileName), FileMode.Create))
+                        var dbPath = $"{Request.Scheme}://{Request.Host}/Temp/Product/{fileName}"; //호출하는 폴더 
+
+                        using (var fileStream = new FileStream(Path.Combine(uploadFolderProduct, fileName), FileMode.Create))
                         {
                             file.CopyTo(fileStream);
-                        }                      
-                   
+                        }
 
                         return Ok(dbPath);
                     }
@@ -102,11 +103,15 @@ namespace WebServer.Controllers
                 {
                     return BadRequest();
                 }
+
+
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
         }
+
+      
     }
 }

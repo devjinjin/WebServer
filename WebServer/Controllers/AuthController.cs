@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Data;
@@ -17,13 +18,15 @@ namespace WebServer.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ITokenBuilder _tokenBuilder;
+        private readonly ILogger<AuthenticationController> _logger;
 
         public AuthenticationController(
             ApplicationDbContext context,
-            ITokenBuilder tokenBuilder)
+            ITokenBuilder tokenBuilder, ILogger<AuthenticationController> logger)
         {
             _context = context;
             _tokenBuilder = tokenBuilder;
+            _logger = logger;
         }
 
         [HttpPost("login")]

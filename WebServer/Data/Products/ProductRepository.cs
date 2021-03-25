@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 using WebServer.Models.Features;
 using WebServer.Models.Product;
@@ -27,8 +28,15 @@ namespace WebServer.Data.Products
 
         public async Task CreateProduct(ProductModel product)
         {
+            product.Created = DateTime.Now;
             _context.Add(product);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<ProductModel> GetProduct(string id)
+        {
+            var _Guid = new Guid(id);
+            return await _context.Products.FirstOrDefaultAsync(m => m.Id == _Guid);
         }
     }
 }

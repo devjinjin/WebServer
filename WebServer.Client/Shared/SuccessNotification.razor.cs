@@ -11,7 +11,6 @@ namespace WebServer.Client.Shared
         private string _modalDisplay;
         private string _modalClass;
         private bool _showBackdrop;
-
         [Inject]
         public NavigationManager Navigation { get; set; }
 

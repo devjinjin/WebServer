@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ namespace WebServer.Controllers
         private readonly INoteRepository _noteRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public NotesController(INoteRepository noteRepository, IWebHostEnvironment webHostEnvironment)
+        public NotesController(INoteRepository noteRepository, IWebHostEnvironment webHostEnvironment, ILogger<NotesController> logger)
         {
             _noteRepository = noteRepository;
             _webHostEnvironment = webHostEnvironment;
