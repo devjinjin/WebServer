@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebServer.Migrations
 {
-    public partial class Db1 : Migration
+    public partial class Test1232 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -38,8 +38,8 @@ namespace WebServer.Migrations
                     MemberId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
-                    ReadCnt = table.Column<string>(nullable: true),
-                    registDate = table.Column<DateTime>(nullable: false)
+                    ReadCnt = table.Column<int>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,7 +78,7 @@ namespace WebServer.Migrations
                     Address = table.Column<string>(nullable: true),
                     Tel = table.Column<string>(nullable: true),
                     HomePage = table.Column<string>(nullable: true),
-                    RegistDate = table.Column<DateTime>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
                     MainImage = table.Column<string>(nullable: true),
                     KeepCount = table.Column<int>(nullable: false)
                 },
@@ -111,6 +111,7 @@ namespace WebServer.Migrations
                     Supplier = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
+                    ReadCnt = table.Column<int>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
                     Modified = table.Column<DateTime>(nullable: false)
                 },

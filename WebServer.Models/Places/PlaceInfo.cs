@@ -55,7 +55,7 @@ namespace WebServer.Models.Places
         /// <summary>
         /// 등록일
         /// </summary>
-        public DateTime RegistDate { get; set; }
+        public DateTime Created { get; set; }
 
         public string MainImage { get; set; }
         #endregion

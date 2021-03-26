@@ -32,7 +32,6 @@
     <Folder Include="Data\Notices\" />
     <Folder Include="Files\" />
     <Folder Include="Files\Product\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 

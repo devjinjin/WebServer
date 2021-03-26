@@ -33,5 +33,8 @@ namespace WebServer.Models.Notes
         public bool isNewImage { get; set; }
 
         public string OldFilePath { get; set; }
+
+        public DateTime Created { get; set; }
+
     }
 }

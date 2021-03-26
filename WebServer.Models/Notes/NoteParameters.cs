@@ -9,7 +9,7 @@ namespace WebServer.Models.Notes
     {
         public NoteParameters()
         {
-            OrderBy = "Created desc";
+            OrderBy = "created desc";
             //상속 형식에서 값이 바뀔수 있는 것들에 대한 정의 필요
         }
     }

@@ -14,6 +14,6 @@ namespace WebServer.Models.Notices
 
         public int ReadCnt { get; set; }
 
-        public DateTime registDate { get; set; }
+        public DateTime Created { get; set; }
     }
 }

@@ -71,6 +71,9 @@ namespace WebServer.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -79,9 +82,6 @@ namespace WebServer.Migrations
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("registDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -125,6 +125,9 @@ namespace WebServer.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Discription")
                         .HasColumnType("nvarchar(max)");
 
@@ -148,9 +151,6 @@ namespace WebServer.Migrations
 
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("RegistDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Tel")
                         .HasColumnType("nvarchar(max)");

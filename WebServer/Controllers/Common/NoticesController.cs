@@ -116,7 +116,7 @@ namespace WebServer.Controllers.Common
             {
                 return BadRequest();
             }
-            notice.registDate = DateTime.Now;
+            notice.Created = DateTime.Now;
             _context.Notice.Add(notice);
             await _context.SaveChangesAsync();
 

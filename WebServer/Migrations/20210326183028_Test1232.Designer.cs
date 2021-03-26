@@ -10,8 +10,8 @@ using WebServer.Data;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210326173704_Test1")]
-    partial class Test1
+    [Migration("20210326183028_Test1232")]
+    partial class Test1232
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,6 +73,9 @@ namespace WebServer.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
@@ -81,9 +84,6 @@ namespace WebServer.Migrations
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("registDate")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -127,6 +127,9 @@ namespace WebServer.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Discription")
                         .HasColumnType("nvarchar(max)");
 
@@ -150,9 +153,6 @@ namespace WebServer.Migrations
 
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime>("RegistDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Tel")
                         .HasColumnType("nvarchar(max)");
