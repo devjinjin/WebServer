@@ -31,7 +31,7 @@ namespace WebServer.Data.Notes
         /// </summary>
         /// <param name="note"></param>
         /// <returns></returns>
-        public async Task<NoteResponse> AddAsync(NoteRequest model)
+        public async Task AddAsync(NoteRequest model)
         {
             try
             {
@@ -47,22 +47,14 @@ namespace WebServer.Data.Notes
                 };
                 _context.Notes.Add(note);
                 await _context.SaveChangesAsync();
+
             }
             catch (Exception e)
             {
                 _logger.LogError($"ERROR({nameof(AddAsync)}): {e.Message}");
             }
 
-            NoteResponse response = new NoteResponse()
-            {
-                Name = model.Name,
-                Title = model.Title,
-                Content = model.Content,
-                FilePath = model.FilePath,
-                CreatedBy = model.CreatedBy,
-                Created = DateTime.Now
-            };
-            return response;
+            
         }
 
         /// <summary>

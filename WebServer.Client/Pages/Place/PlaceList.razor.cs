@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,48 +13,83 @@ namespace WebServer.Client.Pages.Place
     public partial class PlaceList
     {
         public List<PlaceInfo> places { get; set; } = new List<PlaceInfo>();
-        public MetaData MetaData { get; set; } = new MetaData();
 
         private PlaceParameters Parameters = new PlaceParameters();
 
         [Inject]
         public IPlaceHttpRepository Repository { get; set; }
 
+        bool IsLoading { get; set; } = false;
 
 
-        protected override async Task OnInitializedAsync()
+        bool StopLoading = false;
+
+        int pageNumber = 1;
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await GetItem();
-        }
-        private async Task SelectedPage(int page)
-        {
-            Parameters.PageNumber = page;
-            await GetItem();
-        }
-
-        private async Task GetItem()
-        {
-
-            var pagingResponse = await Repository.GetItems(Parameters);
-            places = pagingResponse.Items;
-            MetaData = pagingResponse.MetaData;
+            if (firstRender)
+            {
+                await LoadMore();
+                await InitJsListenerAsync();
+            }
         }
 
-        private async Task SearchChanged(string searchTerm)
+        protected async Task InitJsListenerAsync()
         {
-            Console.WriteLine(searchTerm);
-            Parameters.PageNumber = 1;
-            Parameters.SearchTerm = searchTerm;
-            await GetItem();
+            await JsRuntime.InvokeVoidAsync("ScrollList.Init", "list-end", DotNetObjectReference.Create(this));
         }
 
-        private async Task SortChanged(string orderBy)
+        [JSInvokable]
+        public async Task LoadMore()
         {
-            Console.WriteLine(orderBy);
-            Parameters.OrderBy = orderBy;
-            await GetItem();
+            if (!IsLoading)
+            {
+                IsLoading = true;
+
+                StateHasChanged();
+
+                await Task.Delay(1000);
+                Parameters.PageNumber = pageNumber;
+                var pagingResponse = await Repository.GetItems(Parameters);
+
+                if (pagingResponse.Items.Count > 0)
+                {
+                    places.AddRange(pagingResponse.Items);
+                    pageNumber++;
+                }
+                else
+                {
+                    StopLoading = true;
+                }
+
+
+                IsLoading = false;
+
+                StateHasChanged();
+
+
+                //at the end of pages or results stop loading anymore
+                if (StopLoading)
+                {
+                    await StopListener();
+                }
+            }
         }
 
-        
+        public async Task StopListener()
+        {
+
+            IsLoading = false;
+            await JsRuntime.InvokeVoidAsync("ScrollList.RemoveListener");
+            StateHasChanged();
+        }
+
+
+        public void Dispose()
+        {
+            JsRuntime.InvokeVoidAsync("ScrollList.RemoveListener");
+        }
     }
+    
 }

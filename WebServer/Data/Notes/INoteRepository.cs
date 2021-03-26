@@ -10,7 +10,7 @@ namespace WebServer.Data.Notes
 {
     public interface INoteRepository
     {
-        Task<NoteResponse> AddAsync(NoteRequest model);// 입력
+        Task AddAsync(NoteRequest model);// 입력
 
         Task<List<NoteModel>> GetAllAsync(); // 출력
         Task<PagedList<NoteModel>> GetAllAsync(NoteParameters parameters);

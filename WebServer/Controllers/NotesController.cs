@@ -184,7 +184,7 @@ namespace WebServer.Controllers
 
             await _repository.AddAsync(note);
 
-            return Created("", note);
+            return CreatedAtAction("GetNoteById", new { id = note.Id }, note);
         }
 
 

@@ -20,7 +20,7 @@ namespace WebServer.Client.Pages.Note
         [Inject]
         public INoteHttpRepository Repository { get; set; }
 
-
+        private int Index = 1;
 
         protected override async Task OnInitializedAsync()
         {

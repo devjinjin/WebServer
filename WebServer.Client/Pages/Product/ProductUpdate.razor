@@ -1,11 +1,10 @@
 ﻿@page "/product/update/{id}"
 @inject HttpClient Http
+@using WebServer.Models.Product
+<h1>Product update</h1>
 
-<h1>note update</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-@if (forecasts == null)
+@if (product == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -23,18 +22,17 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
-            {
+
                 <tr>
-                    <td>@forecast.Id</td>
-                    <td>@forecast.Title</td>
-                    <td>@forecast.Content</td>
-                    <td> <img src="@forecast.FilePath" asp-append-version="true" /></td>
-                    <td>@forecast.Created</td>
-                    <td>@forecast.Modified</td>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td> <img src="@product.ImageUrl" asp-append-version="true" /></td>
+                    <td>@product.Created</td>
+                    <td>@product.Modified</td>
 
                 </tr>
-            }
+
         </tbody>
     </table>
 }
@@ -43,12 +41,11 @@ else
     [Parameter]
     public string id { get; set; }
 
-    private NoteResponse[] forecasts;
+    private ProductModel product;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<NoteResponse[]>("api/Notes");
+        product = await Http.GetFromJsonAsync<ProductModel>($"api/products/{id}");
     }
-
 
 }
