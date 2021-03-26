@@ -9,80 +9,89 @@
 }
 else
 {
-
-    @if (productList.Count > 0)
-    {
-<section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
-                <a class="btn btn-primary" href="/product/create">Create</a>
+            <div class="col-md-5">
+                <Search OnSearchChanged="SearchChanged" />
             </div>
-
-            <div class="col-sm-12">
-
-                <div class="features_items">
-                    <!--features_items-->
-                    <h2 class="title text-center">Features Items</h2>
-                    <div class="row">
-
-                        @foreach (var note in productList)
-                        {
-
-                            <div class="col-sm-3">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <a href="product/detail/@(note.Id.ToString())">
-                                            <div class="productinfo text-center">
-
-                                                <img src="@note.ImageUrl" alt="" style=" height: 200px; width: 100%; object-fit:cover" />
-
-
-                                                <h2>@note.Name</h2>
-                                                <p>@note.Supplier</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                            </div>
-                                            <div class="product-overlay">
-
-                                                content
-                                                <div class="overlay-content">
-                                                    <h2>@note.Name</h2>
-                                                    <p>@note.Supplier</p>
-                                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <a href="/product/delete/@note.Id"><i class="fa fa-plus-square"></i>Delete</a>
-                                            </div>
-                                            <div class="col-6">
-                                                <a href="/product/update/@note.Id"><i class="fa fa-plus-square"></i>Modify</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-
-                    </div>
-                </div><!--features_items-->
+            <div class="col-md-5">
+                <SortShop OnSortChanged="SortChanged" />
+            </div>
+            <div class="col-md-2">
+                <a class="btn btn-primary" href="/product/create">Create</a>
             </div>
         </div>
     </div>
-</section>
+    @if (productList.Count > 0)
+    {
+        <section>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="features_items">
+                            <!--features_items-->
+                            <h2 class="title text-center">Features Items</h2>
+                            <div class="row">
+
+                                @foreach (var note in productList)
+                                {
+
+                                    <div class="col-sm-3">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <a href="product/detail/@(note.Id.ToString())">
+                                                    <div class="productinfo text-center">
+
+                                                        <img src="@note.ImageUrl" alt="" style="height: 200px; width:100%; object-fit:cover" />
+
+
+                                                        <h2>@note.Name</h2>
+                                                        <p>@note.Price</p>
+                                                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                    </div>
+                                                    <div class="product-overlay">
+
+                                                        content
+                                                        <div class="overlay-content">
+                                                            <h2>@note.Name</h2>
+                                                            <p>@note.Supplier</p>
+                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                        </div>
+
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="container">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <a href="/product/delete/@note.Id"><i class="fa fa-plus-square"></i>Delete</a>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <a href="/product/update/@note.Id"><i class="fa fa-plus-square"></i>Modify</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div><!--features_items-->
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
     }
     else
     {
-         @if (productList.Count == 0)
-         {
-              <p>데이터가 없습니다.</p>
-         }
+        @if (productList.Count == 0)
+        {
+            <p>데이터가 없습니다.</p>
+        }
     }
 }
 

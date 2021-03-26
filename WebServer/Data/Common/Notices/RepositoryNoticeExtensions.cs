@@ -41,7 +41,7 @@ namespace WebServer.Data.Common.Notices
 
                 //var direction = param.EndsWith(" desc") ? "descending" : "ascending";
 
-                var direction = param.EndsWith(" desc") ? "ascending" : "descending";
+                var direction = param.EndsWith(" desc") ? "descending" : "ascending";
                 orderQueryBuilder.Append($"{objectProperty.Name} {direction}, ");
             }
 

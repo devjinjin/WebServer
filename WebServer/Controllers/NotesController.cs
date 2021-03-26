@@ -157,7 +157,7 @@ namespace WebServer.Controllers
         public async Task<IActionResult> Get([FromQuery] NoteParameters productParameters)
         {
 
-            var notes = await _repository.GetAllAsync(productParameters);
+           var notes = await _repository.GetAllAsync(productParameters);
 
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(notes.MetaData));
 

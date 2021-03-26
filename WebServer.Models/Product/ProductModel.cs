@@ -16,6 +16,8 @@ namespace WebServer.Models.Product
         public double Price { get; set; }
         public string ImageUrl { get; set; }
 
+        public int ReadCnt { get; set; }
+
         public DateTime Created { get; set; }
 
         public DateTime Modified { get; set; }

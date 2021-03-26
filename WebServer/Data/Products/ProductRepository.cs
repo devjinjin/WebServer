@@ -36,7 +36,14 @@ namespace WebServer.Data.Products
         public async Task<ProductModel> GetProduct(string id)
         {
             var _Guid = new Guid(id);
-            return await _context.Products.FirstOrDefaultAsync(m => m.Id == _Guid);
+            var model = await _context.Products.FirstOrDefaultAsync(m => m.Id == _Guid);
+
+            model.ReadCnt = model.ReadCnt + 1;
+
+            _context.Entry(model).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return model;
         }
     }
 }

@@ -64,5 +64,6 @@ namespace WebServer.Models.Places
         /// 즐겨찾기 숫자
         /// </summary>
         public int KeepCount { get; set; }
+
     }
 }

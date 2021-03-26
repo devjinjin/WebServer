@@ -1,7 +1,6 @@
 ﻿@page "/note"
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
-<h1>note list</h1>
 
 
 @if (Notes == null)
@@ -10,53 +9,67 @@
 }
 else
 {
-    <div class="col-sm-12">
-        <a class="btn btn-primary" href="/note/create">Create</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <SearchBoard OnSearchChanged="SearchChanged" />
+            </div>
+           
+            <div class="col-md-2">
+                <a class="btn btn-primary" href="/note/create">Create</a>
+            </div>
+        </div>
     </div>
-    @if (Notes.Count > 0)
-    {
-        <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="text-center" width="5%" scope="col">#</th>
-                    <th class="text-center" width="10%" scope="col">이미지</th>
-                    <th class="text-center" width="55%" scope="col">제목</th>
-                    <th class="text-center" width="9%" scope="col">작성자</th>
-                    <th class="text-center" width="12%" scope="col">작성일</th>
-                    <th class="text-center" width="9%" scope="col">비고</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    Index = (MetaData.CurrentPage == 1) ? 1 : (MetaData.CurrentPage * MetaData.PageSize) - MetaData.PageSize + 1;
-                    foreach (var note in Notes)
-                    {
-                                <tr>
-                                    <td class="align-middle" scope="row">@Index</td>
-                                    <td class="align-middle"><a href="note/detail/@note.Id"><img src="@note.FilePath" alt="product image" style="width:100px;" /></a></td>
-                                    <td class="align-middle"><a href="note/detail/@note.Id">@note.Title</a></td>
-                                    <td class="align-middle text-center">@note.CreatedBy</td>
-                                    <td class="align-middle text-center">@note.Created</td>
-                                    <td class="align-middle">
-                                        <a class="btn btn-danger" href="note/delete/@(note.Id.ToString())">Delete</a>
-                                        <a class="btn btn-warning" href="note/update/@(note.Id.ToString())">update</a>
-                                    </td>
-                                </tr>
+    <section>
 
-                        Index++;
+        @if (Notes.Count > 0)
+        {
+
+
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-center" width="5%" scope="col">#</th>
+                        <th class="text-center" width="10%" scope="col">이미지</th>
+                        <th class="text-center" width="55%" scope="col">제목</th>
+                        <th class="text-center" width="9%" scope="col">작성자</th>
+                        <th class="text-center" width="12%" scope="col">작성일</th>
+                        <th class="text-center" width="9%" scope="col">비고</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        Index = (MetaData.CurrentPage == 1) ? 1 : (MetaData.CurrentPage * MetaData.PageSize) - MetaData.PageSize + 1;
+                        foreach (var note in Notes)
+                        {
+                            <tr>
+                                <td class="align-middle" scope="row">@Index</td>
+                                <td class="align-middle"><a href="note/detail/@note.Id"><img src="@note.FilePath" alt="product image" style="width:100px;" /></a></td>
+                                <td class="align-middle"><a href="note/detail/@note.Id">@note.Title</a></td>
+                                <td class="align-middle text-center">@note.CreatedBy</td>
+                                <td class="align-middle text-center">@note.Created</td>
+                                <td class="align-middle">
+                                    <a class="btn btn-danger" href="note/delete/@(note.Id.ToString())">Delete</a>
+                                    <a class="btn btn-warning" href="note/update/@(note.Id.ToString())">update</a>
+                                </td>
+                            </tr>
+
+                            Index++;
+                        }
                     }
-                }
+                </tbody>
+            </table>
+            <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+        }
+        else
+        {
+            <span>
+                Loading Notes...
+            </span>
+        }
+    </section>
 
 
-            </tbody>
-        </table>
 
-        <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
-    }
-    else
-    {
-        <span>
-            Loading Notes...
-        </span>
-    }
+
 }

@@ -12,6 +12,19 @@
     }
     else
     {
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <SearchBoard OnSearchChanged="SearchChanged" />
+                </div>
+                <div class="col-md-5">
+                    <SortNotice OnSortChanged="SortChanged" />
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary" href="/notice/create">Create</a>
+                </div>
+            </div>
+        </div>
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
@@ -25,14 +38,14 @@
             <tbody>
                 @{
                     Index = (MetaData.CurrentPage == 1) ? 1 : (MetaData.CurrentPage * MetaData.PageSize) - MetaData.PageSize + 1;
-                    foreach(var note in notices)
+                    foreach (var note in notices)
                     {
                         <tr>
-                        <th class="text-center" scope="row">@Index</th>
-                        <td class="text-center"><a href="/notice/detail/@note.Id">@note.Title</a></td>
-                        <td class="text-center">@note.MemberId</td>
-                        <td class="text-center">@note.registDate.ToShortDateString()</td>
-                        <td class="text-center">@note.ReadCnt</td>
+                            <th class="text-center" scope="row">@Index</th>
+                            <td class="text-center"><a href="/notice/detail/@note.Id">@note.Title</a></td>
+                            <td class="text-center">@note.MemberId</td>
+                            <td class="text-center">@note.registDate.ToShortDateString()</td>
+                            <td class="text-center">@note.ReadCnt</td>
                         </tr>
 
                         Index++;
