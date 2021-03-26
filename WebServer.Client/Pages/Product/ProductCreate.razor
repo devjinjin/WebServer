@@ -1,6 +1,6 @@
 ﻿@page "/product/create"
 @inject HttpClient Http
-
+@inject NavigationManager NavigationManger
 <h2>Create Product Form</h2>
 
 <EditForm Model="_product" OnValidSubmit="Create" class="card card-body bg-light mt-5">

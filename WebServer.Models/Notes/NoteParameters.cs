@@ -1,27 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using WebServer.Models.Features;
 
 namespace WebServer.Models.Notes
 {
-    public class NoteParameters
+    public class NoteParameters : PageParameters
     {
-        const int maxPageSize = 50;
-        public int PageNumber { get; set; } = 1;
-        private int _pageSize = 4;
-        public int PageSize
+        public NoteParameters()
         {
-            get
-            {
-                return _pageSize;
-            }
-            set
-            {
-                _pageSize = (value > maxPageSize) ? maxPageSize : value;
-            }
+            //상속 형식에서 값이 바뀔수 있는 것들에 대한 정의 필요
         }
-
-        public string SearchTerm { get; set; }
-        public string OrderBy { get; set; } = "name";
     }
 }

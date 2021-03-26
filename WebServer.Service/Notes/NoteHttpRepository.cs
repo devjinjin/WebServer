@@ -20,7 +20,8 @@ namespace WebServer.Service.Notes
             _client = client;
         }
 
-        public async Task CreateNote(NoteRequest note)
+
+        public async Task Create(NoteRequest note)
         {
             var content = JsonSerializer.Serialize(note);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
@@ -75,22 +76,6 @@ namespace WebServer.Service.Notes
             return pagingResponse;
         }
 
-        public async Task<string> UploadNoteImage(MultipartFormDataContent content)
-        {
-            var postResult = await _client.PostAsync("/api/files", content);
-            var postContent = await postResult.Content.ReadAsStringAsync();
-
-            if (!postResult.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(postContent);
-            }
-            else
-            {
-                var imgUrl = postContent;
-                return imgUrl;
-            }
-        }
-
         public async Task UploadDelete(string path)
         {
             var postResult = await _client.DeleteAsync($"/api/files/{path}");
@@ -103,5 +88,7 @@ namespace WebServer.Service.Notes
             }
           
         }
+
+      
     }
 }

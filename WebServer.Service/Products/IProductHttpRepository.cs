@@ -5,10 +5,8 @@ using WebServer.Models.Product;
 
 namespace WebServer.Service.Products
 {
-    public interface IProductHttpRepository
+    public interface IProductHttpRepository : IHttpRepository<ProductModel>
     {
         Task<PagingResponse<ProductModel>> GetProducts(ProductParameters productParameters);
-        Task CreateProduct(ProductModel product);
-        Task<string> UploadProductImage(MultipartFormDataContent content);
     }
 }

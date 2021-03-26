@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WebServer.Models.Places
 {
-    public class Place
+    public class PlaceInfo
     {
 
         /// <summary>
@@ -12,6 +12,9 @@ namespace WebServer.Models.Places
         /// </summary>
         public int Id { get; set; }
 
+        public int MemberId { get; set; }
+
+        public int PlaceId { get; set; }
         #region 장소 설명
         /// <summary>
         /// 제목
@@ -21,7 +24,7 @@ namespace WebServer.Models.Places
         /// <summary>
         /// 서브 타이틀 설명등
         /// </summary>
-        public string SubTitle { get; set; }
+        public string Discription { get; set; }
 
         /// <summary>
         /// 내용
@@ -58,6 +61,9 @@ namespace WebServer.Models.Places
         #endregion
 
         #region 장소 정보
+
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
         /// <summary>
         /// 주소
         /// </summary>
@@ -103,7 +109,15 @@ namespace WebServer.Models.Places
         /// </summary>
         public string Email { get; set; }
 
+        /// <summary>
+        /// 등록일
+        /// </summary>
+        public DateTime RegistDate { get; set; }
         #endregion
 
+        /// <summary>
+        /// 즐겨찾기 숫자
+        /// </summary>
+        public int KeepCount { get; set; }
     }
 }

@@ -4,8 +4,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
-using WebServer.Service.Notes;
-using WebServer.Service.Products;
+using WebServer.Service;
+using WebServer.Service.Upload;
 
 namespace WebServer.Client.Shared
 {
@@ -20,7 +20,7 @@ namespace WebServer.Client.Shared
         [Inject]
         public IFileReaderService FileReaderService { get; set; }
         [Inject]
-        public IProductHttpRepository Repository { get; set; }
+        public IUploadHttpRepository Repository { get; set; }
 
 
         private async Task HandleSelected()
@@ -36,7 +36,7 @@ namespace WebServer.Client.Shared
                         content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
                         content.Add(new StreamContent(ms, Convert.ToInt32(ms.Length)), "image", fileInfo.Name);
 
-                        ImgUrl = await Repository.UploadProductImage(content);
+                        ImgUrl = await Repository.UploadImage(content);
 
                         await OnChange.InvokeAsync(ImgUrl);
                     }

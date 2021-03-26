@@ -8,14 +8,12 @@ using WebServer.Models.Notes;
 
 namespace WebServer.Service.Notes
 {
-    public interface INoteHttpRepository
+    public interface INoteHttpRepository : IHttpRepository<NoteRequest>
     {
         Task<PagingResponse<NoteModel>> GetNotes(NoteParameters noteParameters);
 
         Task<bool> UpdateNote(NoteRequest model);
-        Task CreateNote(NoteRequest note);
-        Task<string> UploadNoteImage(MultipartFormDataContent content);
-
+  
         Task UploadDelete(string path);
     }
 }

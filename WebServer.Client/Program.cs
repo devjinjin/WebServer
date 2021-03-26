@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
 using WebServer.Service.Notes;
+using WebServer.Service.Places;
 using WebServer.Service.Products;
+using WebServer.Service.Upload;
 
 namespace WebServer.Client
 {
@@ -20,7 +22,9 @@ namespace WebServer.Client
 
             builder.Services.AddScoped<IProductHttpRepository, ProductHttpRepository>();
             builder.Services.AddScoped<INoteHttpRepository, NoteHttpRepository>();
-
+            builder.Services.AddScoped<IPlaceHttpRepository, PlaceHttpRepository>();
+            builder.Services.AddScoped<IUploadHttpRepository, UploadHttpRepository>();
+            builder.Services.AddScoped<IPlaceImageHttpRespository, PlaceImageHttpRespository>();
             builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
             await builder.Build().RunAsync();

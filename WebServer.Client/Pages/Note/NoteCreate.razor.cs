@@ -21,7 +21,7 @@ namespace WebServer.Client.Pages.Note
 
         private async Task Create()
         {
-            await Repository.CreateNote(_note);
+            await Repository.Create(_note);
             _notification.Show();
         }
 

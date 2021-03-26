@@ -181,7 +181,7 @@ namespace WebServer.Controllers
             {
                 return BadRequest();
             }
-   
+
             await _repository.AddAsync(note);
 
             return Created("", note);
@@ -192,12 +192,15 @@ namespace WebServer.Controllers
         public async Task<bool> PutNote([FromBody] NoteRequest noteRequest)
         {
             return await EditNote(noteRequest);
+
+
         }
 
-        public async Task<bool> EditNote(NoteRequest model)
+        private async Task<bool> EditNote(NoteRequest model)
         {
 
-            if (model.isNewImage) {
+            if (model.isNewImage)
+            {
                 var OldFilePath = model.OldFilePath;
 
                 if (OldFilePath.Length > 0)
@@ -212,7 +215,7 @@ namespace WebServer.Controllers
                         }
                     }
                 }
-            }           
+            }
 
             return await _repository.EditAsync(model);
 

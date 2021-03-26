@@ -7,6 +7,7 @@ using WebServer.Models;
 using WebServer.Models.Notes;
 using WebServer.Models.Product;
 using WebServer.Models.Users;
+using WebServer.Models.Places;
 
 namespace WebServer.Data
 {
@@ -36,5 +37,15 @@ namespace WebServer.Data
         public DbSet<NoteModel> Notes { get; set; }
 
         public DbSet<ProductModel> Products { get; set; }
+
+
+        /// <summary>
+        /// Place 정보에 대한 객체들
+        /// </summary>
+        public DbSet<WebServer.Models.Places.PlaceInfo> PlaceInfo { get; set; }
+
+        public DbSet<WebServer.Models.Places.PlaceImageInfo> PlaceImageInfo { get; set; }
+
+        public DbSet<WebServer.Models.Places.PlaceKeep> PlaceKeep { get; set; }
     }
 }

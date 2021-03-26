@@ -26,7 +26,7 @@ namespace WebServer.Data.Notes
                 return notes.OrderBy(e => e.Title);
 
             var orderParams = orderByQueryString.Trim().Split(',');
-            var propertyInfos = typeof(ProductModel).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var propertyInfos = typeof(NoteModel).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var orderQueryBuilder = new StringBuilder();
 
             foreach (var param in orderParams)

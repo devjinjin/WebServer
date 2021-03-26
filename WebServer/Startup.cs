@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 using WebServer.Data;
 using WebServer.Data.Notes;
+using WebServer.Data.Place;
 using WebServer.Data.Products;
 using WebServer.Data.Users;
 
@@ -38,9 +39,13 @@ namespace WebServer
 
             JWTAuthentication(services); //jWT 인증 등록 함수
 
+            //AddTransient: 호출될 때마다 새로운 인스턴스가 생성됨
+            //AddScoped : 세션단위로 동일한 인스턴스가 제공됨. 즉, 같은 세션에서는 항상 동일한 객체가 제공되나, 다른 세션이 생성되었다면 그 세션내에서는 그 세션 전용의 객체가 생성되어 제공됨
+            //AddSingleton: 세션과는 무관하게 애플리케이션 전체에서 하나의 객체만 생성되어 제공됨
+            
             services.AddTransient<INoteRepository, NoteRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
-
+            services.AddScoped<IPlaceInfoRepository, PlaceInfoRepository>();
             //swagger 등록 
             services.AddSwaggerGen();//Swagger 추가
             //swagger 등록

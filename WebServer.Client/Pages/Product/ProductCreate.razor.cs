@@ -20,7 +20,7 @@ namespace WebServer.Client.Pages.Product
         {
             if (_product.ImageUrl != null) {
              
-                await ProductRepo.CreateProduct(_product);
+                await ProductRepo.Create(_product);
                 _notification.Show();
             }
         }

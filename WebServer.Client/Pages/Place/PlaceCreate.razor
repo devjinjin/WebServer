@@ -1,0 +1,48 @@
+﻿@page "/place/create"
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+<h2>Create place Form</h2>
+
+<EditForm Model="_placeInfo" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <div class="form-group row">
+        <label for="name" class="col-md-2 col-form-label">Name:</label>
+        <div class="col-md-10">
+            <InputText id="title" class="form-control" @bind-Value="_placeInfo.Title" />
+            <ValidationMessage For="@(() => _placeInfo.Title)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="supplier" class="col-md-2 col-form-label">Supplier:</label>
+        <div class="col-md-10">
+            <InputText id="discription" class="form-control" @bind-Value="_placeInfo.Discription" />
+            <ValidationMessage For="@(() => _placeInfo.Discription)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="price" class="col-md-2 col-form-label">Price:</label>
+        <div class="col-md-10">
+            <InputText id="price" class="form-control" @bind-Value="_placeInfo.Address" />
+            <ValidationMessage For="@(() => _placeInfo.Address)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="image" class="col-md-2 col-form-label">Image:</label>
+        <div class="col-md-10">
+            <PlaceImageUpload OnChange="AssignImageUrl" />
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-success">Create</button>
+        </div>
+    </div>
+</EditForm>
+<PlaceSuccessNotification @ref="_notification" />
+
+

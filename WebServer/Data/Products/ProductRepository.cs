@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using WebServer.Models.Features;
+using WebServer.Data.Common;
 using WebServer.Models.Product;
 
 namespace WebServer.Data.Products

@@ -45,7 +45,7 @@ namespace WebServer.Service.Products
             return pagingResponse;
         }
 
-        public async Task CreateProduct(ProductModel product)
+        public async Task Create(ProductModel product)
         {
             var content = JsonSerializer.Serialize(product);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
@@ -60,22 +60,5 @@ namespace WebServer.Service.Products
                 throw new ApplicationException(postContent);
             }
         }
-
-        public async Task<string> UploadProductImage(MultipartFormDataContent content)
-        {
-            var postResult = await _client.PostAsync("/api/files", content);
-            var postContent = await postResult.Content.ReadAsStringAsync();
-
-            if (!postResult.IsSuccessStatusCode)
-            {
-                throw new ApplicationException(postContent);
-            }
-            else
-            {
-                var imgUrl = postContent;
-                return imgUrl;
-            }
-        }
-
     }
 }
