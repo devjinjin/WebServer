@@ -61,7 +61,7 @@ namespace WebServer.Migrations
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("WebServer.Models.Notice", b =>
+            modelBuilder.Entity("WebServer.Models.Notices.Notice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,8 +71,17 @@ namespace WebServer.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReadCnt")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("registDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -113,25 +122,10 @@ namespace WebServer.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CloseDay")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CloseTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Company")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Discription")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HomePage")
@@ -146,29 +140,14 @@ namespace WebServer.Migrations
                     b.Property<double>("Longitude")
                         .HasColumnType("float");
 
-                    b.Property<string>("Manager")
+                    b.Property<string>("MainImage")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OpenTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<double>("OriginPrice")
-                        .HasColumnType("float");
-
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");
-
-                    b.Property<string>("PlaceNotice")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PostAddress")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
 
                     b.Property<DateTime>("RegistDate")
                         .HasColumnType("datetime2");

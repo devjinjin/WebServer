@@ -1,34 +1,31 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Reflection;
 using System.Text;
-using System.Linq.Dynamic.Core;
-using WebServer.Models.Product;
-using WebServer.Models.Places;
+using WebServer.Models.Notices;
 
-namespace WebServer.Data.Place
+namespace WebServer.Data.Common.Notices
 {
-    public static class RepositoryPlaceInfoExtensions
+    public static class RepositoryNoticeExtensions
     {
-        public static IQueryable<PlaceInfo> Search(this IQueryable<PlaceInfo> PlaceInfos, string searchTearm)
+        public static IQueryable<NoticeModel> Search(this IQueryable<NoticeModel> items, string searchTearm)
         {
             if (string.IsNullOrWhiteSpace(searchTearm))
-                return PlaceInfos;
+                return items;
 
             var lowerCaseSearchTerm = searchTearm.Trim().ToLower();
 
-            return PlaceInfos.Where(p => p.Title.ToLower().Contains(lowerCaseSearchTerm));
+            return items.Where(p => p.Title.ToLower().Contains(lowerCaseSearchTerm));
         }
 
-        public static IQueryable<PlaceInfo> Sort(this IQueryable<PlaceInfo> PlaceInfos, string orderByQueryString)
+        public static IQueryable<NoticeModel> Sort(this IQueryable<NoticeModel> items, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
-            {
-                return PlaceInfos.OrderBy(e => e.Id);
-            }
+                return items.OrderBy(e => e.Title);
 
             var orderParams = orderByQueryString.Trim().Split(',');
-            var propertyInfos = typeof(PlaceInfo).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+            var propertyInfos = typeof(NoticeModel).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var orderQueryBuilder = new StringBuilder();
 
             foreach (var param in orderParams)
@@ -43,17 +40,18 @@ namespace WebServer.Data.Place
                     continue;
 
                 //var direction = param.EndsWith(" desc") ? "descending" : "ascending";
+
                 var direction = param.EndsWith(" desc") ? "ascending" : "descending";
                 orderQueryBuilder.Append($"{objectProperty.Name} {direction}, ");
             }
 
             var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
             if (string.IsNullOrWhiteSpace(orderQuery)) {
-                return PlaceInfos.OrderBy(e => e.Id);
+                return items.OrderBy(e => e.Title);
             }
              
 
-            return PlaceInfos.OrderBy(orderQuery);
+            return items.OrderBy(orderQuery);
         }
     }
 }

@@ -1,43 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using WebServer.Data;
-using WebServer.Models;
+using WebServer.Models.Notes;
+using WebServer.Models.Notices;
+using WebServer.Data.Common.Notices;
+using WebServer.Data.Common;
+using Newtonsoft.Json;
 
-namespace WebServer.Controllers
+namespace WebServer.Controllers.Common
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class NoticesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<NoticesController> logger;
 
-        public NoticesController(ApplicationDbContext context, ILogger<NoticesController> logger)
+        public NoticesController(ApplicationDbContext context)
         {
             _context = context;
-            this.logger = logger;
         }
 
-        // GET: api/Notices
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Notice>>> GetNotice()
+        public async Task<IActionResult> Get([FromQuery] NoteParameters parameters)
         {
-            return await _context.Notice.ToListAsync();
+            if (parameters == null) {
+                return BadRequest();
+            }
+        
+            var items = await _context.Notice
+              .Search(parameters.SearchTerm)
+              .Sort(parameters.OrderBy)
+              .ToListAsync();
+
+            var pageItems = PagedList<NoticeModel>
+                .ToPagedList(items, parameters.PageNumber, parameters.PageSize);
+
+       
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageItems.MetaData));
+
+            return Ok(pageItems);
         }
 
         // GET: api/Notices/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Notice>> GetNotice(int id)
+        public async Task<ActionResult<NoticeModel>> GetNotice(int id)
         {
             var notice = await _context.Notice.FindAsync(id);
 
@@ -53,7 +64,7 @@ namespace WebServer.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNotice(int id, Notice notice)
+        public async Task<IActionResult> PutNotice(int id, NoticeModel notice)
         {
             if (id != notice.Id)
             {
@@ -85,17 +96,23 @@ namespace WebServer.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Notice>> PostNotice(Notice notice)
+        public async Task<ActionResult<NoticeModel>> PostNotice([FromBody] NoticeModel notice)
         {
+            if (notice == null)
+            {
+                return BadRequest();
+            }
+            notice.registDate = DateTime.Now;
             _context.Notice.Add(notice);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetNotice", new { id = notice.Id }, notice);
         }
 
+     
         // DELETE: api/Notices/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Notice>> DeleteNotice(int id)
+        public async Task<ActionResult<NoticeModel>> DeleteNotice(int id)
         {
             var notice = await _context.Notice.FindAsync(id);
             if (notice == null)

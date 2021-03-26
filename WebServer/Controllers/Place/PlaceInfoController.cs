@@ -97,7 +97,7 @@ namespace WebServer.Controllers.Place
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateNote([FromBody] PlaceInfo placeInfo)
+        public async Task<IActionResult> Create([FromBody] PlaceInfo placeInfo)
         {
             if (placeInfo == null)
             {

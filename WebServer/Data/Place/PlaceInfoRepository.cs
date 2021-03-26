@@ -22,6 +22,7 @@ namespace WebServer.Data.Place
         {
             try
             {
+                placeInfo.RegistDate = DateTime.Now;
                 context.PlaceInfo.Add(placeInfo);
                 await context.SaveChangesAsync();
             }

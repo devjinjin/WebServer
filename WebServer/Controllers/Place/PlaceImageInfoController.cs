@@ -36,7 +36,7 @@ namespace WebServer.Controllers.Place
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Consumes("application/json", "multipart/form-data")]
-        public async Task<ActionResult<PlaceImageInfo>> PostPlaceImageInfo(PlaceImageRequest placeImageRequest)
+        public async Task<ActionResult<PlaceImageResponse>> PostPlaceImageInfo()
         {
             try
             {
@@ -48,7 +48,7 @@ namespace WebServer.Controllers.Place
 
                 if (Request.Form.Files.Count > 0)
                 {
-                    var file = placeImageRequest.File;
+                    var file = Request.Form.Files[0];
 
                     var uploadFolder = Path.Combine(_environment.WebRootPath, "Files"); //실제 사용 폴더
                     var uploadFolderProduct = Path.Combine(uploadFolder, "Product");
@@ -79,13 +79,18 @@ namespace WebServer.Controllers.Place
 
                         var placeImageInfo = new PlaceImageInfo();
                         placeImageInfo.FileName = fileName;
-                        placeImageInfo.ImageMemo = placeImageRequest.ImageMemo;
                         context.PlaceImageInfo.Add(placeImageInfo);
 
                         await context.SaveChangesAsync();
 
+                        var response = new PlaceImageResponse()
+                        {
+                            Id = placeImageInfo.Id,
+                            FileName = fileName
+                        };
 
-                        return Ok(dbPath);
+
+                        return Ok(response);
                     }
                     else
                     {

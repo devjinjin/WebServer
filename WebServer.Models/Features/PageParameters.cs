@@ -8,7 +8,7 @@ namespace WebServer.Models.Features
     {
         public const int maxPageSize = 50;
         public int PageNumber { get; set; } = 1;
-        public int _pageSize = 4;
+        public int _pageSize = 5;
         public int PageSize
         {
             get

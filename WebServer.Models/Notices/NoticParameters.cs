@@ -1,13 +1,14 @@
 ﻿using WebServer.Models.Features;
 
-namespace WebServer.Models.Places
+namespace WebServer.Models.Notices
 {
-    public class PlaceParameters : PageParameters
+    public class NoticParameters : PageParameters
     {
 
-        public PlaceParameters() { 
+        public NoticParameters() { 
             //상속 형식에서 값이 바뀔수 있는 것들에 대한 정의 필요
             OrderBy = "Id";
-        }
+            _pageSize = 10;
+    }
     }
 }

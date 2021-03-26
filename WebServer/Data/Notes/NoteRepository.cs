@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Data.Common;
-using WebServer.Models.Features;
 using WebServer.Models.Notes;
 
 namespace WebServer.Data.Notes

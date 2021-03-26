@@ -2,7 +2,7 @@
 
 namespace WebServer.Migrations
 {
-    public partial class product2 : Migration
+    public partial class Db3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

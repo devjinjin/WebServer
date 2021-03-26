@@ -2,32 +2,37 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using WebServer.Models.Features;
-using WebServer.Models.Places;
-using WebServer.Service.Places;
+using WebServer.Models.Notices;
+using WebServer.Service.Common.Notices;
 
-namespace WebServer.Client.Pages.Place
+namespace WebServer.Client.Pages.Notice
 {
-    public partial class PlaceList
+    public partial class NoticeList
     {
-        public List<PlaceInfo> places { get; set; } = new List<PlaceInfo>();
+        public List<NoticeModel> notices { get; set; } = new List<NoticeModel>();
         public MetaData MetaData { get; set; } = new MetaData();
 
-        private PlaceParameters Parameters = new PlaceParameters();
+        private NoticParameters Parameters = new NoticParameters();
 
         [Inject]
-        public IPlaceHttpRepository Repository { get; set; }
+        public INoticeHttpRepository Repository { get; set; }
 
-
+        private int Index = 1;
+   
 
         protected override async Task OnInitializedAsync()
         {
             await GetItem();
         }
+
+
         private async Task SelectedPage(int page)
         {
             Parameters.PageNumber = page;
+            
             await GetItem();
         }
 
@@ -35,8 +40,10 @@ namespace WebServer.Client.Pages.Place
         {
 
             var pagingResponse = await Repository.GetItems(Parameters);
-            places = pagingResponse.Items;
+
+            notices = pagingResponse.Items;
             MetaData = pagingResponse.MetaData;
+
         }
 
         private async Task SearchChanged(string searchTerm)
@@ -53,7 +60,5 @@ namespace WebServer.Client.Pages.Place
             Parameters.OrderBy = orderBy;
             await GetItem();
         }
-
-        
     }
 }

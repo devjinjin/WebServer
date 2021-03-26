@@ -18,4 +18,8 @@
     <ProjectReference Include="..\WebServer.Service\WebServer.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Board\" />
+  </ItemGroup>
+
 </Project>

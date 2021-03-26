@@ -1,13 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebServer.Models;
 using WebServer.Models.Notes;
+using WebServer.Models.Notices;
 using WebServer.Models.Product;
 using WebServer.Models.Users;
-using WebServer.Models.Places;
 
 namespace WebServer.Data
 {
@@ -32,7 +27,7 @@ namespace WebServer.Data
         }
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Notice> Notice { get; set; }
+        public DbSet<NoticeModel> Notice { get; set; }
 
         public DbSet<NoteModel> Notes { get; set; }
 

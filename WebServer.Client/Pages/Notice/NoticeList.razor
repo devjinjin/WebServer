@@ -1,0 +1,53 @@
+﻿@page "/notice"
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+<section>
+    @if (notices == null)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center" width="5%" scope="col">#</th>
+                    <th class="text-center" width="65%" scope="col">제목</th>
+                    <th class="text-center" width="9%" scope="col">작성자</th>
+                    <th class="text-center" width="12%" scope="col">작성일</th>
+                    <th class="text-center" width="9%" scope="col">조회수</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    Index = (MetaData.CurrentPage == 1) ? 1 : (MetaData.CurrentPage * MetaData.PageSize) - MetaData.PageSize + 1;
+                    foreach(var note in notices)
+                    {
+                        <tr>
+                        <th class="text-center" scope="row">@Index</th>
+                        <td class="text-center"><a href="/notice/detail/@note.Id">@note.Title</a></td>
+                        <td class="text-center">@note.MemberId</td>
+                        <td class="text-center">@note.registDate.ToShortDateString()</td>
+                        <td class="text-center">@note.ReadCnt</td>
+                        </tr>
+
+                        Index++;
+                    }
+                }
+
+
+            </tbody>
+        </table>
+        <div class="justify-content-center">
+            <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+        </div>
+
+
+    }
+
+</section>
+

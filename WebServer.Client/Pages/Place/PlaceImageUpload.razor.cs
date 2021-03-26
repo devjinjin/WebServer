@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
+using WebServer.Models.Places;
 using WebServer.Service.Places;
 
 namespace WebServer.Client.Pages.Place
@@ -14,14 +15,15 @@ namespace WebServer.Client.Pages.Place
 
         [Parameter]
         public string ImgUrl { get; set; }
+
+
         [Parameter]
         public EventCallback<string> OnChange { get; set; }
         [Inject]
         public IFileReaderService FileReaderService { get; set; }
         [Inject]
         public IPlaceImageHttpRespository Repository { get; set; }
-
-
+  
         private async Task HandleSelected()
         {
             foreach (var file in await FileReaderService.CreateReference(_input).EnumerateFilesAsync())
@@ -35,9 +37,12 @@ namespace WebServer.Client.Pages.Place
                         content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
                         content.Add(new StreamContent(ms, Convert.ToInt32(ms.Length)), "image", fileInfo.Name);
 
-                        ImgUrl = await Repository.UploadImage(content);
+                        var response = await Repository.UploadImage(content);
 
-                        await OnChange.InvokeAsync(ImgUrl);
+                    
+                        var serverUrl = "https://localhost:44300/Temp/Product/";                   
+                        ImgUrl = $"{serverUrl}{response.FileName}";
+                        await OnChange.InvokeAsync(response.FileName);
                     }
                 }
             }

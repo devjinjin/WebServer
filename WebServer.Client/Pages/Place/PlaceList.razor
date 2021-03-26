@@ -1,4 +1,5 @@
 ﻿@page "/place"
+
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
 <h1>Place list</h1>
@@ -50,7 +51,7 @@ else
                                 </div><!--/ cardbox-heading -->
 
                                 <div class="cardbox-item">
-                                    <img class="img-fluid" src="https://localhost:44300/Temp/Product/UserId-20210325-1838-14.jpg" alt="Image">
+                                    <img class="img-fluid" src="/Temp/Product/@note.MainImage" alt="Image">
                                 </div><!--/ cardbox-item -->
                                 <div class="cardbox-base">
                                     <ul class="float-right">

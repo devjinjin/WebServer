@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
+using WebServer.Models.Places;
 
 namespace WebServer.Service.Places
 {
     public interface IPlaceImageHttpRespository
     {
-        Task<string> UploadImage(MultipartFormDataContent content);
+        Task<PlaceImageResponse> UploadImage(MultipartFormDataContent item);
     }
 }

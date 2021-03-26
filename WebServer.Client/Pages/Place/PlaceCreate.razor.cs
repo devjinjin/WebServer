@@ -14,7 +14,7 @@ namespace WebServer.Client.Pages.Place
     {
 
         private PlaceInfo _placeInfo = new PlaceInfo();
-        private string ImageUrl = "";
+        private TimeSample _timeSample = new TimeSample();
         private PlaceSuccessNotification _notification;
 
         [Inject]
@@ -23,44 +23,30 @@ namespace WebServer.Client.Pages.Place
         [Inject]
         public IUploadHttpRepository imageRepository { get; set; }
 
+        public class TimeSample
+        {
+            public DateTime date { get; set; }
+            public DateTime time { get; set; }
+            public string text { get; set; }
+        };
+
+                 
+
         private async Task Create()
         {
-            if (ImageUrl != null)
+            if (_placeInfo.MainImage.Length > 0)
             {
-                _placeInfo.PlaceId = 0;
-                _placeInfo.Title = "string";
-                _placeInfo.Discription = "string";
-                _placeInfo.Content = "string";
-                _placeInfo.OpenTime = DateTime.Now;
-                _placeInfo.CloseTime = DateTime.Now;
-                _placeInfo.CloseDay = "string";
-                _placeInfo.Price = 0;
-                _placeInfo.PlaceNotice = "string";
-                _placeInfo.Latitude = 0;
-                _placeInfo.Longitude = 0;
-                _placeInfo.Address = "string";
-                _placeInfo.PostAddress = "string";
-                _placeInfo.OriginPrice = 0;
-                _placeInfo.CompanyId = 0;
-                _placeInfo.Company = "string";
-                _placeInfo.Manager = "string";
-                _placeInfo.Tel = "string";
-                _placeInfo.HomePage = "string";
-                _placeInfo.Email = "string";
-                _placeInfo.RegistDate = DateTime.Now;
-                _placeInfo.KeepCount = 0;
-
-
+                _placeInfo.Latitude = 37.60747646883645;
+                _placeInfo.Longitude = 127.15007826373763;
+                
                 await repository.Create(_placeInfo);
-
-
                 _notification.Show();
             } 
         }
 
-        private void AssignImageUrl(string imgUrl)
+        private void AssignImageUrl(string fileName)
         {
-            ImageUrl = imgUrl;
+            _placeInfo.MainImage = fileName;
         }
     }
 }

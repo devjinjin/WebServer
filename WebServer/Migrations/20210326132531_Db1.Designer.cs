@@ -10,8 +10,8 @@ using WebServer.Data;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210325023050_aaaa")]
-    partial class aaaa
+    [Migration("20210326132531_Db1")]
+    partial class Db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace WebServer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebServer.Models.Notes.Note", b =>
+            modelBuilder.Entity("WebServer.Models.Notes.NoteModel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace WebServer.Migrations
                     b.ToTable("Notes");
                 });
 
-            modelBuilder.Entity("WebServer.Models.Notice", b =>
+            modelBuilder.Entity("WebServer.Models.Notices.Notice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,12 +73,117 @@ namespace WebServer.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReadCnt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("registDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Notice");
+                });
+
+            modelBuilder.Entity("WebServer.Models.Places.PlaceImageInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageMemo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("InfoId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegistDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlaceImageInfo");
+                });
+
+            modelBuilder.Entity("WebServer.Models.Places.PlaceInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Discription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HomePage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("KeepCount")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("MainImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegistDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Tel")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Notice");
+                    b.ToTable("PlaceInfo");
+                });
+
+            modelBuilder.Entity("WebServer.Models.Places.PlaceKeep", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("MemberId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PlaceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RegistDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlaceKeep");
                 });
 
             modelBuilder.Entity("WebServer.Models.Product.ProductModel", b =>
@@ -87,8 +192,14 @@ namespace WebServer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()

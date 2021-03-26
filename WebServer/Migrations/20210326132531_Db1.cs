@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebServer.Migrations
 {
-    public partial class aaaa : Migration
+    public partial class Db1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,12 +35,71 @@ namespace WebServer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    MemberId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true)
+                    Content = table.Column<string>(nullable: true),
+                    ReadCnt = table.Column<string>(nullable: true),
+                    registDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notice", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlaceImageInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InfoId = table.Column<int>(nullable: false),
+                    FileName = table.Column<string>(nullable: true),
+                    ImageMemo = table.Column<string>(nullable: true),
+                    RegistDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlaceImageInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlaceInfo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MemberId = table.Column<int>(nullable: false),
+                    PlaceId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Discription = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    Latitude = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Tel = table.Column<string>(nullable: true),
+                    HomePage = table.Column<string>(nullable: true),
+                    RegistDate = table.Column<DateTime>(nullable: false),
+                    MainImage = table.Column<string>(nullable: true),
+                    KeepCount = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlaceInfo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlaceKeep",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MemberId = table.Column<int>(nullable: false),
+                    PlaceId = table.Column<int>(nullable: false),
+                    RegistDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlaceKeep", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,7 +110,9 @@ namespace WebServer.Migrations
                     Name = table.Column<string>(nullable: false),
                     Supplier = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
-                    ImageUrl = table.Column<string>(nullable: true)
+                    ImageUrl = table.Column<string>(nullable: true),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Modified = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,6 +153,15 @@ namespace WebServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Notice");
+
+            migrationBuilder.DropTable(
+                name: "PlaceImageInfo");
+
+            migrationBuilder.DropTable(
+                name: "PlaceInfo");
+
+            migrationBuilder.DropTable(
+                name: "PlaceKeep");
 
             migrationBuilder.DropTable(
                 name: "Products");

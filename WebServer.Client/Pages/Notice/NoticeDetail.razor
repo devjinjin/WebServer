@@ -1,0 +1,28 @@
+﻿@page "/notice/detail/{id:int}"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+
+@if (notice == null)
+{
+
+}
+else
+{
+
+    <section>
+        <p>@notice.Title</p>
+    </section>
+
+}
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    private NoticeModel notice;
+
+    protected override async Task OnInitializedAsync()
+    {
+        notice = await Http.GetFromJsonAsync<NoticeModel>($"api/notices/{id}");
+    }
+}
