@@ -89,6 +89,9 @@ namespace WebServer.Service.Notes
           
         }
 
-      
+        public Task Edit(NoteRequest item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace WebServer.Service
     public interface IHttpRepository<T>
     {
         Task Create(T item);
+
+        Task Edit(T item);
     }
 }

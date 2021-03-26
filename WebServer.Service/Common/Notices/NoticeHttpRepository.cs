@@ -35,6 +35,22 @@ namespace WebServer.Service.Common.Notices
             }
         }
 
+        public async Task Edit(NoticeModel item)
+        {
+            var content = JsonSerializer.Serialize(item);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var putResult = await _client.PutAsync($"/api/notices/{item.Id}", bodyContent);
+
+
+            var putContent = await putResult.Content.ReadAsStringAsync();
+
+            if (!putResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(putContent);
+            }
+        }
+
         public async Task<PagingResponse<NoticeModel>> GetItems(NoticParameters noteParameters)
         {
             var queryStringParam = new Dictionary<string, string>

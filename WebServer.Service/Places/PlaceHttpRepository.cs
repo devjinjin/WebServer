@@ -41,6 +41,11 @@ namespace WebServer.Service.Places
             }
         }
 
+        public Task Edit(PlaceInfo item)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<PagingResponse<PlaceInfo>> GetItems(PageParameters parameters)
         {
             var queryStringParam = new Dictionary<string, string>

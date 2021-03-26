@@ -1,5 +1,68 @@
-﻿<h3>NoticeEdit</h3>
+﻿@page "/notice/edit/{id:int}"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+@if (_Notice == null)
+{
+
+}
+else { 
+<section>
+    <EditForm Model="_Notice" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+        <DataAnnotationsValidator />
+        <div class="form-group row">
+            <label for="title" class="col-md-2 col-form-label">상점명:</label>
+            <div class="col-md-10">
+                <InputText id="title" class="form-control" @bind-Value="_Notice.Title" />
+                <ValidationMessage For="@(() => _Notice.Title)" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="content" class="col-md-2 col-form-label">설명:</label>
+            <div class="col-md-10">
+                <InputText id="content" class="form-control" @bind-Value="_Notice.Content" />
+                <ValidationMessage For="@(() => _Notice.Content)" />
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-success">Edit</button>
+            </div>
+        </div>
+    </EditForm>
+
+</section>
+}
+
+
 
 @code {
 
+    [Inject]
+    public INoticeHttpRepository repository { get; set; }
+
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+
+
+    [Parameter]
+    public int id { get; set; }
+
+    private NoticeModel _Notice;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _Notice = await Http.GetFromJsonAsync<NoticeModel>($"api/notices/{id}");
+    }
+
+
+    private async Task Create()
+    {
+
+        await repository.Edit(_Notice);
+        Navigation.NavigateTo("/notice");
+    }
 }

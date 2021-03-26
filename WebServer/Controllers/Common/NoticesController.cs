@@ -50,11 +50,25 @@ namespace WebServer.Controllers.Common
         [HttpGet("{id}")]
         public async Task<ActionResult<NoticeModel>> GetNotice(int id)
         {
+
             var notice = await _context.Notice.FindAsync(id);
 
             if (notice == null)
             {
                 return NotFound();
+            }
+
+            notice.ReadCnt = notice.ReadCnt + 1;
+
+            _context.Entry(notice).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return BadRequest();
             }
 
             return notice;

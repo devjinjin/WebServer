@@ -60,5 +60,10 @@ namespace WebServer.Service.Products
                 throw new ApplicationException(postContent);
             }
         }
+
+        public Task Edit(ProductModel item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
