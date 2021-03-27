@@ -6,6 +6,7 @@ using WebServer.Models.Features;
 using WebServer.Service.Products;
 using WebServer.Models.Product;
 
+
 namespace WebServer.Client.Pages.Product
 {
     public partial class ProductList
@@ -18,11 +19,12 @@ namespace WebServer.Client.Pages.Product
         [Inject]
         public IProductHttpRepository repository { get; set; }
 
-          protected override async Task OnInitializedAsync()
+
+        protected override async Task OnInitializedAsync()
         {
             await GetProducts();
         }
-
+       
         private async Task SelectedPage(int page)
         {
             _productParameters.PageNumber = page;

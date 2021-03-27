@@ -85,9 +85,11 @@ namespace WebServer.Data.Notes
         /// <returns></returns>
         public async Task<NoteModel> GetByIdAsync(int id)
         {
-            var notice = await _context.Notes.SingleOrDefaultAsync(m => m.Id == id);
-
-            return notice;
+            var note = await _context.Notes.SingleOrDefaultAsync(m => m.Id == id);
+            note.ReadCnt += 1;
+            _context.Entry(note).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return note;
         }
 
 

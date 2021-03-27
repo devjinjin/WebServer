@@ -31,6 +31,7 @@ namespace WebServer.Models.Notes
         public DateTime? Created { get; set; }
 
         public DateTime? Modified { get; set; }
+        public int ReadCnt { get; set; }
 
     }
 }

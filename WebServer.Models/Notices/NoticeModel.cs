@@ -12,7 +12,9 @@ namespace WebServer.Models.Notices
 
         public string Content { get; set; }
 
-        public int ReadCnt { get; set; }
+        public int ReadCnt { get; set; } = 0;
+
+        public bool IsPinned { get; set; } = false;
 
         public DateTime Created { get; set; }
     }

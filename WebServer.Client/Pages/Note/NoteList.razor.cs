@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using WebServer.Models.Features;
 using WebServer.Models.Notes;
 using WebServer.Service.Notes;
-using WebServer.Service.Products;
 
 namespace WebServer.Client.Pages.Note
 {
@@ -20,24 +19,26 @@ namespace WebServer.Client.Pages.Note
         [Inject]
         public INoteHttpRepository Repository { get; set; }
 
-        private int Index = 1;
+        bool IsLoading { get; set; } = false;
 
         protected override async Task OnInitializedAsync()
         {
+            IsLoading = true;
             await GetNotes();
         }
         private async Task SelectedPage(int page)
         {
             _NoteParameters.PageNumber = page;
+            IsLoading = true;
             await GetNotes();
         }
 
         private async Task GetNotes()
         {
-
             var pagingResponse = await Repository.GetNotes(_NoteParameters);
             Notes = pagingResponse.Items;
             MetaData = pagingResponse.MetaData;
+            IsLoading = false;
         }
 
         private async Task SearchChanged(string searchTerm)
@@ -45,6 +46,7 @@ namespace WebServer.Client.Pages.Note
             Console.WriteLine(searchTerm);
             _NoteParameters.PageNumber = 1;
             _NoteParameters.SearchTerm = searchTerm;
+            IsLoading = true;
             await GetNotes();
         }
 
@@ -52,34 +54,8 @@ namespace WebServer.Client.Pages.Note
         {
             Console.WriteLine(orderBy);
             _NoteParameters.OrderBy = orderBy;
+            IsLoading = true;
             await GetNotes();
-        }
-
-        public void MoveCreate()
-        {
-            //this.NavigationManager.NavigateTo("/note/create", forceLoad: true);
-            this.NavigationManager.NavigateTo("/note/create");
-
-        }
-
-        public void MoveUpdate(Guid id)
-        {
-            this.NavigationManager.NavigateTo("/note/update" + id);
-
-        }
-
-        public void MoveDelete(Guid id)
-        {
-            //this.NavigationManager.NavigateTo("/note/create", forceLoad: true);
-            this.NavigationManager.NavigateTo("/note/delete/" + id);
-
-        }
-
-        public void MoveDetail()
-        {
-            //this.NavigationManager.NavigateTo("/note/create", forceLoad: true);
-            this.NavigationManager.NavigateTo("/note/detail/" + 1);
-
-        }
+        }       
     }
 }

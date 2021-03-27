@@ -171,6 +171,8 @@ namespace WebServer.Controllers
         {
             var model = await _repository.GetByIdAsync(Int32.Parse(id));
             return Ok(model);
+
+          
         }
 
 

@@ -9,7 +9,7 @@ namespace WebServer.Service.Common.Notices
 {
     public interface INoticeHttpRepository : IHttpRepository<NoticeModel>
     {
-         Task<PagingResponse<NoticeModel>> GetItems(NoticParameters noteParameters);
+         Task<PagingResponse<NoticeModel>> GetItems(NoticeParameters noteParameters);
 
     }
 }

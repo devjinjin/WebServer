@@ -15,12 +15,12 @@ namespace WebServer.Client.Pages.Notice
         public List<NoticeModel> notices { get; set; } = new List<NoticeModel>();
         public MetaData MetaData { get; set; } = new MetaData();
 
-        private NoticParameters Parameters = new NoticParameters();
+        private NoticeParameters Parameters = new NoticeParameters();
 
         [Inject]
         public INoticeHttpRepository Repository { get; set; }
 
-        private int Index = 1;
+        //private int Index = 0;
    
 
         protected override async Task OnInitializedAsync()
@@ -43,7 +43,6 @@ namespace WebServer.Client.Pages.Notice
 
             notices = pagingResponse.Items;
             MetaData = pagingResponse.MetaData;
-
         }
 
         private async Task SearchChanged(string searchTerm)

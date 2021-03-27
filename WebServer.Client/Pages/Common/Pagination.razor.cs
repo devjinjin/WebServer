@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Models.Features;
 
-namespace WebServer.Client.Pages.Component
+namespace WebServer.Client.Pages.Common
 {
     public partial class Pagination
     {
@@ -26,8 +24,9 @@ namespace WebServer.Client.Pages.Component
         private void CreatePaginationLinks()
         {
             _links = new List<PagingLink>();
-            if (MetaData != null) {
-                _links.Add(new PagingLink(MetaData.CurrentPage - 1, MetaData.HasPrevious, "Previous"));
+            if (MetaData != null)
+            {
+                _links.Add(new PagingLink(MetaData.CurrentPage - 1, MetaData.HasPrevious, "<"));
 
                 for (int i = 1; i <= MetaData.TotalPages; i++)
                 {
@@ -37,9 +36,9 @@ namespace WebServer.Client.Pages.Component
                     }
                 }
 
-                _links.Add(new PagingLink(MetaData.CurrentPage + 1, MetaData.HasNext, "Next"));
+                _links.Add(new PagingLink(MetaData.CurrentPage + 1, MetaData.HasNext, ">"));
             }
-            
+
         }
 
         private async Task OnSelectedPage(PagingLink link)

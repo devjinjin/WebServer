@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
-using WebServer.Client.Shared;
-using WebServer.Models.Product;
-using WebServer.Service.Products;
-using WebServer.Client.Pages.Component;
-using WebServer.Service.Notes;
 using WebServer.Models.Notes;
+using WebServer.Service.Notes;
 
 namespace WebServer.Client.Pages.Note
 {

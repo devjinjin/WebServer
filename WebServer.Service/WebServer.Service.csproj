@@ -14,4 +14,8 @@
     <ProjectReference Include="..\WebServer.Models\WebServer.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Category\" />
+  </ItemGroup>
+
 </Project>

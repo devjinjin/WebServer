@@ -51,7 +51,7 @@ namespace WebServer.Service.Common.Notices
             }
         }
 
-        public async Task<PagingResponse<NoticeModel>> GetItems(NoticParameters noteParameters)
+        public async Task<PagingResponse<NoticeModel>> GetItems(NoticeParameters noteParameters)
         {
             var queryStringParam = new Dictionary<string, string>
             {

@@ -26,21 +26,26 @@ namespace WebServer.Controllers.Common
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] NoteParameters parameters)
+        public async Task<IActionResult> Get([FromQuery] NoticeParameters parameters)
         {
             if (parameters == null) {
                 return BadRequest();
             }
-        
-            var items = await _context.Notice
-              .Search(parameters.SearchTerm)
-              .Sort(parameters.OrderBy)
-              .ToListAsync();
+
+            //핀기능이있을 경우 먼저 핀 true 목록 제거
+            var removePinnedItems = await _context.Notice.Where(m => !m.IsPinned)
+                .Search(parameters.SearchTerm)
+                .Sort(parameters.OrderBy)
+                .ToListAsync();
+
+            //Pinned true 최상단으로 추가
+            var pinnedItem = await _context.Notice.Where(m => m.IsPinned).OrderByDescending(x => x.Created).ToListAsync();
+            pinnedItem.AddRange(removePinnedItems);
+            //Pinned true 최상단으로 추가
 
             var pageItems = PagedList<NoticeModel>
-                .ToPagedList(items, parameters.PageNumber, parameters.PageSize);
+                .ToPagedList(pinnedItem, parameters.PageNumber, parameters.PageSize);
 
-       
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageItems.MetaData));
 
             return Ok(pageItems);
@@ -144,5 +149,25 @@ namespace WebServer.Controllers.Common
         {
             return _context.Notice.Any(e => e.Id == id);
         }
+
+        //핀기능이 없을 경우
+        //[HttpGet]
+        //public async Task<IActionResult> Get([FromQuery] NoticeParameters parameters)
+        //{
+        //    if (parameters == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    //핀기능이 없을 경우
+        //    var items = await _context.Notice
+        //        .Search(parameters.SearchTerm)
+        //        .Sort(parameters.OrderBy)
+        //        .ToListAsync();
+        //    //핀기능이 없을 경우
+        //    var pageItems = PagedList<NoticeModel>
+        //        .ToPagedList(items, parameters.PageNumber, parameters.PageSize);
+        //    Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(pageItems.MetaData));
+        //    return Ok(pageItems);
+        //}
     }
 }

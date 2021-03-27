@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Threading;
 
-namespace WebServer.Client.Pages.Component
+namespace WebServer.Client.Pages.Notice.Component
 {
-    public partial class SearchBoard
+    public partial class SearchNotice
     {
         private Timer _timer;
 

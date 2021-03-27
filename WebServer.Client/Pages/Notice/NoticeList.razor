@@ -15,21 +15,21 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-5">
-                    <SearchBoard OnSearchChanged="SearchChanged" />
+                    <SearchNotice OnSearchChanged="SearchChanged" />
                 </div>
                 <div class="col-md-5">
                     <SortNotice OnSortChanged="SortChanged" />
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 w-100">
                     <a class="btn btn-primary" href="/notice/create">Create</a>
                 </div>
             </div>
         </div>
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="font-size: 12px;">
             <thead class="thead-dark">
                 <tr>
-                    <th class="text-center" width="5%" scope="col">#</th>
-                    <th class="text-center" width="65%" scope="col">제목</th>
+                    <th class="text-center" width="8%" scope="col">번호</th>
+                    <th class="text-center" width="62%" scope="col">제목</th>
                     <th class="text-center" width="9%" scope="col">작성자</th>
                     <th class="text-center" width="12%" scope="col">작성일</th>
                     <th class="text-center" width="9%" scope="col">조회수</th>
@@ -37,30 +37,41 @@
             </thead>
             <tbody>
                 @{
-                    Index = (MetaData.CurrentPage == 1) ? 1 : (MetaData.CurrentPage * MetaData.PageSize) - MetaData.PageSize + 1;
+                    var Index = MetaData.TotalCount - ((MetaData.CurrentPage - 1) * MetaData.PageSize);
                     foreach (var note in notices)
                     {
                         <tr>
-                            <th class="text-center" scope="row">@Index</th>
-                            <td class="text-center"><a href="/notice/detail/@note.Id">@note.Title</a></td>
+
+                            @if (note.IsPinned)
+                            {
+                                <th class="text-center" scope="row"></th>
+                                <td class="text-center"><a href="/notice/detail/@note.Id" style="color:red;">@note.Title</a></td>
+                            }
+                            else
+                            {
+                                <th class="text-center" scope="row">@Index</th>
+                                <td class="text-center"><a href="/notice/detail/@note.Id">@note.Title</a></td>
+
+                            }
                             <td class="text-center">@note.MemberId</td>
                             <td class="text-center">@note.Created.ToShortDateString()</td>
                             <td class="text-center">@note.ReadCnt</td>
                         </tr>
 
-                        Index++;
+                        Index--;
                     }
                 }
 
 
             </tbody>
         </table>
-        <div class="justify-content-center">
-            <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
-        </div>
-
+        @if (notices == null || notices.Count > 0)
+        {
+            <div class="justify-content-center">
+                <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+            </div>
+        }
 
     }
-
-</section>
+    </section>
 

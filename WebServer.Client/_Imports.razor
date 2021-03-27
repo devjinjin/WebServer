@@ -10,18 +10,26 @@
 @using WebServer.Client.Shared
 
 
-@using Tewr.Blazor.FileReader
+@inject NavigationManager NavigationManager
 
+@using Tewr.Blazor.FileReader
 
 @using WebServer.Models.Notes
 @using WebServer.Models.Notices
 @using WebServer.Models.Features
+@using WebServer.Models.Category
 @using WebServer.Service.Common.Notices
-@inject NavigationManager NavigationManager
 
-@using WebServer.Client.Pages.Component
 
+
+
+@using WebServer.Client.Pages.Product.Component
+@using WebServer.Client.Pages.Common
 @using WebServer.Client.Pages.Product
+
+@using WebServer.Client.Pages.Note.Component
 @using WebServer.Client.Pages.Note
+
 @using WebServer.Client.Pages.Place
+@using WebServer.Client.Pages.Notice.Component
 @using WebServer.Client.Pages.Notice

@@ -1,4 +1,8 @@
-﻿<header id="header">
+﻿@using WebServer.Service.Common.Categories
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+
+<header id="header">
     <!--header-->
     <div class="header_top">
         <!--header_top-->
@@ -58,21 +62,20 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        @*<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                             Home
-                        </NavLink>
-                        <NavLink class="nav-link" href="note">
-                            Notes
-                        </NavLink>
-                        <NavLink class="nav-link" href="product">
-                            Product
-                        </NavLink>
-                        <NavLink class="nav-link" href="place">
-                            Place
-                        </NavLink>
-                        <NavLink class="nav-link" href="notice">
-                            Notice
-                        </NavLink>
+                        </NavLink>*@
+                        @if (categories != null)
+                        {
+                            @foreach (var cateogry in categories)
+                            {
+
+                                <NavLink class="nav-link" href="@cateogry.Path" Match="NavLinkMatch.All">
+                                    @cateogry.Name
+                                </NavLink>
+
+                            }
+                        }
                     </div>
                 </div>
             </nav>
@@ -84,8 +87,19 @@
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
+    [Inject]
+    private ICategoryHttpRepository repository { get; set; }
+
+    private List<CategoryModel> categories;
+
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        categories = await repository.GetCategories();
     }
 }

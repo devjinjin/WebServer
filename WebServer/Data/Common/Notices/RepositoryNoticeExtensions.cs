@@ -9,6 +9,8 @@ namespace WebServer.Data.Common.Notices
 {
     public static class RepositoryNoticeExtensions
     {
+
+
         public static IQueryable<NoticeModel> Search(this IQueryable<NoticeModel> items, string searchTearm)
         {
             if (string.IsNullOrWhiteSpace(searchTearm))

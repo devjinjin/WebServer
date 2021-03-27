@@ -20,7 +20,7 @@ else
     <div class="container">
         <div class="row">
             <div class="col-md-5">
-                <Search OnSearchChanged="SearchChanged" />
+                <SearchShop OnSearchChanged="SearchChanged" />
             </div>
             <div class="col-md-5">
                 <SortShop OnSortChanged="SortChanged" />
@@ -30,14 +30,13 @@ else
             </div>
         </div>
     </div>
+    <hr/>
     @if (productList.Count > 0)
     {
         <section>
-
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-
                         <div class="features_items">
                             <!--features_items-->
                             <h2 class="title text-center">Features Items</h2>
@@ -51,27 +50,25 @@ else
                                             <div class="single-products">
                                                 <a href="product/detail/@(note.Id.ToString())">
                                                     <div class="productinfo text-center">
-
-                                                        <img src="@note.ImageUrl" alt="" style="height: 200px; width:100%; object-fit:cover" />
-
-
+                                                        <img src="@note.ImageUrl" alt="" style="height:350px; width:100%; object-fit:cover" />
                                                         <h2>@note.Name</h2>
+                                                        <h2 style="width:100%; padding:0 10px; font-size:10px; text-overflow:ellipsis;overflow : hidden; white-space : nowrap;" >@note.Discription</h2>
                                                         <p>@note.Price</p>
                                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                     </div>
                                                     <div class="product-overlay">
-
                                                         content
                                                         <div class="overlay-content">
-                                                            <h2>@note.Name</h2>
-                                                            <p>@note.Supplier</p>
-                                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                                            @*<h2>@note.Name</h2>*@
+                                                            @*<h2>@note.Discription</h2>*@
+                                                           @* <p>@note.Supplier</p>*@
+                                                           @* <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>*@
                                                         </div>
 
                                                     </div>
                                                 </a>
                                             </div>
-                                            <div class="container">
+                                            @*<div class="container">
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <a href="/product/delete/@note.Id"><i class="fa fa-plus-square"></i>Delete</a>
@@ -80,7 +77,7 @@ else
                                                         <a href="/product/update/@note.Id"><i class="fa fa-plus-square"></i>Modify</a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>*@
                                         </div>
                                     </div>
                                 }
@@ -96,6 +93,7 @@ else
     }
     else
     {
+
         @if (productList.Count == 0)
         {
             <p>데이터가 없습니다.</p>

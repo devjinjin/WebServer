@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
 
-namespace WebServer.Client.Pages.Component
+namespace WebServer.Client.Pages.Notice.Component
 {
-    public partial class SortShop
+    public partial class SortNotice
     {
         [Parameter]
         public EventCallback<string> OnSortChanged { get; set; }

@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
+using WebServer.Service.Common.Categories;
 using WebServer.Service.Common.Notices;
 using WebServer.Service.Notes;
 using WebServer.Service.Places;
@@ -23,7 +24,7 @@ namespace WebServer.Client
             builder.Services.AddScoped<INoticeHttpRepository, NoticeHttpRepository>();
             builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
-
+            builder.Services.AddScoped<ICategoryHttpRepository, CategoryHttpRepository>();
             builder.Services.AddScoped<IProductHttpRepository, ProductHttpRepository>();
             builder.Services.AddScoped<INoteHttpRepository, NoteHttpRepository>();
             builder.Services.AddScoped<IPlaceHttpRepository, PlaceHttpRepository>();
