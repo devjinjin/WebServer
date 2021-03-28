@@ -10,6 +10,8 @@
     <link href="css/app.css" rel="stylesheet" />
 
     <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="fonts/fontawesome/css/all.min.css" type="text/css" rel="stylesheet" />
+
     <!-- <link href="css/prettyPhoto.css" rel="stylesheet">
      <link href="css/price-range.css" rel="stylesheet">
      <link href="css/animate.css" rel="stylesheet">
@@ -19,11 +21,19 @@
     <link href="css/dev-board-style.css" rel="stylesheet">
     <link href="css/dev-pagination.css" rel="stylesheet">
     <link href="css/dev-board-detail.css" rel="stylesheet">
-
+    <link href="css/dev-loader.css" rel="stylesheet" type="text/css" />
+    <link href="css/temp.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-    <app>Loading...</app>
+    <app>
+        <div class="loader-mask">
+            <div class="loader">
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </app>
 
 
     <div id="blazor-error-ui">

@@ -5,6 +5,7 @@
 @inject IJSRuntime JsRuntime
 @implements IDisposable
 
+
 @if (places.Count > 0)
 {
 
@@ -136,7 +137,7 @@
 
             StateHasChanged();
 
-            await Task.Delay(1000);
+            await Task.Delay(500);
             Parameters.PageNumber = pageNumber;
             var pagingResponse = await Repository.GetItems(Parameters);
 

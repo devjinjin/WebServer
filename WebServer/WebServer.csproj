@@ -25,7 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\WebServer.Client\WebServer.Client.csproj" />
     <ProjectReference Include="..\WebServer.Models\WebServer.Models.csproj" />
-    <ProjectReference Include="..\WebServer.Service\WebServer.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

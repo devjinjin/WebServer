@@ -34,7 +34,7 @@ namespace WebServer.Client.Pages.Product
         private async Task GetProducts()
         {
 
-            var pagingResponse = await repository.GetProducts(_productParameters);
+            var pagingResponse = await repository.GetItems(_productParameters);
             productList = pagingResponse.Items;
             MetaData = pagingResponse.MetaData;
         }

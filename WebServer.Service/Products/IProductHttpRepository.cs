@@ -7,6 +7,8 @@ namespace WebServer.Service.Products
 {
     public interface IProductHttpRepository : IHttpRepository<ProductModel>
     {
-        Task<PagingResponse<ProductModel>> GetProducts(ProductParameters productParameters);
+        Task<PagingResponse<ProductModel>> GetItems(ProductParameters productParameters);
+
+        Task<PagingResponse<ProductModel>> GetNewProducts(ProductParameters productParameters);
     }
 }

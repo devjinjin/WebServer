@@ -1,0 +1,12 @@
+﻿@page "/admin/place/edit/{id}"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+
+
+<h3>AdminPlaceEdit</h3>
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+}

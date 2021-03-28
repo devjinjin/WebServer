@@ -1,0 +1,21 @@
+﻿<section>
+    <div class="container" style="@AddStyle">
+        <div class="row" style="padding:26px 28px 0; border-bottom: solid 1px #555; border-top: solid 1px #555;">
+            <dl style="list-style:none; width:100%;">
+                <dt style="float: left;">@Title</dt>
+                <dd style="float: right;"><a href="">Home</a> > <a href="@Link">@Title</a></dd>
+            </dl>
+        </div>
+    </div>
+</section>
+@code {
+    // Demonstrates how a parent component can supply parameters
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Link { get; set; }
+
+    [Parameter]
+    public string AddStyle { get; set; }
+}

@@ -1,0 +1,78 @@
+﻿@page "/admin/notice/edit/{id:int}"
+
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+
+<CategoryTitle Title="관리자(공지사항)" Link="/admin/notice" AddStyle="background:aqua;" />
+
+@if (_Notice == null)
+{
+
+}
+else
+{
+    <section>
+        <EditForm Model="_Notice" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+            <DataAnnotationsValidator />
+            <div class="form-group row">
+                <label for="title" class="col-md-2 col-form-label">제목:</label>
+                <div class="col-md-10">
+                    <InputText id="title" class="form-control" @bind-Value="_Notice.Title" />
+                    <ValidationMessage For="@(() => _Notice.Title)" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="ispinned" class="col-md-2 col-form-label">공지글 상단 올리기:</label>
+                <div class="col-md-10">
+                    <InputCheckbox id="ispinned" class="form-control w-auto" @bind-Value="_Notice.IsPinned" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="content" class="col-md-2 col-form-label">내용:</label>
+                <div class="col-md-10">
+                    <InputText id="content" class="form-control" @bind-Value="_Notice.Content" />
+                    <ValidationMessage For="@(() => _Notice.Content)" />
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-success">Edit</button>
+                </div>
+            </div>
+        </EditForm>
+
+    </section>
+}
+
+
+
+@code {
+
+    [Inject]
+    public INoticeHttpRepository repository { get; set; }
+
+    [Inject]
+    public NavigationManager Navigation { get; set; }
+
+
+    [Parameter]
+    public int id { get; set; }
+
+    private NoticeModel _Notice;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _Notice = await Http.GetFromJsonAsync<NoticeModel>($"api/notices/{id}");
+    }
+
+
+    private async Task Create()
+    {
+
+        await repository.Edit(_Notice);
+        Navigation.NavigateTo("/admin/notice");
+    }
+}

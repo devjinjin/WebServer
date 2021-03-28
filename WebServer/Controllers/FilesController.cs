@@ -85,8 +85,10 @@ namespace WebServer.Controllers
                         strTimeStamp = strTimeStamp.Insert(13, "-");
                         var fileName = "UserId-" + strTimeStamp + extension;
 
-                        var dbPath = $"{Request.Scheme}://{Request.Host}/Temp/Product/{fileName}"; //호출하는 폴더 
-           
+                        //var dbPath = $"{Request.Scheme}://{Request.Host}/Temp/Product/{fileName}"; //호출하는 폴더 
+
+                        var dbPath = $"{fileName}"; //호출하는 폴더 
+
                         using (var fileStream = new FileStream(Path.Combine(uploadFolderProduct, fileName), FileMode.Create))
                         {
                             file.CopyTo(fileStream);

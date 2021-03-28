@@ -1,0 +1,88 @@
+﻿@page "/admin/notice"
+@inject HttpClient Http
+@inject NavigationManager NavigationManger
+
+<CategoryTitle Title="관리자(공지사항)" Link="/admin/notice" AddStyle="background:aqua;"/>
+
+
+<section style="background-color:lightgray">
+    @if (notices == null)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="container" style="padding-top: 15px;">
+            <div class="row">
+                <div class="col-md-2">
+                    <p style="font-size:8px;margin-top:10px;">총 @MetaData.TotalCount 개의 글이 있습니다.</p>
+                </div>
+                <div class="col-md-5">
+                    <SearchNotice OnSearchChanged="SearchChanged" />
+                </div>
+                <div class="col-md-5">
+                    <SortNotice OnSortChanged="SortChanged" />
+                </div>
+            </div>
+        </div>
+
+
+        <table class="table table-bordered" style="font-size: 12px;">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-center" width="8%" scope="col">번호</th>
+                    <th class="text-center" width="52%" scope="col">제목</th>
+                    <th class="text-center" width="12%" scope="col">작성일</th>
+                    <th class="text-center" width="9%" scope="col">상단고정</th>
+                    <th class="text-center" width="19%" scope="col">비고</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var Index = MetaData.TotalCount - ((MetaData.CurrentPage - 1) * MetaData.PageSize);
+                    foreach (var item in notices)
+                    {
+                                <tr>
+
+                                    @if (item.IsPinned)
+                                    {
+                                        <th class="text-center" scope="row"></th>
+                                        <td class="text-center"><a href="/admin/notice/detail/@item.Id" style="color:red;">@item.Title</a></td>
+                                    }
+                                    else
+                                    {
+                                        <th class="text-center" scope="row">@Index</th>
+                                        <td class="text-center"><a href="/admin/notice/detail/@item.Id">@item.Title</a></td>
+
+                                    }
+
+                                    <td class="text-center">@item.Created.ToShortDateString()</td>
+                                    <td class="text-center">@(item.IsPinned?"중요공지":"일반")</td>
+                                    <td class="text-center">
+                               
+                                        <a class="btn btn-warning" href="/admin/notice/edit/@item.Id">수정</a>
+                                        <button class="btn btn-danger">삭제</button>
+                                    </td>
+                                </tr>
+
+                        Index--;
+                    }
+                }
+
+
+            </tbody>
+        </table>
+        @if (notices == null || notices.Count > 0)
+        {
+            <div class="justify-content-center">
+                <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+            </div>
+        }
+
+    }
+</section>
+

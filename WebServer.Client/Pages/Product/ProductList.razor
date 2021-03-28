@@ -2,44 +2,41 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
 
+<CategoryTitle Title="Product" Link="/product" />
 
 @if (productList == null)
 {
-    <div id="list-end" class="mt-5 mb-5 p-5">
-
-        <div class="d-flex justify-content-center">
-            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
+    <section>
+        <div id="list-end" class="mt-5 mb-5 p-5">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
             </div>
         </div>
-
-    </div>
+    </section>
 }
 else
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <SearchShop OnSearchChanged="SearchChanged" />
-            </div>
-            <div class="col-md-5">
-                <SortShop OnSortChanged="SortChanged" />
-            </div>
-            <div class="col-md-2">
-                <a class="btn btn-primary" href="/product/create">Create</a>
+    <section>
+        <div class="container">
+            <div style="float:right; padding:15px 0">
+                <div style="display: flex;">
+                    <SearchShop OnSearchChanged="SearchChanged"/> <div style="margin-right: 10px;"/> <SortShop OnSortChanged="SortChanged" />
+                </div>
             </div>
         </div>
-    </div>
-    <hr/>
+    </section>
+   
     @if (productList.Count > 0)
     {
-        <section>
+        <section style="clear:both;">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="features_items">
                             <!--features_items-->
-                            <h2 class="title text-center">Features Items</h2>
+                            @*<h2 class="title text-center">Features Items</h2>*@
                             <div class="row">
 
                                 @foreach (var note in productList)
@@ -50,9 +47,9 @@ else
                                             <div class="single-products">
                                                 <a href="product/detail/@(note.Id.ToString())">
                                                     <div class="productinfo text-center">
-                                                        <img src="@note.ImageUrl" alt="" style="height:350px; width:100%; object-fit:cover" />
+                                                        <img src="/Temp/Product/@note.ImageUrl" alt="" style="height:350px; width:100%; object-fit:cover" />
                                                         <h2>@note.Name</h2>
-                                                        <h2 style="width:100%; padding:0 10px; font-size:10px; text-overflow:ellipsis;overflow : hidden; white-space : nowrap;" >@note.Discription</h2>
+                                                        <h2 style="width:100%; padding:0 10px; font-size:10px; text-overflow:ellipsis;overflow : hidden; white-space : nowrap;">@note.Discription</h2>
                                                         <p>@note.Price</p>
                                                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                                                     </div>
@@ -61,23 +58,23 @@ else
                                                         <div class="overlay-content">
                                                             @*<h2>@note.Name</h2>*@
                                                             @*<h2>@note.Discription</h2>*@
-                                                           @* <p>@note.Supplier</p>*@
-                                                           @* <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>*@
+                                                            @* <p>@note.Supplier</p>*@
+                                                            @* <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>*@
                                                         </div>
 
                                                     </div>
                                                 </a>
                                             </div>
                                             @*<div class="container">
-                                                <div class="row">
-                                                    <div class="col-6">
-                                                        <a href="/product/delete/@note.Id"><i class="fa fa-plus-square"></i>Delete</a>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <a href="/product/delete/@note.Id"><i class="fa fa-plus-square"></i>Delete</a>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <a href="/product/update/@note.Id"><i class="fa fa-plus-square"></i>Modify</a>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-6">
-                                                        <a href="/product/update/@note.Id"><i class="fa fa-plus-square"></i>Modify</a>
-                                                    </div>
-                                                </div>
-                                            </div>*@
+                                                </div>*@
                                         </div>
                                     </div>
                                 }
@@ -90,6 +87,7 @@ else
         </section>
 
         <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+
     }
     else
     {
@@ -100,6 +98,7 @@ else
         }
     }
 }
+
 
 
 

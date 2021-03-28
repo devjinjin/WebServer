@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\Board\" />
-    <Folder Include="Shared\Header\" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using WebServer.Data.Common;
 using WebServer.Models.Product;
@@ -17,7 +18,7 @@ namespace WebServer.Data.Products
 
         public async Task<PagedList<ProductModel>> GetProducts(ProductParameters productParameters)
         {
-            var products = await _context.Products
+            var products = await _context.Products.Where(m => !m.IsSoldOut)
                 .Search(productParameters.SearchTerm)
                 .Sort(productParameters.OrderBy)
                 .ToListAsync();

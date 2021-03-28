@@ -28,5 +28,9 @@ namespace WebServer.Models.Product
         public DateTime Created { get; set; }
 
         public DateTime Modified { get; set; }
+
+        public int TotalCount { get; set; } = 0;
+
+        public bool IsSoldOut { get; set; } = false;
     }
 }

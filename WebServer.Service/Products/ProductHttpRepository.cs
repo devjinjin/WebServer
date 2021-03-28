@@ -20,7 +20,7 @@ namespace WebServer.Service.Products
             _client = client;
         }
 
-        public async Task<PagingResponse<ProductModel>> GetProducts(ProductParameters productParameters)
+        public async Task<PagingResponse<ProductModel>> GetItems(ProductParameters productParameters)
         {
             var queryStringParam = new Dictionary<string, string>
             {
@@ -64,6 +64,32 @@ namespace WebServer.Service.Products
         public Task Edit(ProductModel item)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<PagingResponse<ProductModel>> GetNewProducts(ProductParameters productParameters)
+        {
+            var queryStringParam = new Dictionary<string, string>
+            {
+                ["pageNumber"] = productParameters.PageNumber.ToString(),
+                ["searchTerm"] = productParameters.SearchTerm == null ? "" : productParameters.SearchTerm,
+                ["orderBy"] = productParameters.OrderBy
+            };
+
+            var response = await _client.GetAsync(QueryHelpers.AddQueryString("/api/products", queryStringParam));
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var pagingResponse = new PagingResponse<ProductModel>
+            {
+                Items = JsonSerializer.Deserialize<List<ProductModel>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
+                MetaData = JsonSerializer.Deserialize<MetaData>(response.Headers.GetValues("X-Pagination").First(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+            };
+
+            return pagingResponse;
         }
     }
 }

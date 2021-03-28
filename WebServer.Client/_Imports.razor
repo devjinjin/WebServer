@@ -8,7 +8,8 @@
 @using Microsoft.JSInterop
 @using WebServer.Client
 @using WebServer.Client.Shared
-
+@using WebServer.Client.Shared.Component
+@using WebServer.Client.Shared.Layout
 
 @inject NavigationManager NavigationManager
 
@@ -20,11 +21,14 @@
 @using WebServer.Models.Category
 @using WebServer.Service.Common.Notices
 
+@* Admin 관련 *@
+@using WebServer.Client.Pages.Admin
+@using WebServer.Client.Pages.Admin.Product
 
 
+@using WebServer.Client.Pages.Main
 
 @using WebServer.Client.Pages.Product.Component
-@using WebServer.Client.Pages.Common
 @using WebServer.Client.Pages.Product
 
 @using WebServer.Client.Pages.Note.Component

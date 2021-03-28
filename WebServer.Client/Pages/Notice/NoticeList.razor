@@ -1,6 +1,10 @@
 ﻿@page "/notice"
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
+
+<CategoryTitle Title="공지사항" Link="/notice" />
+
+
 <section>
     @if (notices == null)
     {
@@ -12,20 +16,33 @@
     }
     else
     {
-        <div class="container">
+        @*<div class="container" style="padding-top: 15px;">
             <div class="row">
+                <div class="col-md-2">
+                    <p style="font-size:8px;margin-top:10px;">총 @MetaData.TotalCount 개의 글이 있습니다.</p>
+                </div>
                 <div class="col-md-5">
                     <SearchNotice OnSearchChanged="SearchChanged" />
                 </div>
                 <div class="col-md-5">
                     <SortNotice OnSortChanged="SortChanged" />
                 </div>
-                <div class="col-md-2 w-100">
-                    <a class="btn btn-primary" href="/notice/create">Create</a>
+            </div>
+        </div>*@
+
+
+        <div class="container" style="padding-top: 15px;">
+            <div style="float:left; padding:15px 0">
+                <p style="font-size:8px;margin-top:10px;">총 @MetaData.TotalCount 개의 글이 있습니다.</p>
+            </div>
+            <div style="float:right; padding:15px 0">
+                <div style="display: flex;">
+                    <SearchNotice OnSearchChanged="SearchChanged" /> <div style="margin-right: 10px;" /> <SortNotice OnSortChanged="SortChanged" />
                 </div>
             </div>
         </div>
-        <table class="table table-bordered" style="font-size: 12px;">
+
+        <table class="table table-bordered" style="clear:both; font-size: 12px;">
             <thead class="thead-dark">
                 <tr>
                     <th class="text-center" width="8%" scope="col">번호</th>
@@ -73,5 +90,5 @@
         }
 
     }
-    </section>
+</section>
 
