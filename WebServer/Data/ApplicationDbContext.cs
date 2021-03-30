@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using WebServer.Models.Category;
 using WebServer.Models.Notes;
 using WebServer.Models.Notices;
@@ -25,6 +26,15 @@ namespace WebServer.Data
                 new User { Id = 1, Email = "User1", Password = "Password1", FirstName = "lee", LastName = "jin" },
                 new User { Id = 2, Email = "User2", Password = "Password2", FirstName = "lee", LastName = "young" }
                 );
+
+            builder
+              .Entity<CategoryModel>()
+              .HasData(
+                  new CategoryModel { Id = 1,Created = DateTime.Now, IsHide = false, Name = "상품", OrderNum = 0, Path = "/product" },
+                  new CategoryModel { Id = 2, Created = DateTime.Now, IsHide = false, Name = "PLACE", OrderNum = 1, Path = "/place" },
+                  new CategoryModel { Id = 3, Created = DateTime.Now, IsHide = false, Name = "게시판", OrderNum = 2, Path = "/board" },
+                  new CategoryModel { Id = 4, Created = DateTime.Now, IsHide = false, Name = "공지사항", OrderNum = 3, Path = "/notice" }
+              );
         }
         public DbSet<User> Users { get; set; }
 

@@ -10,8 +10,8 @@ using WebServer.Data;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210326183028_Test1232")]
-    partial class Test1232
+    [Migration("20210330035641_t")]
+    partial class t
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,33 @@ namespace WebServer.Migrations
                 .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebServer.Models.Category.CategoryModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsHide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderNum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
 
             modelBuilder.Entity("WebServer.Models.Notes.NoteModel", b =>
                 {
@@ -55,6 +82,9 @@ namespace WebServer.Migrations
                     b.Property<int?>("ParentId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ReadCnt")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -75,6 +105,9 @@ namespace WebServer.Migrations
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPinned")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
@@ -195,8 +228,14 @@ namespace WebServer.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSoldOut")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
@@ -214,6 +253,9 @@ namespace WebServer.Migrations
                     b.Property<string>("Supplier")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

@@ -3,10 +3,27 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebServer.Migrations
 {
-    public partial class Test1232 : Migration
+    public partial class t : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Path = table.Column<string>(nullable: true),
+                    OrderNum = table.Column<int>(nullable: false),
+                    IsHide = table.Column<bool>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Notes",
                 columns: table => new
@@ -22,7 +39,8 @@ namespace WebServer.Migrations
                     CreatedBy = table.Column<string>(nullable: true),
                     ModifiedBy = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: true),
-                    Modified = table.Column<DateTime>(nullable: true)
+                    Modified = table.Column<DateTime>(nullable: true),
+                    ReadCnt = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -39,6 +57,7 @@ namespace WebServer.Migrations
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     ReadCnt = table.Column<int>(nullable: false),
+                    IsPinned = table.Column<bool>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -108,12 +127,15 @@ namespace WebServer.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: false),
+                    Discription = table.Column<string>(nullable: true),
                     Supplier = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
                     ImageUrl = table.Column<string>(nullable: true),
                     ReadCnt = table.Column<int>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    Modified = table.Column<DateTime>(nullable: false)
+                    Modified = table.Column<DateTime>(nullable: false),
+                    TotalCount = table.Column<int>(nullable: false),
+                    IsSoldOut = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,6 +171,9 @@ namespace WebServer.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Categories");
+
             migrationBuilder.DropTable(
                 name: "Notes");
 

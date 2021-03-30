@@ -61,14 +61,18 @@
             {
                 <tr>
                     <td colspan="6" class="text-center">
-                        글이 없습니다.
+                        등록된 Place가 없습니다.
                     </td>
                 </tr>
 
             }
         </tbody>
     </table>
-    <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+    @if (PlaceInfoList.Count > 0)
+    {
+
+        <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+    }
 
 
 </section>

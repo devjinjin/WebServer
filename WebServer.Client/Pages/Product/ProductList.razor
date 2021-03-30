@@ -22,12 +22,12 @@ else
         <div class="container">
             <div style="float:right; padding:15px 0">
                 <div style="display: flex;">
-                    <SearchShop OnSearchChanged="SearchChanged"/> <div style="margin-right: 10px;"/> <SortShop OnSortChanged="SortChanged" />
+                    <SearchShop OnSearchChanged="SearchChanged" /> <div style="margin-right: 10px;" /> <SortShop OnSortChanged="SortChanged" />
                 </div>
             </div>
         </div>
     </section>
-   
+
     @if (productList.Count > 0)
     {
         <section style="clear:both;">
@@ -91,11 +91,18 @@ else
     }
     else
     {
-
-        @if (productList.Count == 0)
-        {
-            <p>데이터가 없습니다.</p>
-        }
+        <section style="clear:both;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 text-center jumbotron">
+                        @if (productList.Count == 0)
+                        {
+                            <p>데이터가 없습니다.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
     }
 }
 

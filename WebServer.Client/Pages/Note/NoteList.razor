@@ -1,80 +1,79 @@
-﻿@page "/note"
+﻿@page "/board"
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
 
 <CategoryTitle Title="게시판" Link="/note" />
 
-    <div class="container" style="padding-top: 15px;">
 
-        <div class="row">
-            <div class="col-md-2">
-                <p style="font-size:8px;margin-top:10px;">총 @MetaData.TotalCount 개의 글이 있습니다.</p>
-            </div>
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">
-                <SearchNote OnSearchChanged="SearchChanged" />
-            </div>
-            <div class="col-md-2">
-                <a class="btn btn-primary w-100" href="/note/create">Create</a>
-            </div>
+<div class="container" style="padding-top: 15px;">
+    <div style="float:left; padding:15px 0">
+        <p style="font-size:8px;margin-top:10px;">총 @MetaData.TotalCount 개의 글이 있습니다.</p>
+    </div>
+    <div style="float:right; padding:15px 0">
+        <div style="display: flex;">
+            <SearchNote OnSearchChanged="SearchChanged" /> <div style="margin-right: 10px;" />  <a class="btn btn-primary w-100" href="/note/create">Create</a>
         </div>
     </div>
-    <section>
-        <table class="table table-bordered" style="font-size:12px;">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="text-center" width="5%" scope="col">#</th>
-                    <th class="text-center" width="10%" scope="col">이미지</th>
-                    <th class="text-center" width="55%" scope="col">제목</th>
-                    <th class="text-center" width="9%" scope="col">작성자</th>
-                    <th class="text-center" width="12%" scope="col">작성일</th>
-                    <th class="text-center" width="9%" scope="col">조회수</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Notes.Count > 0)
-                {
+</div>
 
-                    var Index = MetaData.TotalCount - ((MetaData.CurrentPage - 1) * MetaData.PageSize);
+<section>
+    <table class="table table-bordered" style="font-size:12px;">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center" width="5%" scope="col">#</th>
+                <th class="text-center" width="10%" scope="col">이미지</th>
+                <th class="text-center" width="55%" scope="col">제목</th>
+                <th class="text-center" width="9%" scope="col">작성자</th>
+                <th class="text-center" width="12%" scope="col">작성일</th>
+                <th class="text-center" width="9%" scope="col">조회수</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Notes.Count > 0)
+            {
 
-                    foreach (var note in Notes)
-                    {
-                        <tr>
-                            <td class="align-middle" scope="row">@Index</td>
-                            <td class="align-middle"><a href="note/detail/@note.Id"><img src="@note.FilePath" alt="product image" style="width:100px;" /></a></td>
-                            <td class="align-middle"><a href="note/detail/@note.Id">@note.Title</a></td>
-                            <td class="align-middle text-center">@note.CreatedBy</td>
-                            <td class="align-middle text-center">@note.Created</td>
-                            <td class="align-middle text-center">@note.ReadCnt</td>
-                        </tr>
+                var Index = MetaData.TotalCount - ((MetaData.CurrentPage - 1) * MetaData.PageSize);
 
-                        Index--;
-                    }
-                }
-                else
+                foreach (var note in Notes)
                 {
                     <tr>
-                        <td colspan="6" class="text-center">
-                            글이 없습니다.
-                        </td>
+                        <td class="align-middle" scope="row">@Index</td>
+                        <td class="align-middle"><a href="note/detail/@note.Id"><img src="@note.FilePath" alt="product image" style="width:100px;" /></a></td>
+                        <td class="align-middle"><a href="note/detail/@note.Id">@note.Title</a></td>
+                        <td class="align-middle text-center">@note.CreatedBy</td>
+                        <td class="align-middle text-center">@note.Created</td>
+                        <td class="align-middle text-center">@note.ReadCnt</td>
                     </tr>
 
+                    Index--;
                 }
-            </tbody>
-        </table>
-        @if (IsLoading)
-        {
-            <div class="d-flex justify-content-center">
-                <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
-            </div>
-        }
-        else
-        {
-            <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
-        }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        작성된 글이 없습니다.
+                    </td>
+                </tr>
 
-    </section>
+            }
+        </tbody>
+    </table>
+    @if (IsLoading)
+    {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    }
+
+    @if (Notes == null || Notes.Count > 0)
+    {
+        <div class="justify-content-center">
+            <Pagination MetaData="MetaData" Spread="3" SelectedPage="SelectedPage" />
+        </div>
+    }
+
+</section>
 

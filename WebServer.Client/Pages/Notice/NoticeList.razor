@@ -54,32 +54,42 @@
             </thead>
             <tbody>
                 @{
-                    var Index = MetaData.TotalCount - ((MetaData.CurrentPage - 1) * MetaData.PageSize);
-                    foreach (var note in notices)
+                    @if (notices.Count > 0)
+                    {
+                        var Index = MetaData.TotalCount - ((MetaData.CurrentPage - 1) * MetaData.PageSize);
+                        foreach (var note in notices)
+                        {
+                            <tr>
+
+                                @if (note.IsPinned)
+                                {
+                                    <th class="text-center" scope="row"></th>
+                                    <td class="text-center"><a href="/notice/detail/@note.Id" style="color:red;">@note.Title</a></td>
+                                }
+                                else
+                                {
+                                    <th class="text-center" scope="row">@Index</th>
+                                    <td class="text-center"><a href="/notice/detail/@note.Id">@note.Title</a></td>
+
+                                }
+                                <td class="text-center">@note.MemberId</td>
+                                <td class="text-center">@note.Created.ToShortDateString()</td>
+                                <td class="text-center">@note.ReadCnt</td>
+                            </tr>
+
+                            Index--;
+                        }
+
+                    }
+                    else
                     {
                         <tr>
-
-                            @if (note.IsPinned)
-                            {
-                                <th class="text-center" scope="row"></th>
-                                <td class="text-center"><a href="/notice/detail/@note.Id" style="color:red;">@note.Title</a></td>
-                            }
-                            else
-                            {
-                                <th class="text-center" scope="row">@Index</th>
-                                <td class="text-center"><a href="/notice/detail/@note.Id">@note.Title</a></td>
-
-                            }
-                            <td class="text-center">@note.MemberId</td>
-                            <td class="text-center">@note.Created.ToShortDateString()</td>
-                            <td class="text-center">@note.ReadCnt</td>
+                            <td colspan="5" class="text-center">
+                                <p>데이터가 없습니다.</p>
+                            </td>
                         </tr>
-
-                        Index--;
                     }
                 }
-
-
             </tbody>
         </table>
         @if (notices == null || notices.Count > 0)

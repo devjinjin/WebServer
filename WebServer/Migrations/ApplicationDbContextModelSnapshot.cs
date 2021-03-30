@@ -44,6 +44,44 @@ namespace WebServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 959, DateTimeKind.Local).AddTicks(1606),
+                            IsHide = false,
+                            Name = "상품",
+                            OrderNum = 0,
+                            Path = "/product"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9254),
+                            IsHide = false,
+                            Name = "PLACE",
+                            OrderNum = 1,
+                            Path = "/place"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9309),
+                            IsHide = false,
+                            Name = "게시판",
+                            OrderNum = 2,
+                            Path = "/board"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9312),
+                            IsHide = false,
+                            Name = "공지사항",
+                            OrderNum = 3,
+                            Path = "/notice"
+                        });
                 });
 
             modelBuilder.Entity("WebServer.Models.Notes.NoteModel", b =>

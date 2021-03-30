@@ -10,8 +10,8 @@ using WebServer.Data;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210327081844_pin11")]
-    partial class pin11
+    [Migration("20210330040952_t1")]
+    partial class t1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,71 @@ namespace WebServer.Migrations
                 .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebServer.Models.Category.CategoryModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsHide")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderNum")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 959, DateTimeKind.Local).AddTicks(1606),
+                            IsHide = false,
+                            Name = "상품",
+                            OrderNum = 0,
+                            Path = "/product"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9254),
+                            IsHide = false,
+                            Name = "PLACE",
+                            OrderNum = 1,
+                            Path = "/place"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9309),
+                            IsHide = false,
+                            Name = "게시판",
+                            OrderNum = 2,
+                            Path = "/board"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9312),
+                            IsHide = false,
+                            Name = "공지사항",
+                            OrderNum = 3,
+                            Path = "/notice"
+                        });
+                });
 
             modelBuilder.Entity("WebServer.Models.Notes.NoteModel", b =>
                 {
@@ -201,8 +266,14 @@ namespace WebServer.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discription")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsSoldOut")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
@@ -220,6 +291,9 @@ namespace WebServer.Migrations
                     b.Property<string>("Supplier")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TotalCount")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
