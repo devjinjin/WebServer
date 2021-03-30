@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebServer.Data;
 
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210330045732_t2")]
+    partial class t2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 975, DateTimeKind.Local).AddTicks(5899),
+                            Created = new DateTime(2021, 3, 30, 13, 57, 31, 767, DateTimeKind.Local).AddTicks(4539),
                             IsHide = false,
                             Name = "상품",
                             OrderNum = 0,
@@ -58,7 +60,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 977, DateTimeKind.Local).AddTicks(4867),
+                            Created = new DateTime(2021, 3, 30, 13, 57, 31, 769, DateTimeKind.Local).AddTicks(5295),
                             IsHide = false,
                             Name = "PLACE",
                             OrderNum = 1,
@@ -67,7 +69,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 977, DateTimeKind.Local).AddTicks(4940),
+                            Created = new DateTime(2021, 3, 30, 13, 57, 31, 769, DateTimeKind.Local).AddTicks(5368),
                             IsHide = false,
                             Name = "게시판",
                             OrderNum = 2,
@@ -76,7 +78,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 977, DateTimeKind.Local).AddTicks(4943),
+                            Created = new DateTime(2021, 3, 30, 13, 57, 31, 769, DateTimeKind.Local).AddTicks(5371),
                             IsHide = false,
                             Name = "공지사항",
                             OrderNum = 3,
@@ -279,9 +281,6 @@ namespace WebServer.Migrations
 
                     b.Property<bool>("IsText")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");

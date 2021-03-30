@@ -3,6 +3,7 @@ using System;
 using WebServer.Models.Category;
 using WebServer.Models.Notes;
 using WebServer.Models.Notices;
+using WebServer.Models.Popup;
 using WebServer.Models.Product;
 using WebServer.Models.Users;
 
@@ -45,6 +46,8 @@ namespace WebServer.Data
         public DbSet<ProductModel> Products { get; set; }
 
         public DbSet<CategoryModel> Categories { get; set; }
+
+        public DbSet<PopupModel> Popups { get; set; }
 
         /// <summary>
         /// Place 정보에 대한 객체들

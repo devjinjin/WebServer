@@ -6,4 +6,15 @@
 <MainRecommend />
 <hr />
 <MainNew />
+
+@if (popups != null && popups.Count > 0) {
+
+    foreach (var popup in popups)
+    {
+        <Popup PopUpId="@popup.Id" ImageName="@popup.FileName" Content="@popup.Content" Title="@popup.Title"  Posistion=@popup.Position/>
+    }
+}
+
 @*<SurveyPrompt Title="How is Blazor working for you?" />*@
+
+

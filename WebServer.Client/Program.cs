@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Tewr.Blazor.FileReader;
 using WebServer.Service.Common.Categories;
 using WebServer.Service.Common.Notices;
+using WebServer.Service.Common.Popups;
 using WebServer.Service.Notes;
 using WebServer.Service.Places;
 using WebServer.Service.Products;
@@ -24,17 +25,19 @@ namespace WebServer.Client
             builder.Services.AddScoped<INoticeHttpRepository, NoticeHttpRepository>();
             builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
+            builder.Services.AddScoped<IPopupHttpRepository, PopupHttpRepository>();
             builder.Services.AddScoped<ICategoryHttpRepository, CategoryHttpRepository>();
             builder.Services.AddScoped<IProductHttpRepository, ProductHttpRepository>();
             builder.Services.AddScoped<INoteHttpRepository, NoteHttpRepository>();
             builder.Services.AddScoped<IPlaceHttpRepository, PlaceHttpRepository>();
             builder.Services.AddScoped<IUploadHttpRepository, UploadHttpRepository>();
             builder.Services.AddScoped<IPlaceImageHttpRespository, PlaceImageHttpRespository>();
-       
 
-    
+            builder.Services.AddScoped<BrowserService>(); // scoped service
+        
 
-            await builder.Build().RunAsync();
+
+        await builder.Build().RunAsync();
         }
     }
 }

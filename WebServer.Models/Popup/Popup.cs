@@ -42,5 +42,10 @@ namespace WebServer.Models.Popup
         /// 종료일
         /// </summary>
         public DateTime Ended { get; set; }
+
+        /// <summary>
+        /// 출력하는 팝업 위치 : 0 => Center , 1 => Left, 2=> Right
+        /// </summary>
+        public int Position { get; set; }
     }
 }

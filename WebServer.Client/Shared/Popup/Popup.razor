@@ -1,0 +1,178 @@
+﻿@inject IJSRuntime JsRuntime
+
+@if (showModal)
+{
+
+    <div class="modal" id="myModal"
+         draggable="true"
+         @ondragstart="OnDragStart"
+         @ondragend="OnDragEnd"
+         style="display:block; top: @(offsetY)px; left: @(offsetX)px; width:500px; height:auto; @ModalStyle" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"
+                     style=" cursor: move; background:#ed995d;">
+                    @*<h6 class="modal-title">@Title</h6>*@
+                    <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
+                </div>
+                <div class="modal-body">
+                    @if (IsText)
+                    {
+                        <p>@Content</p>
+                    }
+                    else
+                    {
+                        <img src="/Temp/Product/@ImageName" style="width:100%; height:auto;" />
+                    }
+                </div>
+                <div class="modal-footer">
+  
+                    <button type="button" class="close" aria-label="Close"   @onclick=@DoNotShow>
+                        <span aria-hidden="true">&times;</span> <span class="align-middle" style="font-size:x-small;"> 하루동안 열지 않기</span>                     
+                    </button>
+                    <button type="button" class="btn" style=" background-color:#ed995d; color:#808080;" @onclick=@ModalOk>닫기</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+
+
+@code{
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string Content { get; set; }
+
+    [Parameter]
+    public string ImageName { get; set; }
+
+    [Parameter]
+    public bool IsText { get; set; }
+
+
+    [Parameter]
+    public int Posistion { get; set; } = 0;
+
+    [Parameter]
+    public int PopUpId { get; set; }
+
+    [Inject]
+    BrowserService Service { get; set; }
+
+
+    bool showModal = true;
+
+    string ModalStyle = "";//"position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);";
+
+    void ModalShow() => showModal = true;
+    void ModalCancel() => showModal = false;
+
+    public int WindowHeight { get; set; }
+    public int WindowWidth { get; set; }
+
+    public string popupCookie { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        bool isHidden =  await ReadCookies("Popup_" + PopUpId.ToString());
+
+        if (isHidden)
+        {
+            showModal = false;
+        }
+        else {
+            await GetDimensions();
+
+
+            if (Posistion == 0) //center
+            {
+                offsetX = (WindowWidth / 2) - 250;
+                offsetY = 50;
+            }
+            else if (Posistion == 1)//left
+            {
+                offsetX = 50;
+                offsetY = 50;
+            }
+            else if (Posistion == 2)//right
+            {
+                offsetX = WindowWidth - 550;
+                offsetY = 50;
+            }
+        }
+    }
+
+
+
+    async Task GetDimensions()
+    {
+        var dimension = await Service.GetDimensions();
+        WindowHeight = dimension.Height;
+        WindowWidth = dimension.Width;
+    }
+
+    void ModalOk()
+    {
+        showModal = false;
+    }
+
+    async Task DoNotShow()
+    {
+        await WriteCookies("Popup_"+PopUpId.ToString());
+        showModal = false;
+    }
+
+
+    private double startX, startY, offsetX, offsetY = 0;
+
+
+    private void OnDragStart(DragEventArgs args)
+    {
+        if (ModalStyle.Length > 0)
+        {
+
+            offsetX = args.ClientX;
+            offsetY = args.ClientY;
+        }
+
+        ModalStyle = "";
+        Console.WriteLine("args.ClientX : " + args.ClientX);
+        Console.WriteLine("args.ClientY : " + args.ClientY);
+
+        startX = args.ClientX;
+        startY = args.ClientY;
+    }
+
+    private void OnDragEnd(DragEventArgs args)
+    {
+        offsetX += args.ClientX - startX;
+        offsetY += args.ClientY - startY;
+        Console.WriteLine("args.offsetX : " + offsetX);
+        Console.WriteLine("args.offsetY : " + offsetY);
+    }
+
+    protected async Task WriteCookies(string strPopUpId)
+    {
+
+        //await JsRuntime.InvokeAsync<object>("WriteCookie.WriteCookie", "cookieName", "cookieValue", DateTime.Now.AddMinutes(1));
+        await JsRuntime.InvokeAsync<object>("WriteCookie.WriteCookie", strPopUpId, strPopUpId, DateTime.Now.AddMinutes(1));
+
+    }
+    protected async Task<bool> ReadCookies(string strPopUpId)
+    {
+
+        popupCookie = await JsRuntime.InvokeAsync<string>("ReadCookie.ReadCookie", strPopUpId);
+        if (popupCookie != null && popupCookie.Length > 0) {
+            if (popupCookie.Contains("Popup_" + PopUpId.ToString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+
