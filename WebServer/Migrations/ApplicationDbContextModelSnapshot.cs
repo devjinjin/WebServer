@@ -49,7 +49,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 975, DateTimeKind.Local).AddTicks(5899),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 208, DateTimeKind.Local).AddTicks(7901),
                             IsHide = false,
                             Name = "상품",
                             OrderNum = 0,
@@ -58,7 +58,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 977, DateTimeKind.Local).AddTicks(4867),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4726),
                             IsHide = false,
                             Name = "PLACE",
                             OrderNum = 1,
@@ -67,7 +67,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 977, DateTimeKind.Local).AddTicks(4940),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4775),
                             IsHide = false,
                             Name = "게시판",
                             OrderNum = 2,
@@ -76,7 +76,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2021, 3, 30, 20, 5, 0, 977, DateTimeKind.Local).AddTicks(4943),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4778),
                             IsHide = false,
                             Name = "공지사항",
                             OrderNum = 3,

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace WebServer.Client.Pages.Product
+namespace WebServer.Client.Pages.Admin.Product
 {
     public partial class ProductSuccessNotification
     {
@@ -24,7 +24,7 @@ namespace WebServer.Client.Pages.Product
             _modalClass = "";
             _showBackdrop = false;
             StateHasChanged();
-            Navigation.NavigateTo("/product");
+            Navigation.NavigateTo("/admin/product");
         }
     }
 }

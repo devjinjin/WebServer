@@ -25,7 +25,7 @@ namespace WebServer.Client.Pages.Note
             _modalClass = "";
             _showBackdrop = false;
             StateHasChanged();
-            Navigation.NavigateTo("/note");
+            Navigation.NavigateTo("/board");
         }
     }
 }

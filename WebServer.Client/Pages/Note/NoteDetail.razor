@@ -2,7 +2,7 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
 
-<CategoryTitle Title="게시판" Link="/note" />
+<CategoryTitle Title="게시판" Link="/board" />
 
     @if (note == null)
     {
@@ -44,7 +44,7 @@
                             </div><!--/ cardbox-heading -->
 
                             <div class="cardbox-item">
-                                <img class="img-fluid" src="@note.FilePath" alt="Image">
+                                <img class="img-fluid" src="/Temp/Product/@note.FilePath" alt="Image" style="width:100%; height:auto;">
                             </div><!--/ cardbox-item -->
                             <div class="cardbox-base">
                                 <ul class="float-right">

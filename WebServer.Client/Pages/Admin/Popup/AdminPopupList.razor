@@ -1,0 +1,72 @@
+﻿@page "/admin/popup"
+<CategoryTitle Title="관리자(팝업관리)" Link="/admin/popup" AddStyle="background:aqua;"  />
+
+
+<div class="container" style="padding-top: 15px;">
+
+    <div class="row">
+        <div class="col-md-2">
+            <p style="font-size:8px;margin-top:10px;">총 @MetaData.TotalCount 개의 글이 있습니다.</p>
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <SearchNote OnSearchChanged="SearchChanged" />
+        </div>
+        <div class="col-md-2">
+            <a class="btn btn-primary w-100" href="/admin/product/create">상품등록</a>
+        </div>
+    </div>
+</div>
+<section style="background-color:lightgray">
+    <table class="table table-bordered" style="font-size:12px;">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-center" width="5%" scope="col">#</th>
+                <th class="text-center" width="10%" scope="col">이미지</th>
+                <th class="text-center" width="55%" scope="col">제목</th>
+                <th class="text-center" width="9%" scope="col">가격</th>
+                <th class="text-center" width="12%" scope="col">작성일</th>
+                <th class="text-center" width="9%" scope="col">비고</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ProductList.Count > 0)
+            {
+
+                var Index = MetaData.TotalCount - ((MetaData.CurrentPage - 1) * MetaData.PageSize);
+
+                foreach (var item in ProductList)
+                {
+                    <tr>
+                        <td class="align-middle" scope="row">@Index</td>
+                        <td class="align-middle"><a href="/admin/popup/detail/@item.Id"><img src="/Temp/Product/@item.ImageUrl" alt="product image" style="width:100px;" /></a></td>
+                        <td class="align-middle"><a href="/admin/popup/detail/@item.Id">@item.Name</a></td>
+                        <td class="align-middle text-center">@item.Price</td>
+                        <td class="align-middle text-center">@item.Created</td>
+                        <td class="align-middle text-center">
+                            <a class="btn btn-warning" href="/admin/popup/edit/@item.Id">수정</a>
+                            <a class="btn btn-danger">삭제</a>
+                        </td>
+                    </tr>
+
+                    Index--;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center">
+                        등록된 상품이 없습니다.
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    @if (ProductList.Count > 0)
+    {
+        <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+    }
+
+</section>

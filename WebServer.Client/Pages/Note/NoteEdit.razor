@@ -1,8 +1,8 @@
-﻿@page "/note/update/{id}"
+﻿@page "/board/edit/{id}"
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
 
-<CategoryTitle Title="게시판" Link="/note" />
+<CategoryTitle Title="게시판" Link="/board" />
 
 
 <EditForm Model="_note" OnValidSubmit="Modify" class="card card-body bg-light mt-5">

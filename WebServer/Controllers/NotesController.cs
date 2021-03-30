@@ -167,7 +167,7 @@ namespace WebServer.Controllers
         // 상세
         // GET api/Notices/1
         [HttpGet("{id}", Name = "GetNoteById")]
-        public async Task<IActionResult> GetById([FromRoute] string id)
+        public async Task<IActionResult> GetNoteById([FromRoute] string id)
         {
             var model = await _repository.GetByIdAsync(Int32.Parse(id));
             return Ok(model);

@@ -6,7 +6,7 @@ using WebServer.Service.Notes;
 
 namespace WebServer.Client.Pages.Note
 {
-    public partial class NoteUpdate
+    public partial class NoteEdit
     {
         [Parameter]
         public string id { get; set; }

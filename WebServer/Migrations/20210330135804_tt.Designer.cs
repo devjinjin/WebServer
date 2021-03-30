@@ -10,8 +10,8 @@ using WebServer.Data;
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210330040952_t1")]
-    partial class t1
+    [Migration("20210330135804_tt")]
+    partial class tt
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,7 +51,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 959, DateTimeKind.Local).AddTicks(1606),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 208, DateTimeKind.Local).AddTicks(7901),
                             IsHide = false,
                             Name = "상품",
                             OrderNum = 0,
@@ -60,7 +60,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9254),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4726),
                             IsHide = false,
                             Name = "PLACE",
                             OrderNum = 1,
@@ -69,7 +69,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9309),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4775),
                             IsHide = false,
                             Name = "게시판",
                             OrderNum = 2,
@@ -78,7 +78,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2021, 3, 30, 13, 9, 51, 960, DateTimeKind.Local).AddTicks(9312),
+                            Created = new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4778),
                             IsHide = false,
                             Name = "공지사항",
                             OrderNum = 3,
@@ -255,6 +255,42 @@ namespace WebServer.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PlaceKeep");
+                });
+
+            modelBuilder.Entity("WebServer.Models.Popup.PopupModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Ended")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsHide")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsText")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Popups");
                 });
 
             modelBuilder.Entity("WebServer.Models.Product.ProductModel", b =>

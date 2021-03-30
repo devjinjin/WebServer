@@ -2,7 +2,7 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManger
 
-<CategoryTitle Title="게시판" Link="/note" />
+<CategoryTitle Title="게시판" Link="/board" />
 
 
 <div class="container" style="padding-top: 15px;">
@@ -11,7 +11,7 @@
     </div>
     <div style="float:right; padding:15px 0">
         <div style="display: flex;">
-            <SearchNote OnSearchChanged="SearchChanged" /> <div style="margin-right: 10px;" />  <a class="btn btn-primary w-100" href="/note/create">Create</a>
+            <SearchNote OnSearchChanged="SearchChanged" /> <div style="margin-right: 10px;" />  <a class="btn btn-primary" href="/board/create">Create</a>
         </div>
     </div>
 </div>
@@ -38,8 +38,8 @@
                 {
                     <tr>
                         <td class="align-middle" scope="row">@Index</td>
-                        <td class="align-middle"><a href="note/detail/@note.Id"><img src="@note.FilePath" alt="product image" style="width:100px;" /></a></td>
-                        <td class="align-middle"><a href="note/detail/@note.Id">@note.Title</a></td>
+                        <td class="align-middle"><a href="/board/detail/@note.Id"><img src="/Temp/Product/@note.FilePath" alt="product image" style="width:100px;" /></a></td>
+                        <td class="align-middle"><a href="/board/detail/@note.Id">@note.Title</a></td>
                         <td class="align-middle text-center">@note.CreatedBy</td>
                         <td class="align-middle text-center">@note.Created</td>
                         <td class="align-middle text-center">@note.ReadCnt</td>

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebServer.Migrations
 {
-    public partial class t : Migration
+    public partial class tt : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,6 +122,26 @@ namespace WebServer.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Popups",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(nullable: true),
+                    Content = table.Column<string>(nullable: true),
+                    IsText = table.Column<bool>(nullable: false),
+                    FileName = table.Column<string>(nullable: true),
+                    IsHide = table.Column<bool>(nullable: false),
+                    Created = table.Column<DateTime>(nullable: false),
+                    Ended = table.Column<DateTime>(nullable: false),
+                    Position = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Popups", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -159,14 +179,24 @@ namespace WebServer.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "Email", "FirstName", "LastName", "Password" },
-                values: new object[] { 1, "User1", "lee", "jin", "Password1" });
+                table: "Categories",
+                columns: new[] { "Id", "Created", "IsHide", "Name", "OrderNum", "Path" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2021, 3, 30, 22, 58, 4, 208, DateTimeKind.Local).AddTicks(7901), false, "상품", 0, "/product" },
+                    { 2, new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4726), false, "PLACE", 1, "/place" },
+                    { 3, new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4775), false, "게시판", 2, "/board" },
+                    { 4, new DateTime(2021, 3, 30, 22, 58, 4, 210, DateTimeKind.Local).AddTicks(4778), false, "공지사항", 3, "/notice" }
+                });
 
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "FirstName", "LastName", "Password" },
-                values: new object[] { 2, "User2", "lee", "young", "Password2" });
+                values: new object[,]
+                {
+                    { 1, "User1", "lee", "jin", "Password1" },
+                    { 2, "User2", "lee", "young", "Password2" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -188,6 +218,9 @@ namespace WebServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "PlaceKeep");
+
+            migrationBuilder.DropTable(
+                name: "Popups");
 
             migrationBuilder.DropTable(
                 name: "Products");
