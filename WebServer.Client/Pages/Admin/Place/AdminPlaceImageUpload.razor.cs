@@ -39,7 +39,7 @@ namespace WebServer.Client.Pages.Admin.Place
                         var response = await Repository.UploadImage(content);
 
 
-                        var serverUrl = "/Temp/Product/";
+                        var serverUrl = "/Temp/Temp/";
                         ImgUrl = $"{serverUrl}{response.FileName}";
                         await OnChange.InvokeAsync(response.FileName);
                     }

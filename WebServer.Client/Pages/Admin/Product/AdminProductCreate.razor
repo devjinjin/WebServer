@@ -16,6 +16,14 @@
     </div>
 
     <div class="form-group row">
+        <label for="discription" class="col-md-2 col-form-label">Discription:</label>
+        <div class="col-md-10">
+            <InputText id="discription" class="form-control" @bind-Value="_product.Discription" />
+            <ValidationMessage For="@(() => _product.Discription)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="supplier" class="col-md-2 col-form-label">Supplier:</label>
         <div class="col-md-10">
             <InputText id="supplier" class="form-control" @bind-Value="_product.Supplier" />
@@ -32,10 +40,37 @@
     </div>
 
     <div class="form-group row">
-        <label for="image" class="col-md-2 col-form-label">Image:</label>
+        <label for="totalCount" class="col-md-2 col-form-label">TotalCount:</label>
         <div class="col-md-10">
-            <ImageUpload OnChange="AssignImageUrl" />
+            <InputNumber id="totalCount" class="form-control" @bind-Value="_product.TotalCount" />
+            <ValidationMessage For="@(() => _product.TotalCount)" />
+        </div>
+    </div>
 
+    @if (_product.ImageUrl == null || _product.ImageUrl.Length <= 0)
+    {
+        <div class="form-group row">
+            <label for="image" class="col-md-2 col-form-label">이미지:</label>
+            <div class="col-md-10">
+                <ImageUpload OnChange="AssignImageUrl" />
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-group row">
+            <label for="price" class="col-md-2 col-form-label">이미지:</label>
+            <div class="col-md-10">
+                <button @onclick="DeleteImage">삭제</button>
+                <img src="/Temp/Temp/@_product.ImageUrl" style="width:100%;height:auto;" />
+            </div>
+        </div>
+    }
+
+    <div class="form-group row">
+        <label for="isSoldOut" class="col-md-2 col-form-label">IsSoldOut:</label>
+        <div class="col-md-10">
+            <InputCheckbox id="isSoldOut" class="form-control" @bind-Value="_product.IsSoldOut " />
         </div>
     </div>
 

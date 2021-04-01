@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using WebServer.Data;
 using WebServer.Data.Place;
 using WebServer.Models.Features;
 using WebServer.Models.Places;
+using WebServer.Utils;
 
 namespace WebServer.Controllers.Place
 {
@@ -17,15 +21,19 @@ namespace WebServer.Controllers.Place
     [ApiController]
     public class PlaceInfoController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext context;
         private readonly IPlaceInfoRepository repository;
+        private readonly IWebHostEnvironment environment;
+        private readonly ILogger<PlaceInfoController> logger;
 
-
-        public PlaceInfoController(ApplicationDbContext context, IPlaceInfoRepository _repository)
+        public PlaceInfoController(ApplicationDbContext context,  IWebHostEnvironment environment, IPlaceInfoRepository _repository, ILogger<PlaceInfoController> logger)
         {
-            _context = context;
-            repository = _repository;
+            this.context = context;
+            this.environment = environment;
+            this.repository = _repository;
+            this.logger = logger;
         }
+
         /// <summary>
         /// 전체 리스트 가져오기 검색어 정보 Page 정보 Orderby에 의해서 적용
         /// </summary>
@@ -53,7 +61,7 @@ namespace WebServer.Controllers.Place
         [HttpGet("{id}")]
         public async Task<ActionResult<PlaceInfo>> GetPlaceInfo(int id)
         {
-            var placeInfo = await _context.PlaceInfo.FindAsync(id);
+            var placeInfo = await context.PlaceInfo.FindAsync(id);
 
             if (placeInfo == null)
             {
@@ -74,11 +82,11 @@ namespace WebServer.Controllers.Place
                 return BadRequest();
             }
 
-            _context.Entry(placeInfo).State = EntityState.Modified;
+            context.Entry(placeInfo).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -104,6 +112,9 @@ namespace WebServer.Controllers.Place
                 return BadRequest();
             }
 
+
+            FileUtil.MoveFile(environment, placeInfo.MainImage, "Place");
+
             await repository.AddAsync(placeInfo);
 
             return CreatedAtAction("GetPlaceInfo", new { id = placeInfo.Id }, placeInfo);
@@ -114,21 +125,66 @@ namespace WebServer.Controllers.Place
         [HttpDelete("{id}")]
         public async Task<ActionResult<PlaceInfo>> DeletePlaceInfo(int id)
         {
-            var placeInfo = await _context.PlaceInfo.FindAsync(id);
+            var placeInfo = await context.PlaceInfo.FindAsync(id);
             if (placeInfo == null)
             {
                 return NotFound();
             }
 
-            _context.PlaceInfo.Remove(placeInfo);
-            await _context.SaveChangesAsync();
+            context.PlaceInfo.Remove(placeInfo);
+            await context.SaveChangesAsync();
 
             return placeInfo;
         }
 
         private bool PlaceInfoExists(int id)
         {
-            return _context.PlaceInfo.Any(e => e.Id == id);
+            return context.PlaceInfo.Any(e => e.Id == id);
+        }
+
+        private bool CopyFile(string ImageFile)
+        {
+
+            try
+            {
+
+                if (string.IsNullOrWhiteSpace(environment.WebRootPath))
+                {
+                    environment.WebRootPath = Directory.GetCurrentDirectory();
+                }
+
+                if (ImageFile != null && ImageFile.Length > 0)
+                {
+                    var uploadFolder = Path.Combine(environment.WebRootPath, "Files"); //실제 사용 폴더
+                    var uploadTempFolder = Path.Combine(uploadFolder, "Temp");//임시폴더
+                    var uploadProductFolder = Path.Combine(uploadFolder, "Place");
+
+                    if (!System.IO.Directory.Exists(uploadTempFolder))
+                    {
+                        System.IO.Directory.CreateDirectory(uploadTempFolder);
+                    }
+
+                    if (!System.IO.Directory.Exists(uploadProductFolder))
+                    {
+                        System.IO.Directory.CreateDirectory(uploadProductFolder);
+                    }
+
+                    var orginTempFilePath = Path.Combine(uploadTempFolder, ImageFile);
+                    var destTempFilePath = Path.Combine(uploadProductFolder, ImageFile);
+                    if (System.IO.File.Exists(orginTempFilePath))
+                    {
+                        System.IO.File.Move(orginTempFilePath, destTempFilePath);
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+            return false;
         }
     }
 }

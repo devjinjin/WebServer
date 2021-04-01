@@ -16,6 +16,7 @@ namespace WebServer.Client.Pages.Note
         private NoteModel _note = new NoteModel();
         private NoteSuccessNotification _notification;
         private string originFilePath = "";
+
         [Inject]
         public INoteHttpRepository Repository { get; set; }
 
@@ -36,7 +37,7 @@ namespace WebServer.Client.Pages.Note
                 _noteRequest.CreatedBy = _note.CreatedBy;
                 _noteRequest.FilePath = _note.FilePath;
                 _noteRequest.OldFilePath = originFilePath;
-
+    
                 await Repository.UpdateNote(_noteRequest);
 
                 _notification.Show();

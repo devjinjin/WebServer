@@ -5,7 +5,7 @@ using WebServer.Models.Product;
 
 namespace WebServer.Service.Products
 {
-    public interface IProductHttpRepository : IHttpRepository<ProductModel>
+    public interface IProductHttpRepository : IHttpRepository<ProductRequestModel>
     {
         Task<PagingResponse<ProductModel>> GetItems(ProductParameters productParameters);
 

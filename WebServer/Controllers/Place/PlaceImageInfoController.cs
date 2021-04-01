@@ -51,7 +51,7 @@ namespace WebServer.Controllers.Place
                     var file = Request.Form.Files[0];
 
                     var uploadFolder = Path.Combine(_environment.WebRootPath, "Files"); //실제 사용 폴더
-                    var uploadFolderProduct = Path.Combine(uploadFolder, "Product");
+                    var uploadFolderProduct = Path.Combine(uploadFolder, "Temp");
                     if (!System.IO.Directory.Exists(uploadFolderProduct))
                     {
                         System.IO.Directory.CreateDirectory(uploadFolderProduct);
@@ -62,15 +62,15 @@ namespace WebServer.Controllers.Place
 
                         //파일 이름 만들기 UserId + DateTime + extension
                         string extension = System.IO.Path.GetExtension(Path.GetFileName(ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"')));
-                        string strTimeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                        strTimeStamp = strTimeStamp.Replace(":", "");
-                        strTimeStamp = strTimeStamp.Replace("-", "");
-                        strTimeStamp = strTimeStamp.Replace(" ", "");
-                        strTimeStamp = strTimeStamp.Insert(8, "-");
-                        strTimeStamp = strTimeStamp.Insert(13, "-");
-                        var fileName = "UserId-" + strTimeStamp + extension;
+                        //string strTimeStamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        //strTimeStamp = strTimeStamp.Replace(":", "");
+                        //strTimeStamp = strTimeStamp.Replace("-", "");
+                        //strTimeStamp = strTimeStamp.Replace(" ", "");
+                        //strTimeStamp = strTimeStamp.Insert(8, "-");
+                        //strTimeStamp = strTimeStamp.Insert(13, "-");
+                        var fileName = Guid.NewGuid() + extension;
 
-                        var dbPath = $"{Request.Scheme}://{Request.Host}/Temp/Product/{fileName}"; //호출하는 폴더 
+                        //var dbPath = $"{Request.Scheme}://{Request.Host}/Temp/Product/{fileName}"; //호출하는 폴더 
 
                         using (var fileStream = new FileStream(Path.Combine(uploadFolderProduct, fileName), FileMode.Create))
                         {

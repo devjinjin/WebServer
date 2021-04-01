@@ -23,5 +23,7 @@ namespace WebServer.Models.Product
 
         public string SearchTerm { get; set; }
         public string OrderBy { get; set; } = "created desc";
+
+        public bool WithSoldOut { get; set; } = false;
     }
 }

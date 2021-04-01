@@ -29,6 +29,8 @@
 
   <ItemGroup>
     <Folder Include="Data\Notices\" />
+    <Folder Include="Files\Product\" />
+    <Folder Include="Files\Temp\" />
   </ItemGroup>
 
 

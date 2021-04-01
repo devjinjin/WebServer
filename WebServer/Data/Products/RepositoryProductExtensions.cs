@@ -19,6 +19,19 @@ namespace WebServer.Data.Products
             return products.Where(p => p.Name.ToLower().Contains(lowerCaseSearchTerm));
         }
 
+        public static IQueryable<ProductModel> WithSoldOut(this IQueryable<ProductModel> products, bool withSoldOut)
+        {
+          
+
+            if (withSoldOut)
+            {
+                return products;
+            }
+            else {
+                return products.Where(p => !p.IsSoldOut);
+            }
+        }
+
         public static IQueryable<ProductModel> Sort(this IQueryable<ProductModel> products, string orderByQueryString)
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))

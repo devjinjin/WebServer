@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebServer.Data;
 
 namespace WebServer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210331020228_t1")]
+    partial class t1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,7 +51,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 1,
-                            Created = new DateTime(2021, 3, 31, 11, 50, 9, 206, DateTimeKind.Local).AddTicks(4992),
+                            Created = new DateTime(2021, 3, 31, 11, 2, 28, 5, DateTimeKind.Local).AddTicks(1700),
                             IsHide = false,
                             Name = "상품",
                             OrderNum = 0,
@@ -58,7 +60,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 2,
-                            Created = new DateTime(2021, 3, 31, 11, 50, 9, 208, DateTimeKind.Local).AddTicks(5051),
+                            Created = new DateTime(2021, 3, 31, 11, 2, 28, 7, DateTimeKind.Local).AddTicks(862),
                             IsHide = false,
                             Name = "PLACE",
                             OrderNum = 1,
@@ -67,7 +69,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 3,
-                            Created = new DateTime(2021, 3, 31, 11, 50, 9, 208, DateTimeKind.Local).AddTicks(5137),
+                            Created = new DateTime(2021, 3, 31, 11, 2, 28, 7, DateTimeKind.Local).AddTicks(925),
                             IsHide = false,
                             Name = "게시판",
                             OrderNum = 2,
@@ -76,7 +78,7 @@ namespace WebServer.Migrations
                         new
                         {
                             Id = 4,
-                            Created = new DateTime(2021, 3, 31, 11, 50, 9, 208, DateTimeKind.Local).AddTicks(5141),
+                            Created = new DateTime(2021, 3, 31, 11, 2, 28, 7, DateTimeKind.Local).AddTicks(928),
                             IsHide = false,
                             Name = "공지사항",
                             OrderNum = 3,

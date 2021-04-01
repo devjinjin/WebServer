@@ -15,7 +15,9 @@ namespace WebServer.Client.Pages.Admin.Product
         public List<ProductModel> ProductList { get; set; } = new List<ProductModel>();
         public MetaData MetaData { get; set; } = new MetaData();
 
-        private ProductParameters _productParameters = new ProductParameters();
+        private ProductParameters _productParameters = new ProductParameters() {
+            WithSoldOut = true
+        };
 
         [Inject]
         public IProductHttpRepository repository { get; set; }
@@ -23,7 +25,7 @@ namespace WebServer.Client.Pages.Admin.Product
 
         protected override async Task OnInitializedAsync()
         {
-            await GetProduct();
+               await GetProduct();
         }
 
         private async Task SelectedPage(int page)

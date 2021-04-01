@@ -26,7 +26,8 @@ namespace WebServer.Service.Products
             {
                 ["pageNumber"] = productParameters.PageNumber.ToString(),
                 ["searchTerm"] = productParameters.SearchTerm == null ? "" : productParameters.SearchTerm,
-                ["orderBy"] = productParameters.OrderBy
+                ["orderBy"] = productParameters.OrderBy,
+                ["withSoldOut"] = productParameters.WithSoldOut.ToString()
             };
 
             var response = await _client.GetAsync(QueryHelpers.AddQueryString("/api/products", queryStringParam));
@@ -45,9 +46,10 @@ namespace WebServer.Service.Products
             return pagingResponse;
         }
 
-        public async Task Create(ProductModel product)
+     
+        public async Task Create(ProductRequestModel item)
         {
-            var content = JsonSerializer.Serialize(product);
+            var content = JsonSerializer.Serialize(item);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
 
             var postResult = await _client.PostAsync("/api/products", bodyContent);
@@ -61,9 +63,20 @@ namespace WebServer.Service.Products
             }
         }
 
-        public Task Edit(ProductModel item)
+        public async Task Edit(ProductRequestModel item)
         {
-            throw new NotImplementedException();
+            var content = JsonSerializer.Serialize(item);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var postResult = await _client.PutAsync("/api/products", bodyContent);
+
+
+            var postContent = await postResult.Content.ReadAsStringAsync();
+
+            if (!postResult.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(postContent);
+            }
         }
 
         public async Task<PagingResponse<ProductModel>> GetNewProducts(ProductParameters productParameters)

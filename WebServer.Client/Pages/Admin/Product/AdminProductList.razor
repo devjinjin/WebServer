@@ -24,7 +24,8 @@
             <tr>
                 <th class="text-center" width="5%" scope="col">#</th>
                 <th class="text-center" width="10%" scope="col">이미지</th>
-                <th class="text-center" width="55%" scope="col">제목</th>
+                <th class="text-center" width="45%" scope="col">제목</th>
+                <th class="text-center" width="10%" scope="col">판매상태</th>
                 <th class="text-center" width="9%" scope="col">가격</th>
                 <th class="text-center" width="12%" scope="col">작성일</th>
                 <th class="text-center" width="9%" scope="col">비고</th>
@@ -42,6 +43,7 @@
                         <td class="align-middle" scope="row">@Index</td>
                         <td class="align-middle"><a href="/admin/product/detail/@item.Id"><img src="/Temp/Product/@item.ImageUrl" alt="product image" style="width:100px;" /></a></td>
                         <td class="align-middle"><a href="/admin/product/detail/@item.Id">@item.Name</a></td>
+                        <td class="align-middle text-center">@(item.IsSoldOut?"판매중지":"판매중")</td>
                         <td class="align-middle text-center">@item.Price</td>
                         <td class="align-middle text-center">@item.Created</td>
                         <td class="align-middle text-center">

@@ -1,51 +1,88 @@
 ﻿@page "/admin/product/edit/{id}"
 @inject HttpClient Http
+@inject NavigationManager NavigationManger
 @using WebServer.Models.Product
 
 <CategoryTitle Title="관리자(상품관리)" Link="/admin/product" AddStyle="background:aqua;" />
 
-@if (product == null)
-{
-    <p><em>Loading...</em></p>
+@if(_product != null){
+
+    <EditForm Model="_product" OnValidSubmit="Modify" class="card card-body bg-light mt-5">
+        <DataAnnotationsValidator />
+        <div class="form-group row">
+            <label for="name" class="col-md-2 col-form-label">Name:</label>
+            <div class="col-md-10">
+                <InputText id="name" class="form-control" @bind-Value="_product.Name" />
+                <ValidationMessage For="@(() => _product.Name)" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="discription" class="col-md-2 col-form-label">Discription:</label>
+            <div class="col-md-10">
+                <InputText id="discription" class="form-control" @bind-Value="_product.Discription" />
+                <ValidationMessage For="@(() => _product.Discription)" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="supplier" class="col-md-2 col-form-label">Supplier:</label>
+            <div class="col-md-10">
+                <InputText id="supplier" class="form-control" @bind-Value="_product.Supplier" />
+                <ValidationMessage For="@(() => _product.Supplier)" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="price" class="col-md-2 col-form-label">Price:</label>
+            <div class="col-md-10">
+                <InputNumber id="price" class="form-control" @bind-Value="_product.Price" />
+                <ValidationMessage For="@(() => _product.Price)" />
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="totalCount" class="col-md-2 col-form-label">TotalCount:</label>
+            <div class="col-md-10">
+                <InputNumber id="totalCount" class="form-control" @bind-Value="_product.TotalCount" />
+                <ValidationMessage For="@(() => _product.TotalCount)" />
+            </div>
+        </div>
+
+        @if (_product.ImageUrl == null || _product.ImageUrl.Length <= 0)
+        {
+            <div class="form-group row">
+                <label for="image" class="col-md-2 col-form-label">이미지:</label>
+                <div class="col-md-10">
+                    <ImageUpload OnChange="AssignImageUrl" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group row">
+                <label for="price" class="col-md-2 col-form-label">이미지:</label>
+                <div class="col-md-10">
+                    <button @onclick="DeleteImage">삭제</button>
+                    <img src="/Temp/Product/@_product.ImageUrl" style="width:100%;height:auto;" />
+                </div>
+            </div>
+        }
+
+        <div class="form-group row">
+            <label for="isSoldOut" class="col-md-2 col-form-label">IsSoldOut:</label>
+            <div class="col-md-10">
+                <InputCheckbox id="isSoldOut" class="form-control" @bind-Value="_product.IsSoldOut " />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-success">Edit</button>
+            </div>
+        </div>
+    </EditForm>
+    <ProductSuccessNotification @ref="_notification" />
 }
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>FilePath</th>
-                <th>Create</th>
-                <th>Modify</th>
-            </tr>
-        </thead>
-        <tbody>
 
-            <tr>
-                <td>@product.Id</td>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td> <img src="@product.ImageUrl" asp-append-version="true" /></td>
-                <td>@product.Created</td>
-                <td>@product.Modified</td>
 
-            </tr>
-
-        </tbody>
-    </table>
-}
-@code {
-
-    [Parameter]
-    public string id { get; set; }
-
-    private ProductModel product;
-
-    protected override async Task OnInitializedAsync()
-    {
-        product = await Http.GetFromJsonAsync<ProductModel>($"api/products/{id}");
-    }
-
-}

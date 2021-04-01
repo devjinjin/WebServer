@@ -11,5 +11,7 @@ namespace WebServer.Data.Products
         Task CreateProduct(ProductModel product);
 
         Task<ProductModel> GetProduct(string id);
+
+        Task<bool> EditAsync(ProductRequestModel model); // 수정
     }
 }

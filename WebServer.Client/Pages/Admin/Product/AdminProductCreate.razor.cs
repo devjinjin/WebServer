@@ -8,7 +8,7 @@ namespace WebServer.Client.Pages.Admin.Product
 {
     public partial class AdminProductCreate
     {
-        private ProductModel _product = new ProductModel();
+        private ProductRequestModel _product = new ProductRequestModel();
         private ProductSuccessNotification _notification;
 
         [Inject]
@@ -27,6 +27,11 @@ namespace WebServer.Client.Pages.Admin.Product
         private void AssignImageUrl(string imgUrl)
         {
             _product.ImageUrl = imgUrl;
+        }
+
+        private void DeleteImage()
+        {
+            _product.ImageUrl = "";
         }
     }
 }

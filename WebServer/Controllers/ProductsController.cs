@@ -4,11 +4,10 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebServer.Data.Products;
-using WebServer.Models.Features;
 using WebServer.Models.Product;
+using WebServer.Utils;
 
 namespace WebServer.Controllers
 {
@@ -54,10 +53,47 @@ namespace WebServer.Controllers
                 return BadRequest();
             }
 
+            FileUtil.MoveFile(_environment, product.ImageUrl, "Product");
+
             await _repository.CreateProduct(product);
 
             return Created("", product);
         }
-      
+
+        [HttpPut]
+        public async Task<bool> PutProduct([FromBody] ProductRequestModel productModel)
+        {
+            return await EditNote(productModel);
+
+
+        }
+
+        private async Task<bool> EditNote(ProductRequestModel productModel)
+        {
+
+            if (productModel.IsNewImage)
+            {
+                var OldFilePath = productModel.OldFilePath;
+
+                if (OldFilePath.Length > 0)
+                {
+                    var urlArray = OldFilePath.Split("/");
+                    if (urlArray.Length > 0)
+                    {
+                        var fileName = urlArray[urlArray.Length - 1];
+                        if (System.IO.File.Exists($"Files/Product/{fileName}"))
+                        {
+                            System.IO.File.Delete($"Files/Product/{fileName}");
+                        }
+                    }
+                }
+            }
+
+            return await _repository.EditAsync(productModel);
+
+        }
+
+       
+
     }
 }

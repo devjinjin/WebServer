@@ -115,6 +115,7 @@ namespace WebServer
                             Path.Combine(Directory.GetCurrentDirectory(), @"Files")), //실제 폴더 경로
                 RequestPath = new PathString("/Temp") // 외부 사용자 경로
             });
+
             //File 폴더를 위한 경로 설정
 
 
