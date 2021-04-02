@@ -33,6 +33,8 @@ namespace WebServer.Client
             builder.Services.AddScoped<IUploadHttpRepository, UploadHttpRepository>();
             builder.Services.AddScoped<IPlaceImageHttpRespository, PlaceImageHttpRespository>();
 
+            //builder.Services.AddTransient<RTCPeerConnection>();
+
             builder.Services.AddScoped<BrowserService>(); // scoped service
         
 

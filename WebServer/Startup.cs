@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using WebServer.Data;
 using WebServer.Data.Notes;
@@ -42,7 +44,16 @@ namespace WebServer
             //AddTransient: 호출될 때마다 새로운 인스턴스가 생성됨
             //AddScoped : 세션단위로 동일한 인스턴스가 제공됨. 즉, 같은 세션에서는 항상 동일한 객체가 제공되나, 다른 세션이 생성되었다면 그 세션내에서는 그 세션 전용의 객체가 생성되어 제공됨
             //AddSingleton: 세션과는 무관하게 애플리케이션 전체에서 하나의 객체만 생성되어 제공됨
-            
+
+            //Auth
+            services.AddAuthentication(options => { /* Authentication options */ })
+           .AddGitHub(options =>
+           {
+               options.ClientId = "49e302895d8b09ea5656";
+               options.ClientSecret = "98f1bf028608901e9df91d64ee61536fe562064b";
+           });
+
+            //Auth
             services.AddTransient<INoteRepository, NoteRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IPlaceInfoRepository, PlaceInfoRepository>();
@@ -90,6 +101,9 @@ namespace WebServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            //SignalR
+            app.UseResponseCompression();
+            //SignalR
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -124,7 +138,7 @@ namespace WebServer
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
         
             app.UseEndpoints(endpoints =>
             {
