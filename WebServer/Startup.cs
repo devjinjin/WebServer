@@ -46,12 +46,12 @@ namespace WebServer
             //AddSingleton: 세션과는 무관하게 애플리케이션 전체에서 하나의 객체만 생성되어 제공됨
 
             //Auth
-            services.AddAuthentication(options => { /* Authentication options */ })
-           .AddGitHub(options =>
-           {
-               options.ClientId = "49e302895d8b09ea5656";
-               options.ClientSecret = "98f1bf028608901e9df91d64ee61536fe562064b";
-           });
+           // services.AddAuthentication(options => { /* Authentication options */ })
+           //.AddGitHub(options =>
+           //{
+           //    options.ClientId = "49e302895d8b09ea5656";
+           //    options.ClientSecret = "98f1bf028608901e9df91d64ee61536fe562064b";
+           //});
 
             //Auth
             services.AddTransient<INoteRepository, NoteRepository>();
@@ -102,7 +102,7 @@ namespace WebServer
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             //SignalR
-            app.UseResponseCompression();
+            //app.UseResponseCompression();
             //SignalR
             if (env.IsDevelopment())
             {
